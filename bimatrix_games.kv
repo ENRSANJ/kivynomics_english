@@ -1,0 +1,165 @@
+#: import HoverButton4 main
+#: import mainbgcolor main
+#: import mainbtcolor main
+#: import secondarybgcolor main
+#: import secondarybtcolor main
+
+
+<BimatrixVentana>:
+    name: 'BimatrixScreen'
+
+    BoxLayout:
+        Label:
+            text_size: self.size
+            valign: 'middle'
+            halign: 'center'
+            text: 'Matriz de pagos del jugador 1'
+            pos_hint: {'y': .24}
+
+        Label:
+            text_size: self.size
+            valign: 'middle'
+            halign: 'center'
+            text: 'Matriz de pagos del jugador 2'
+            pos_hint: {'y': .24}
+
+    Caja:
+        id: matriz1
+        size_hint: (.4, .55)
+        pos_hint: {'x': .025, 'y': .17}
+
+    Caja:
+        id: matriz2
+        size_hint: (.4, .55)
+        pos_hint: {'right': .975, 'y': .17}
+
+    HoverButton4:
+        text: 'Calcula'
+        size_hint: (.09, .09)
+        pos_hint: {'center_x': .5, 'center_y': (root.altura1-root.espaciado1)}
+        on_release: root.calculanash()
+
+    HoverButton4:
+        text: 'Suma nula'
+        size_hint: (.09, .09)
+        pos_hint: {'center_x': .5, 'center_y': (root.altura1-2*root.espaciado1)}
+        on_release: root.sumanula()
+
+    HoverButton4:
+        text: 'Simétrico'
+        size_hint: (.09, .09)
+        pos_hint: {'center_x': .5, 'center_y': (root.altura1-3*root.espaciado1)}
+        on_release: root.simetrico()
+
+    HoverButton4:
+        text: 'Aleatorio'
+        size_hint: (.09, .09)
+        pos_hint: {'center_x': .5, 'center_y': (root.altura1-4*root.espaciado1)}
+        on_release: root.aleatorio()
+
+    HoverButton4:
+        text: 'Vaciar'
+        size_hint: (.09, .09)
+        pos_hint: {'center_x': .5, 'center_y': (root.altura1-5*root.espaciado1)}
+        on_release: root.vaciar()
+
+    SeleccionaRango:
+
+
+<SeleccionaRango>:
+    size_hint: (.17, .17)
+    pos_hint: {'x': .005, 'top': .98}
+    padding: '5dp'
+    orientation: 'vertical'
+    spacing: '2dp'
+
+    canvas.before:
+        Color:
+            rgba: secondarybgcolor
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+
+    BoxLayout:
+        Label:
+            markup: True
+            text: '[b]nº filas: [/b]'
+        SeleccionaInput:
+            id: numrows
+
+    BoxLayout:
+        Label:
+            markup: True
+            text: '[b]nº columnas: [/b]'
+        SeleccionaInput:
+            id: numcols
+
+    BoxLayout:
+        size_hint: (.25, 1)
+        pos_hint: {'right': 1}
+        OkButton:
+            size_hint: (1, .9)
+            background_color: (0, 0, 0, 0) # last zero to make it invisible
+            text: 'Ok'
+            on_release: root.confirmarango()
+            canvas.before:
+                Color:
+                    rgba: secondarybtcolor
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+
+<PopupNash>:
+    # definimos el dragbehavior:
+    drag_rectangle: self.x, self.y, self.width, self.height
+    drag_timeout: 10000000
+    drag_distance: 0
+
+    title_color: (0, 0, 0, 1)
+    title: 'Equilibrios de Nash'
+    overlay_color: (0, 0, 0, 0) # no ensombrece el fondo
+    size_hint: (.5, .65)
+    background: '' # white
+
+    BoxLayout:
+        id: b1
+        orientation: 'vertical'
+
+
+<Cuadradito>:
+    padding: [0, (self.height-self.line_height)/2]
+    halign: 'center'
+    input_filter: lambda text, from_undo: text[:5 - len(self.text)]
+    color: (1, 0, 0, 1)
+    write_tab: False
+    # Tamaño de fuente relativo a la altura del TextInput
+    font_size: self.height * 0.3
+    multiline: False
+
+<Fila>:
+    spacing: '5dp'
+    padding: '5dp'
+
+<SeleccionaInput>:
+    size_hint: (.2, 1)
+    padding: [0, (self.height-self.line_height)/2]
+    halign: 'center'
+    write_tab: False
+    font_size: self.height * 0.5
+    multiline: False
+    input_filter: lambda text, from_undo: text[:1 - len(self.text)]
+
+
+<BimatrixMasInfoScreen>:
+    name: 'BimatrixMasInfoScreen'
+
+    BoxLayout:
+        Label:
+            halign: 'center'
+            valign: 'middle'
+            text_size: self.size
+            text: 'Este es un texto de ejemplo que, en un futuro, dejará de serlo para convertirse en una concisa explicación sobre el uso de la pantalla de Juegos Bimatriciales'
+
+# Ajuste automático del tamaño de fuente con la altura del botón
+<HoverButton4>:
+    font_size: self.height * 0.3

@@ -1,0 +1,156 @@
+#: import WrappedLabel main
+
+
+<CournotVentana>:
+    name: 'CournotScreen'
+
+    # BoxLayout que contiene todo el contenido de la pantalla
+    BoxLayout:
+
+        # BoxLayout con la parte izquierda (de input) de la pantalla
+        BoxLayout:
+            size_hint: (.5, 1)
+            orientation: 'vertical'
+            canvas.before:
+                Color:
+                    rgba: (0, 1, 0, 1)
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+
+            BoxLayout:
+                canvas.before:
+                    Color:
+                        rgba: (1, 0, 0, 1)
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+                WrappedLabel:
+                    text: 'Función de demanda del mercado: p(X) = '
+
+                CournotInput:
+                    id: a
+
+                CournotInput:
+                    id: b
+
+            BoxLayout:
+                canvas.before:
+                    Color:
+                        rgba: (1, 0, 1, 1)
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+                WrappedLabel:
+                    text: 'Costes totales de la empresa 1:'
+
+                CournotInput:
+                    id: c
+
+                CournotInput:
+                    id: d
+
+            BoxLayout:
+                canvas.before:
+                    Color:
+                        rgba: (1, 0, 0, 1)
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+                WrappedLabel:
+                    text: 'Costes totales de la empresa 2:'
+
+                CournotInput:
+                    id: e
+
+                CournotInput:
+                    id: f
+
+            BoxLayout:
+                size_hint: (.5, .25)
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+                Button:
+                    text: 'Resuelve'
+                    on_release: root.calculacournot()
+
+                Button:
+                    text: 'Vacía'
+                    on_release: root.vacia()
+
+                Button:
+                    text: 'Aleatorio'
+                    on_release: root.aleatorio()
+
+        # BoxLayout con la parte derecha (de output) de la pantalla
+        BoxLayout:
+            orientation: 'vertical'
+            canvas.before:
+                Color:
+                    rgba: (0, 1, 1, 1)
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+
+            # BoxLayout con el gráfico
+            GrafiCournot:
+                id: graficournot
+
+            # Resumen de resultados del modelo
+            BoxLayout:
+                orientation: 'vertical'
+                canvas.before:
+                    Color:
+                        rgba: (0, 0, 0, 1)
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+                size_hint: (1, .5)
+                padding: (0, 0, 0, '20dp')
+
+                # Precio de equilibrio
+                BoxLayout:
+                    size_hint: (1, .25)
+                    AutoFontLabel:
+                        text: root.precio
+
+                # Resultados de las empresas
+                BoxLayout:
+
+                    # EMPRESA 1
+                    BoxLayout:
+                        orientation: 'vertical'
+                        AutoFontLabel:
+                            text: '[u]EMPRESA 1[/u]'
+                            markup: True
+                        AutoFontLabel:
+                            text: root.prod_1
+                        AutoFontLabel:
+                            text: root.beneficio1
+
+                    # EMPRESA 2
+                    BoxLayout:
+                        orientation: 'vertical'
+                        AutoFontLabel:
+                            text: '[u]EMPRESA 2[/u]'
+                            markup: True
+                        AutoFontLabel:
+                            text: root.prod_2
+                        AutoFontLabel:
+                            text: root.beneficio2
+
+                # Hueco para los botones de navegación
+                BoxLayout:
+                    size_hint: (1, .5)
+
+# clase para el estilo de cuadros de input de Cournot
+<CournotInput@TextInput>:
+    size_hint: (.3,.15)
+    pos_hint: {'center_x': 0.25, 'center_y': 0.5}
+    multiline: False
+    write_tab: False
+    halign: 'center'
+    valign: 'middle'
+
+<AutoFontLabel@WrappedLabel>:
+    font_size: self.height * 0.45

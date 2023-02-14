@@ -1,0 +1,216 @@
+#:import bimatrix_games bimatrix_games
+#:import cournot cournot
+#:import stackelberg stackelberg
+#:import bertrand bertrand
+#:import jugar jugar
+
+#: import FadeTransition kivy.uix.screenmanager.FadeTransition
+#: import SlideTransition kivy.uix.screenmanager.SlideTransition
+
+#:set mainbtcolor (0, 0, .19, 1)
+#:set mainbgcolor (0, .35, .5, 1)
+#:set secondarybgcolor (0, 0, .19, 1)
+#:set secondarybtcolor (0, .35, .5, 1)
+
+#set mainbgcolor (0, .19, .24, 1)
+#set mainbtcolor (.36, .18, 0, 1)
+#set secondarybgcolor (.2, .13, .05, 1)
+
+# rgba: (0, 60/255, 50/255, 1)
+
+<Manager>:
+    MenuPrincipal:
+        name: 'MenuPrincipal'
+        BoxLayout:
+            canvas.before:
+                Color:
+                    rgba: mainbgcolor
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            BoxLayout:
+                orientation: 'vertical'
+                BoxLayout:
+                    padding: ('30dp', 0, 0, 0)
+                    Label:
+                        font_size: '50dp'
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'middle'
+                        markup: True
+                        text: '[b]APLICACIÓN DE MI TFG[/b]'
+                        color: (1, 1, 1, 1)
+                BoxLayout:
+                    pos_hint: {'top':.55}
+                    size_hint: (.7, 1)
+                    orientation: 'vertical'
+                    padding: ('30dp', '10dp', '10dp', '10dp')
+                    spacing: '10dp'
+
+                    HoverButton:
+                        text: 'Juegos Bimatriciales (2 jugadores)'
+                        on_press: root.transition.direction= 'left'; root.current = 'BimatrixScreen'
+                        on_enter: app.cambiar1()
+                        on_leave: app.descambiar()
+                    HoverButton:
+                        text: 'Modelo de Cournot'
+                        on_press: root.transition.direction= 'left'; root.current = 'CournotScreen'
+                        on_enter: app.cambiar2()
+                        on_leave: app.descambiar()
+                    HoverButton:
+                        text: 'Modelo de Stackelberg'
+                        on_press: root.transition.direction= 'left'; root.current = 'StackelbergScreen'
+                        on_enter: app.cambiar3()
+                        on_leave: app.descambiar()
+                    HoverButton:
+                        text: 'Modelo de Bertrand'
+                        on_press: root.transition.direction= 'left'; root.current = 'BertrandScreen'
+                        on_enter: app.cambiar4()
+                        on_leave: app.descambiar()
+                    HoverButton:
+                        text: 'Jugar contra el ordenador'
+                        on_press: root.transition.direction= 'left'; root.current = 'JugarScreen'
+                        on_enter: app.cambiar5()
+                        on_leave: app.descambiar()
+            BoxLayout:
+                size_hint:(.2,1)
+
+            # BoxLayout con el Preview de cada Ventana
+            BoxLayout:
+                size_hint: (1.2, 1)
+                orientation: 'vertical'
+                padding: ('10dp', '20dp', '30dp', '10dp')
+
+                BoxLayout:
+                    size_hint: (1, 1.5)
+                    orientation: 'vertical'
+                    padding: '5dp'
+                    canvas.before:
+                        Color:
+                            rgba: (1, 1, 1, 1)
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                    Image:
+                        id: imagencita
+                        allow_stretch: True
+                        keep_ratio: False
+                        source: ''
+                    Label:
+                        id: etiqueta
+                        size_hint: (1, .2)
+                        text: 'Seleccione un ítem'
+                        text_size: self.size
+                        color: (0, 0, 0, 1)
+
+                BoxLayout:
+                    size_hint: (.5, .5)
+                    pos_hint: {'right':1}
+                    padding: ('10dp',0,0,0)
+                    spacing: '25dp'
+
+                    HoverButton2:
+                        text: 'Información'
+                        size_hint: root.size1
+                        on_press: root.transition.direction= 'left'; root.current = 'InformacionScreen'
+
+                    HoverButton2:
+                        text: 'Ajustes'
+                        size_hint: root.size1
+                        on_press: root.transition.direction= 'left'; root.current = 'AjustesScreen'
+    BimatrixVentana:
+
+    BimatrixMasInfoScreen:
+
+    CournotVentana:
+
+    StackelbergVentana:
+
+    BertrandVentana:
+
+    JugarVentana:
+
+    InformacionVentana:
+        name: 'InformacionScreen'
+    AjustesVentana:
+        name: 'AjustesScreen'
+
+
+<InformacionVentana>:
+
+
+<AjustesVentana>:
+
+
+<RoundedButton>:
+    background_color: (0, 0, 0, 0) # last zero to make it invisible
+    canvas.before:
+        Color:
+            rgba: mainbtcolor
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [20]
+
+
+# Layout general para cada ventana
+<VentanaLayout>:
+    canvas.before:
+        Color:
+            rgba: mainbgcolor
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    BoxLayout:
+        spacing: '10dp'
+        size_hint: (.3, .1)
+        pos_hint: {'right': 1}
+        padding: '10dp'
+
+        HoverButton3:
+            id: masinfo
+            text: '+info'
+            on_release: app.root.transition = FadeTransition(); self.parent.parent.obtenermasinfo(); app.root.transition = SlideTransition()
+        HoverButton3:
+            text: 'Menú Principal'
+            on_release: app.root.transition.direction = 'right'; app.root.current = 'MenuPrincipal'
+
+# Layout general para cada ventana
+<VentanaLayout2>:
+    BoxLayout:
+        spacing: '10dp'
+        size_hint: (.15, .1)
+        pos_hint: {'right': 1}
+        padding: '10dp'
+
+        HoverButton3:
+            text: 'Menú Principal'
+            on_release: app.root.transition.direction = 'right'; app.root.current = 'MenuPrincipal'
+
+
+<MasInfoVentana>:
+    canvas.before:
+        Color:
+            rgba: mainbgcolor
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    BoxLayout:
+        spacing: '10dp'
+        size_hint: (.15, .1)
+        pos_hint: {'right': 1}
+        padding: '10dp'
+
+        HoverButton3:
+            text: 'Volver'
+            on_release: self.parent.parent.volver()
+
+# Ajuste automático del tamaño de fuente con la altura del botón
+<HoverButton>:
+    font_size: self.height * 0.3
+
+<HoverButton2>:
+    font_size: self.height * 0.4
+
+<HoverButton3>:
+    font_size: self.height * 0.3
