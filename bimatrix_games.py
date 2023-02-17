@@ -1,5 +1,5 @@
-import nashpy as nash
 import numpy as np
+import pygambit as pg
 from kivy.animation import Animation
 from kivy.lang import Builder
 from kivy.uix.behaviors import DragBehavior
@@ -65,26 +65,20 @@ class BimatrixVentana(VentanaLayout):
                 for nieta in reversed(hija.children):
                     lista2.append(float(nieta.text))
 
-            pagos1 = np.array(lista1)
+            payoff1 = [pg.Rational(num) for num in lista1]
+            pagos1 = np.array(payoff1)
             matrizpagos1 = pagos1.reshape(rows, cols)
-            pagos2 = np.array(lista2)
+
+            payoff2 = [pg.Rational(num) for num in lista2]
+            pagos2 = np.array(payoff2)
             matrizpagos2 = pagos2.reshape(rows, cols)
-            juego = nash.Game(matrizpagos1, matrizpagos2)
+            juego = pg.Game.from_arrays(matrizpagos1, matrizpagos2)
             solpopupnash = PopupNash()
 
-            if list(juego.support_enumeration()):
-                for eq in juego.support_enumeration():
-                    b = str('V*' + '(' + str(eq).replace('array', '').replace('(', '').replace(')', '') + '); ' + 'EP: ' + str(juego[eq]))
-                    c = WrappedLabel(text=b, color=(0, 0, 0, 1), font_size=self.height * 0.02)
-                    solpopupnash.ids.b1.add_widget(c)
-                solpopupnash.open()
-            else:
-                eqs2 = juego.vertex_enumeration()
-                for eq in eqs2:
-                    b = str('V*' + '(' + str(eq).replace('array', '').replace('(', '').replace(')', '') + '); ' + 'EP: ' + str(juego[eq]))
-                    c = WrappedLabel(text=b, color=(0, 0, 0, 1))
-                    solpopupnash.ids.b1.add_widget(c)
-                solpopupnash.open()
+            for eq in pg.nash.enummixed_solve(juego):
+                c = WrappedLabel(text=str(eq), color=(0, 0, 0, 1), font_size=self.height * 0.02)
+                solpopupnash.ids.b1.add_widget(c)
+            solpopupnash.open()
 
         except ValueError:
             alertanash = MensajeDeError2()
