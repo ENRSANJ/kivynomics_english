@@ -5,11 +5,13 @@ from kivy.lang import Builder
 from kivy.uix.behaviors import DragBehavior
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
+from kivy.uix.gridlayout import GridLayout
 from kivy.uix.popup import Popup
+from kivy.uix.scrollview import ScrollView
 from kivy.uix.textinput import TextInput
 from kivymd.theming import ThemableBehavior
 from kivymd.uix.behaviors import HoverBehavior
-from main import VentanaLayout, MasInfoVentana, WrappedLabel
+from main import VentanaLayout, MasInfoVentana, WrappedLabel, WrappedLabel2
 
 
 # Representaremos 3 decimales en cada output de la aplicación,,,,,,,,,,,,,,,EDITABLE EN OPCIONES?????
@@ -52,10 +54,12 @@ class BimatrixVentana(VentanaLayout):
     altura1 = .75
     espaciado1 = .105
 
+    # Cálculo de los equilibrios de Nash
     def calculanash(self):
         lista1 = []
         lista2 = []
 
+        # Recogemos los datos introducidos por el usuario
         try:
             for hijo in reversed(self.ids.matriz1.children):
                 for nieto in reversed(hijo.children):
@@ -65,6 +69,7 @@ class BimatrixVentana(VentanaLayout):
                 for nieta in reversed(hija.children):
                     lista2.append(float(nieta.text))
 
+        # Los almacenamos en matrices de pagos, con el formato adecuado para pygambit
             payoff1 = [pg.Rational(num) for num in lista1]
             pagos1 = np.array(payoff1)
             matrizpagos1 = pagos1.reshape(rows, cols)
@@ -73,11 +78,26 @@ class BimatrixVentana(VentanaLayout):
             pagos2 = np.array(payoff2)
             matrizpagos2 = pagos2.reshape(rows, cols)
             juego = pg.Game.from_arrays(matrizpagos1, matrizpagos2)
-            solpopupnash = PopupNash()
 
-            for eq in pg.nash.enummixed_solve(juego):
-                c = WrappedLabel(text=str(eq), color=(0, 0, 0, 1), font_size=self.height * 0.02)
-                solpopupnash.ids.b1.add_widget(c)
+            # Popup con Scrollview
+            scroll = ScrollView()
+            solpopupnash = PopupNash(content=scroll)
+            grid = GridLayout(cols=1, size_hint=(1, None))
+            scroll.add_widget(grid)
+            grid.bind(minimum_height=grid.setter('height'))
+
+        # Mostramos como output los equilibrios de Nash, con un formato accesible
+            for eq in pg.nash.enummixed_solve(juego, rational=False):
+                strats = np.array(eq)
+                eq_payoff = np.array2string(np.array([eq.payoff(player) for player in range(2)]), separator=', ')
+
+                a = str('V*[' + np.array2string(strats[:rows], separator=', ').replace('[', '(').replace(']', ')') +
+                        ', ' + np.array2string(strats[cols:], separator=', ').replace('[', '(').replace(']', ')') +
+                        ']  EP: ' + str(eq_payoff))
+
+                c = WrappedLabel2(text=a, color=(0, 0, 0, 1), font_size=self.height * 0.022, size_hint=(1, None))
+                grid.add_widget(c)
+
             solpopupnash.open()
 
         except ValueError:
@@ -95,6 +115,7 @@ class BimatrixVentana(VentanaLayout):
             for hija, sublista in zip(self.ids.matriz2.children, lista2):
                 for nieta, a in zip(hija.children, sublista):
                     nieta.text = str(-a)
+
         except ValueError:
             alertanash = MensajeDeError2()
             alertanash.open()

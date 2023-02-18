@@ -23,6 +23,15 @@ class WrappedLabel(Label):
             texture_size=lambda *x: self.setter('height')(self, self.texture_size[1]))
 
 
+class WrappedLabel2(Label):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.halign = 'center'
+        self.bind(
+            width=lambda *x:
+            self.setter('text_size')(self, (self.width, None)))
+
+
 # Botones de selección de ventana del menú principal
 class HoverButton(RoundedButton, ThemableBehavior, HoverBehavior):
 
