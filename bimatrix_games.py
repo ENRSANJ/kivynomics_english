@@ -79,10 +79,10 @@ class BimatrixVentana(VentanaLayout):
             matrizpagos2 = pagos2.reshape(rows, cols)
             juego = pg.Game.from_arrays(matrizpagos1, matrizpagos2)
 
-            # Popup con Scrollview
+            # Popup con Scrollview para mostrar el output
             scroll = ScrollView()
             solpopupnash = PopupNash(content=scroll)
-            grid = GridLayout(cols=1, size_hint=(1, None))
+            grid = GridLayout(cols=1, size_hint=(1, None), padding='.5dp')
             scroll.add_widget(grid)
             grid.bind(minimum_height=grid.setter('height'))
 

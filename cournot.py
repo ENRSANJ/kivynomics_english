@@ -125,7 +125,7 @@ class CournotVentana(VentanaLayout):
             self.ids.graficournot.clear_widgets()
             self.ids.graficournot.add_widget(canvas)
 
-            ######plt.savefig('graph.png', bbox_inches='tight')
+            # plt.savefig('graph.png', bbox_inches='tight')
 
         except ValueError:
             print('Introduce solamente valores permitidos')

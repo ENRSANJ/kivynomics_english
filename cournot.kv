@@ -1,5 +1,6 @@
 #: import WrappedLabel main
-
+#: import re re
+#: import mainbtcolor main
 
 <CournotVentana>:
     name: 'CournotScreen'
@@ -7,67 +8,80 @@
     # BoxLayout que contiene todo el contenido de la pantalla
     BoxLayout:
 
+        # Separador
+        BoxLayout:
+            size_hint: (.02, 1)
+
         # BoxLayout con la parte izquierda (de input) de la pantalla
         BoxLayout:
-            size_hint: (.5, 1)
+            size_hint: (.6, .7)
+            pos_hint: {'center_y': .5}
+            padding: '10dp'
             orientation: 'vertical'
             canvas.before:
                 Color:
-                    rgba: (0, 1, 0, 1)
-                Rectangle:
+                    rgba: mainbtcolor
+                RoundedRectangle:
                     size: self.size
                     pos: self.pos
 
+            # Demanda del mercado
             BoxLayout:
-                canvas.before:
-                    Color:
-                        rgba: (1, 0, 0, 1)
-                    Rectangle:
-                        size: self.size
-                        pos: self.pos
-                WrappedLabel:
-                    text: 'Función de demanda del mercado: p(X) = '
+                orientation: 'vertical'
 
-                CournotInput:
-                    id: a
+                BoxLayout:
+                    Cinput_wrappedlabel:
+                        text: 'Función de demanda del mercado:'
 
-                CournotInput:
-                    id: b
+                BoxLayout:
+                    Cinput_wrappedlabel2:
+                        text: 'p(X)='
+                    CournotInput:
+                        id: a
+                    Cinput_wrappedlabel2:
+                        text: 'X       +'
+                    CournotInput:
+                        id: b
 
+            # Costes de la empresa 1
             BoxLayout:
-                canvas.before:
-                    Color:
-                        rgba: (1, 0, 1, 1)
-                    Rectangle:
-                        size: self.size
-                        pos: self.pos
-                WrappedLabel:
-                    text: 'Costes totales de la empresa 1:'
+                orientation: 'vertical'
 
-                CournotInput:
-                    id: c
+                BoxLayout:
+                    Cinput_wrappedlabel:
+                        text: 'Costes totales de la empresa 1:'
 
-                CournotInput:
-                    id: d
+                BoxLayout:
+                    Cinput_wrappedlabel2:
+                        text: 'CT[sub]1[/sub](x[sub]1[/sub])='
+                    CournotInput:
+                        id: c
+                    Cinput_wrappedlabel2:
+                        text: 'x[sub]1[/sub]       +'
+                    CournotInput:
+                        id: d
 
+            # Costes de la empresa 2
             BoxLayout:
-                canvas.before:
-                    Color:
-                        rgba: (1, 0, 0, 1)
-                    Rectangle:
-                        size: self.size
-                        pos: self.pos
-                WrappedLabel:
-                    text: 'Costes totales de la empresa 2:'
+                orientation: 'vertical'
 
-                CournotInput:
-                    id: e
+                BoxLayout:
+                    Cinput_wrappedlabel:
+                        text: 'Costes totales de la empresa 2:'
 
-                CournotInput:
-                    id: f
+                BoxLayout:
+                    Cinput_wrappedlabel2:
+                        text: 'CT[sub]2[/sub](x[sub]2[/sub])='
+                    CournotInput:
+                        id: e
+                    Cinput_wrappedlabel2:
+                        text: 'x[sub]2[/sub]       +'
+                    CournotInput:
+                        id: f
 
+            # Botones de acción
             BoxLayout:
-                size_hint: (.5, .25)
+                size_hint: (1, .4)
                 pos_hint: {'center_x': 0.5, 'center_y': 0.5}
 
                 Button:
@@ -81,6 +95,15 @@
                 Button:
                     text: 'Aleatorio'
                     on_release: root.aleatorio()
+
+                Button:
+                    text: 'Guardar'
+                    on_release: root.aleatorio()
+
+        # Separador
+        BoxLayout:
+            size_hint: (.02, 1)
+
 
         # BoxLayout con la parte derecha (de output) de la pantalla
         BoxLayout:
@@ -111,8 +134,9 @@
                 # Precio de equilibrio
                 BoxLayout:
                     size_hint: (1, .25)
-                    AutoFontLabel:
+                    WrappedLabel:
                         text: root.precio
+                        font_size: self.height * 0.6
 
                 # Resultados de las empresas
                 BoxLayout:
@@ -145,12 +169,26 @@
 
 # clase para el estilo de cuadros de input de Cournot
 <CournotInput@TextInput>:
-    size_hint: (.3,.15)
+    size_hint: (.2, .7)
     pos_hint: {'center_x': 0.25, 'center_y': 0.5}
+    font_size: self.height * 0.5
     multiline: False
     write_tab: False
+    padding: [0, (self.height-self.line_height)/2]
     halign: 'center'
-    valign: 'middle'
+    input_filter: lambda text, from_undo: (re.sub('[^0-9\.]', '', text))[:5 - len(self.text)]
 
 <AutoFontLabel@WrappedLabel>:
     font_size: self.height * 0.45
+
+<Cinput_wrappedlabel@WrappedLabel>:
+    font_size: self.height * 0.3
+    markup: True
+    bold: True
+    underline: True
+
+<Cinput_wrappedlabel2@WrappedLabel>:
+    size_hint: (.2, 1)
+    font_size: self.height * 0.35
+    markup: True
+    bold: True

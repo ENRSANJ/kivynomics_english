@@ -23,6 +23,7 @@ class WrappedLabel(Label):
             texture_size=lambda *x: self.setter('height')(self, self.texture_size[1]))
 
 
+# Sólo ajustado el ancho, para el output de Bimatrix Games
 class WrappedLabel2(Label):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
