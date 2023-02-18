@@ -1,5 +1,6 @@
+from kivy.graphics import RoundedRectangle, Color
 from kivy.lang import Builder
-from kivy.properties import StringProperty
+from kivy.properties import StringProperty, ListProperty
 from kivy.uix.boxlayout import BoxLayout
 from main import VentanaLayout
 import sympy as sp

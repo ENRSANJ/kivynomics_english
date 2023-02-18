@@ -214,3 +214,12 @@
 
 <HoverButton3>:
     font_size: self.height * 0.3
+
+<CournotButton>:
+    font_size: self.height * 0.3
+    canvas.before:
+        Color:
+            rgba: secondarybtcolor
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size

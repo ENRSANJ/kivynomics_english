@@ -1,11 +1,10 @@
-#: import WrappedLabel main
 #: import re re
-#: import mainbtcolor main
+
 
 <CournotVentana>:
     name: 'CournotScreen'
 
-    # BoxLayout que contiene todo el contenido de la pantalla
+    # BoxLayout que contiene ttodo el contenido de la pantalla
     BoxLayout:
 
         # Separador
@@ -39,9 +38,11 @@
                     CournotInput:
                         id: a
                     Cinput_wrappedlabel2:
-                        text: 'X       +'
+                        text: '-'
                     CournotInput:
                         id: b
+                    Cinput_wrappedlabel2:
+                        text: 'X'
 
             # Costes de la empresa 1
             BoxLayout:
@@ -83,20 +84,21 @@
             BoxLayout:
                 size_hint: (1, .4)
                 pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                spacing: '5dp'
 
-                Button:
+                CournotButton:
                     text: 'Resuelve'
                     on_release: root.calculacournot()
 
-                Button:
+                CournotButton:
                     text: 'Vacía'
                     on_release: root.vacia()
 
-                Button:
+                CournotButton:
                     text: 'Aleatorio'
                     on_release: root.aleatorio()
 
-                Button:
+                CournotButton:
                     text: 'Guardar'
                     on_release: root.aleatorio()
 

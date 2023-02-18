@@ -75,6 +75,16 @@ class HoverButton4(RoundedButton, ThemableBehavior, HoverBehavior):
         Animation(size_hint=(.09, .09), d=0.05).start(self)
 
 
+# Botones de acción de Cournot
+class CournotButton(RoundedButton, ThemableBehavior, HoverBehavior):
+
+    def on_enter(self, *args):
+        Animation(size_hint=(1.1, 1.1), d=0.1).start(self)
+
+    def on_leave(self, *args):
+        Animation(size_hint=(1, 1), d=0.1).start(self)
+
+
 # Root de la aplicación
 class Manager(ScreenManager):
     # b: size_hint de los botones "ajustes" e "información",,,solo height,,, cambiar????
