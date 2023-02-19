@@ -1,13 +1,12 @@
-from kivy.graphics import RoundedRectangle, Color
 from kivy.lang import Builder
-from kivy.properties import StringProperty, ListProperty
+from kivy.properties import StringProperty
 from kivy.uix.boxlayout import BoxLayout
 from main import VentanaLayout
 import sympy as sp
 from kivy.garden.matplotlib.backend_kivyagg import FigureCanvasKivyAgg
 import matplotlib.pyplot as plt
 import numpy as np
-
+from bimatrix_games import MensajeDeError
 
 Builder.load_file('cournot.kv')
 
@@ -129,7 +128,9 @@ class CournotVentana(VentanaLayout):
             # plt.savefig('graph.png', bbox_inches='tight')
 
         except ValueError:
-            print('Introduce solamente valores permitidos')
+            alertanash = MensajeDeError('Introduce solamente valores permitidos (rellene todas las posiciones)')
+            alertanash.open()
+
 
 
 class GrafiCournot(BoxLayout):

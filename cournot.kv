@@ -109,13 +109,9 @@
 
         # BoxLayout con la parte derecha (de output) de la pantalla
         BoxLayout:
+            pos_hint: {'top': 1}
+            size_hint:(1, .9)
             orientation: 'vertical'
-            canvas.before:
-                Color:
-                    rgba: (0, 1, 1, 1)
-                Rectangle:
-                    size: self.size
-                    pos: self.pos
 
             # BoxLayout con el gráfico
             GrafiCournot:
@@ -124,21 +120,25 @@
             # Resumen de resultados del modelo
             BoxLayout:
                 orientation: 'vertical'
+                size_hint: (1, .4)
+                padding: (0, 0, 0, '20dp')
                 canvas.before:
                     Color:
-                        rgba: (0, 0, 0, 1)
-                    Rectangle:
-                        size: self.size
-                        pos: self.pos
-                size_hint: (1, .5)
-                padding: (0, 0, 0, '20dp')
+                        rgba: mainbtcolor
+                    Line:
+                        width: 2
+                        rectangle: (self.x, self.y, self.width, self.height)
+
+                # Separador
+                BoxLayout:
+                    size_hint: (1, .4)
 
                 # Precio de equilibrio
                 BoxLayout:
                     size_hint: (1, .25)
                     WrappedLabel:
                         text: root.precio
-                        font_size: self.height * 0.6
+                        font_size: self.height * 0.8
 
                 # Resultados de las empresas
                 BoxLayout:
@@ -168,6 +168,9 @@
                 # Hueco para los botones de navegación
                 BoxLayout:
                     size_hint: (1, .5)
+        # Separador
+        BoxLayout:
+            size_hint: (.02, 1)
 
 # clase para el estilo de cuadros de input de Cournot
 <CournotInput@TextInput>:
@@ -181,7 +184,7 @@
     input_filter: lambda text, from_undo: (re.sub('[^0-9\.]', '', text))[:5 - len(self.text)]
 
 <AutoFontLabel@WrappedLabel>:
-    font_size: self.height * 0.45
+    font_size: self.height * 0.7
 
 <Cinput_wrappedlabel@WrappedLabel>:
     font_size: self.height * 0.3

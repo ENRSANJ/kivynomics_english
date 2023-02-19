@@ -13,12 +13,13 @@ from kivymd.theming import ThemableBehavior
 from kivymd.uix.behaviors import HoverBehavior
 from main import VentanaLayout, MasInfoVentana, WrappedLabel, WrappedLabel2
 
+Builder.load_file('bimatrix_games.kv')
+
 
 # Representaremos 3 decimales en cada output de la aplicación,,,,,,,,,,,,,,,EDITABLE EN OPCIONES?????
 np.set_printoptions(formatter={'float': lambda x: "{0:0.3f}".format(x)})
 
-Builder.load_file('bimatrix_games.kv')
-
+# Filas y columnas a mostrar por defecto
 rows = 2
 cols = 2
 
@@ -31,11 +32,11 @@ class MensajeDeError(Popup):
         self.title = '¡ERROR!'
         self.mensaje = mensaje
         self.size_hint = (.3, .3)
-
         msg = WrappedLabel(text=mensaje, font_size=self.height * 0.2)
         self.add_widget(msg)
 
 
+# Mensaje de error específico, para errores en input de bimatrix_games
 class MensajeDeError2(MensajeDeError):
     def __init__(self, **kwargs):
         a = 'Debe rellenar todas las posiciones de cada matriz de pagos con valores numéricos'
