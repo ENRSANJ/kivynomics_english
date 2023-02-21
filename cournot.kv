@@ -6,7 +6,7 @@
 
     # BoxLayout que contiene ttodo el contenido de la pantalla
     BoxLayout:
-
+        id: all
         # Separador
         BoxLayout:
             size_hint: (.02, 1)
@@ -100,7 +100,8 @@
 
                 CournotButton:
                     text: 'Guardar'
-                    on_release: root.aleatorio()
+                    on_release: all.export_to_png("test.png")
+
 
         # Separador
         BoxLayout:
@@ -109,25 +110,25 @@
 
         # BoxLayout con la parte derecha (de output) de la pantalla
         BoxLayout:
-            pos_hint: {'top': 1}
-            size_hint:(1, .9)
+            pos_hint: {'top': .99}
+            size_hint:(1, .89)
             orientation: 'vertical'
+            canvas.before:
+                Color:
+                    rgba: mainbtcolor
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
 
             # BoxLayout con el gráfico
             GrafiCournot:
                 id: graficournot
+                padding: '5dp'
 
             # Resumen de resultados del modelo
             BoxLayout:
                 orientation: 'vertical'
                 size_hint: (1, .4)
-                padding: (0, 0, 0, '20dp')
-                canvas.before:
-                    Color:
-                        rgba: mainbtcolor
-                    Line:
-                        width: 2
-                        rectangle: (self.x, self.y, self.width, self.height)
 
                 # Separador
                 BoxLayout:
@@ -147,8 +148,9 @@
                     BoxLayout:
                         orientation: 'vertical'
                         AutoFontLabel:
-                            text: '[u]EMPRESA 1[/u]'
+                            text: root.empresa1
                             markup: True
+                            underline: True
                         AutoFontLabel:
                             text: root.prod_1
                         AutoFontLabel:
@@ -158,8 +160,9 @@
                     BoxLayout:
                         orientation: 'vertical'
                         AutoFontLabel:
-                            text: '[u]EMPRESA 2[/u]'
+                            text: root.empresa2
                             markup: True
+                            underline: True
                         AutoFontLabel:
                             text: root.prod_2
                         AutoFontLabel:

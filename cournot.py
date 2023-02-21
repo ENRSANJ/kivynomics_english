@@ -14,12 +14,13 @@ Builder.load_file('cournot.kv')
 class CournotVentana(VentanaLayout):
 
     # Variables que mostraremos en la pantalla
-
     prod_1 = StringProperty('')
     prod_2 = StringProperty('')
     beneficio1 = StringProperty('')
     beneficio2 = StringProperty('')
     precio = StringProperty('')
+    empresa1 = StringProperty('')
+    empresa2 = StringProperty('')
 
     def obtenermasinfo(self):
         print('soyCournot')
@@ -32,6 +33,13 @@ class CournotVentana(VentanaLayout):
         self.ids.e.text = ''
         self.ids.f.text = ''
         self.ids.graficournot.clear_widgets()
+        self.prod_1 = ''
+        self.prod_2 = ''
+        self.beneficio1 = ''
+        self.beneficio2 = ''
+        self.precio = ''
+        self.empresa1 = ''
+        self.empresa2 = ''
 
     def aleatorio(self):
         self.ids.a.text = str(np.random.randint(20, 150))
@@ -69,6 +77,8 @@ class CournotVentana(VentanaLayout):
             self.beneficio1 = 'Beneficio: ' + str(np.around(a*x1_sol - b*x1_sol**2 - b*x1_sol*x2_sol - c*x1_sol - d, 3))
             self.beneficio2 = 'Beneficio: ' + str(np.around(a*x2_sol - b*x2_sol**2 - b*x1_sol*x2_sol - e*x2_sol - f, 3))
             self.precio = 'Precio en el mercado: ' + str(np.around(a - b*(x1_sol + x2_sol), 3))
+            self.empresa1 = 'EMPRESA 1'
+            self.empresa2 = 'EMPRESA 2'
 
             # GRÁFICO
             # Convert the sp equation to a lambda function
@@ -106,7 +116,10 @@ class CournotVentana(VentanaLayout):
                         xycoords='data', xytext=(5, 5), textcoords='offset points')
 
             # Editamos las características del gráfico
-            plt.title('HOLA BUENAS TARDES')
+            plt.title('Funciones de reacción')
+            plt.xlabel('x$_{1}$')
+            plt.ylabel('x$_{2}$')
+
             ax.set_xlim(0, x1_max)
             ax.set_ylim(0, x2_max)
             ax.spines['top'].set_visible(False)
@@ -130,7 +143,6 @@ class CournotVentana(VentanaLayout):
         except ValueError:
             alertanash = MensajeDeError('Introduce solamente valores permitidos (rellene todas las posiciones)')
             alertanash.open()
-
 
 
 class GrafiCournot(BoxLayout):
