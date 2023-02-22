@@ -146,16 +146,10 @@
     input_filter: lambda text, from_undo: text[:1 - len(self.text)]
 
 
-<BimatrixMasInfoScreen>:
-    name: 'BimatrixMasInfoScreen'
-
-    BoxLayout:
-        Label:
-            halign: 'center'
-            valign: 'middle'
-            text_size: self.size
-            text: 'Este es un texto de ejemplo que, en un futuro, dejará de serlo para convertirse en una concisa explicación sobre el uso de la pantalla de Juegos Bimatriciales'
-
 # Ajuste automático del tamaño de fuente con la altura del botón
 <HoverButton4>:
     font_size: self.height * 0.3
+
+
+<BimatrixMasInfoScreen>:
+    name: 'BimatrixMasInfoScreen'

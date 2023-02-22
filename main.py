@@ -115,6 +115,7 @@ class AjustesVentana(VentanaLayout2):
     pass
 
 
+# Clase para la ventana de más información del menú principal
 class MasInfoVentana(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -123,6 +124,11 @@ class MasInfoVentana(Screen):
         self.manager.transition = FadeTransition()
         self.manager.current = self.manager.previous()
         self.manager.transition = SlideTransition()
+
+
+# Clase para las ventanas de más información de cada apartado de la aplicación
+class MoreInfo(Screen):
+    pass
 
 
 class tfgApp(MDApp):

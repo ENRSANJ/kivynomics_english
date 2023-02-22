@@ -62,7 +62,7 @@ class CournotVentana(VentanaLayout):
             # Definimos las variables del problema (cantidad producida por la empresa 1)
             x = sp.symbols('x')
 
-            # Obtenemos las funciones de reacción de cada empresa
+            # Obtenemos las funciones de reacción de cada empresa, en función de x1 para poder graficarlo
             f1 = ((a - c)/b) - (2*x)
             f2 = ((a - e)/(2*b)) - (x/2)
 
@@ -85,7 +85,7 @@ class CournotVentana(VentanaLayout):
             fl1 = sp.lambdify(x, f1)
             fl2 = sp.lambdify(x, f2)
 
-            # Calculamos el mayor valor que pueden tomar x e y
+            # Calculamos el mayor valor que pueden tomar x e y en cada función de reacción
             x1_max_f1 = (a-c)/(2*b)
             x1_max_f2 = (a-e)/b
             x2_max_f1 = (a-c)/b
@@ -98,7 +98,7 @@ class CournotVentana(VentanaLayout):
             # Generamos los valores de x
             x_vals = np.linspace(0, x1_max, x1_max)
 
-            # Calculamos los valores de y asociados a cada valor de x mediante las funciones de reacción
+            # Calculamos los valores y asociados a cada valor de x mediante las funciones de reacción
             y1 = fl1(x_vals)
             y2 = fl2(x_vals)
 
@@ -124,6 +124,7 @@ class CournotVentana(VentanaLayout):
             ax.set_ylim(0, x2_max)
             ax.spines['top'].set_visible(False)
             ax.spines['right'].set_visible(False)
+            ax.legend()
 
             # Líneas de puntos entre los ejes y el punto de equilibrio
             ax.plot([x1_sol, x1_sol], [0, x2_sol], ':', c='black')
