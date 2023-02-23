@@ -131,7 +131,7 @@ class MoreInfo(Screen):
     pass
 
 
-class tfgApp(MDApp):
+class kivynomicsApp(MDApp):
     color1 = (0, 0, 0.1961, 1)
     color2 = ()
 
@@ -170,4 +170,4 @@ class tfgApp(MDApp):
 
 
 if __name__ == '__main__':
-    tfgApp().run()
+    kivynomicsApp().run()

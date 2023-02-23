@@ -12,6 +12,7 @@
 #:set mainbgcolor (0, .35, .5, 1)
 #:set secondarybgcolor (0, 0, .19, 1)
 #:set secondarybtcolor (0, .35, .5, 1)
+#:set mainbttextcolor (1, 1, 1, 1)
 
 # set mainbgcolor (0, .19, .24, 1)
 # set mainbtcolor (.36, .18, 0, 1)
@@ -29,18 +30,21 @@
                 Rectangle:
                     pos: self.pos
                     size: self.size
+
+            # Parte izquierda de la pantalla del menú principal
             BoxLayout:
                 orientation: 'vertical'
                 BoxLayout:
                     padding: ('30dp', 0, 0, 0)
-                    Label:
-                        font_size: '50dp'
-                        text_size: self.size
+                    WrappedLabel2:
+                        font_size: self.height * .24
                         halign: 'left'
                         valign: 'middle'
                         markup: True
-                        text: '[b]APLICACIÓN DE MI TFG[/b]'
+                        text: '[b]Kivynomics[/b]'
                         color: (1, 1, 1, 1)
+
+                # Botones de selección de ventana
                 BoxLayout:
                     pos_hint: {'top':.55}
                     size_hint: (.7, 1)
@@ -73,15 +77,15 @@
                         on_press: root.transition.direction= 'left'; root.current = 'JugarScreen'
                         on_enter: app.cambiar5()
                         on_leave: app.descambiar()
-            BoxLayout:
-                size_hint:(.2,1)
 
-            # BoxLayout con el Preview de cada Ventana
+
+            # Parte derecha de la pantalla del menú principal
             BoxLayout:
                 size_hint: (1.2, 1)
                 orientation: 'vertical'
                 padding: ('10dp', '20dp', '30dp', '10dp')
 
+                # Preview de cada ventana
                 BoxLayout:
                     size_hint: (1, 1.5)
                     orientation: 'vertical'
@@ -105,6 +109,7 @@
                         font_size: self.height * .2
                         color: (0, 0, 0, 1)
 
+                # Botones de info y ajustes del menú principal
                 BoxLayout:
                     size_hint: (.5, .5)
                     pos_hint: {'right':1}
@@ -126,6 +131,8 @@
 
     CournotVentana:
 
+    CournotMasInfoScreen:
+
     StackelbergVentana:
 
     BertrandVentana:
@@ -143,16 +150,6 @@
 
 <AjustesVentana>:
 
-
-<RoundedButton>:
-    background_color: (0, 0, 0, 0) # last zero to make it invisible
-    canvas.before:
-        Color:
-            rgba: mainbtcolor
-        RoundedRectangle:
-            pos: self.pos
-            size: self.size
-            radius: [20]
 
 
 # Layout general para cada ventana
@@ -207,7 +204,18 @@
             text: 'Volver'
             on_release: self.parent.parent.volver()
 
-# Ajuste automático del tamaño de fuente con la altura del botón
+# Botones de la aplicación
+<RoundedButton>:
+    background_color: (0, 0, 0, 0) # last zero to make it invisible
+    color: mainbttextcolor
+    canvas.before:
+        Color:
+            rgba: mainbtcolor
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [20]
+
 <HoverButton>:
     font_size: self.height * 0.3
 

@@ -1,7 +1,7 @@
 from kivy.lang import Builder
 from kivy.properties import StringProperty
 from kivy.uix.boxlayout import BoxLayout
-from main import VentanaLayout
+from main import VentanaLayout, MoreInfo
 import sympy as sp
 from kivy.garden.matplotlib.backend_kivyagg import FigureCanvasKivyAgg
 import matplotlib.pyplot as plt
@@ -23,7 +23,7 @@ class CournotVentana(VentanaLayout):
     empresa2 = StringProperty('')
 
     def obtenermasinfo(self):
-        print('soyCournot')
+        self.manager.current = 'CournotMasInfoScreen'
 
     def vacia(self):
         self.ids.a.text = ''
@@ -149,3 +149,7 @@ class CournotVentana(VentanaLayout):
 class GrafiCournot(BoxLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+
+class CournotMasInfoScreen(MoreInfo):
+    pass
