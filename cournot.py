@@ -51,7 +51,7 @@ class CournotVentana(VentanaLayout):
         self.ids.e.text = str(np.random.randint(1, 10))
         self.ids.f.text = str(np.random.randint(1, 10))
 
-    def calculacournot(self):
+    def calcula(self):
         a = self.ids.a.text
         b = self.ids.b.text
         c = self.ids.c.text
