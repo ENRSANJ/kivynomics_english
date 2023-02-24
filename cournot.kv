@@ -176,7 +176,7 @@
             size_hint: (.02, 1)
 
 # clase para el estilo de cuadros de input de Cournot
-<CournotInput@TextInput>:
+<CournotInput>:
     size_hint: (.2, .7)
     pos_hint: {'center_x': 0.25, 'center_y': 0.5}
     font_size: self.height * 0.5
@@ -184,7 +184,6 @@
     write_tab: False
     padding: [0, (self.height-self.line_height)/2]
     halign: 'center'
-    input_filter: lambda text, from_undo: (re.sub('[^0-9\.]', '', text))[:5 - len(self.text)]
 
 <AutoFontLabel@WrappedLabel>:
     font_size: self.height * 0.7

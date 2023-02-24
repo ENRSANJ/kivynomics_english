@@ -1,6 +1,8 @@
 from kivy.lang import Builder
 from kivy.properties import StringProperty
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.textinput import TextInput
+
 from main import VentanaLayout, MoreInfo
 import sympy as sp
 from kivy.garden.matplotlib.backend_kivyagg import FigureCanvasKivyAgg
@@ -50,7 +52,17 @@ class CournotVentana(VentanaLayout):
         self.ids.f.text = str(np.random.randint(1, 10))
 
     def calculacournot(self):
-        try:
+        a = self.ids.a.text
+        b = self.ids.b.text
+        c = self.ids.c.text
+        d = self.ids.d.text
+        e = self.ids.e.text
+        f = self.ids.f.text
+
+        if '.' in [a, b, c, d, e, f]:
+            alerta = MensajeDeError('Introduzca parámetros válidos')
+            alerta.open()
+        else:
             # Almacenamos en variables el input del usuario
             a = float(self.ids.a.text)
             b = float(self.ids.b.text)
@@ -70,13 +82,18 @@ class CournotVentana(VentanaLayout):
             x1_sol = (a - (2*c) + e)/(3*b)
             x2_sol = (a - (2*e) + c)/(3*b)
 
+            if (x1_sol < 0) or (x2_sol < 0):
+                alerta = MensajeDeError('CANTIDAD ÓPTIMA NEGATIVA, modifique los parámetros')
+                alerta.open()
+
             self.prod_1 = 'Producción óptima: ' + str(np.around(x1_sol, 3))
             self.prod_2 = 'Producción óptima: ' + str(np.around(x2_sol, 3))
 
             # Calculamos el beneficio de cada empresa y el precio final
             self.beneficio1 = 'Beneficio: ' + str(np.around(a*x1_sol - b*x1_sol**2 - b*x1_sol*x2_sol - c*x1_sol - d, 3))
             self.beneficio2 = 'Beneficio: ' + str(np.around(a*x2_sol - b*x2_sol**2 - b*x1_sol*x2_sol - e*x2_sol - f, 3))
-            self.precio = 'Precio en el mercado: ' + str(np.around(a - b*(x1_sol + x2_sol), 3))
+            p = np.around(a - b*(x1_sol + x2_sol), 3)
+            self.precio = 'Precio en el mercado: ' + str(p)
             self.empresa1 = 'EMPRESA 1'
             self.empresa2 = 'EMPRESA 2'
 
@@ -141,9 +158,21 @@ class CournotVentana(VentanaLayout):
 
             # plt.savefig('graph.png', bbox_inches='tight')
 
+
+# clase para el estilo de cuadros de input de Cournot (5 caracteres, float positivo)
+class CournotInput(TextInput):
+    def insert_text(self, substring, from_undo=False):
+        if len(self.text) >= 5:
+            return
+        try:
+            if float(substring) < 0:
+                return
         except ValueError:
-            alertanash = MensajeDeError('Introduce solamente valores permitidos (rellene todas las posiciones)')
-            alertanash.open()
+            if substring == "." and "." in self.text:
+                return
+            elif substring != ".":
+                return
+        super().insert_text(substring, from_undo=from_undo)
 
 
 class GrafiCournot(BoxLayout):
