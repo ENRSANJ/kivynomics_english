@@ -30,9 +30,11 @@ class MensajeDeError(Popup):
         super().__init__(**kwargs)
 
         self.title = '¡ERROR!'
+        self.title_size = self.height * .2
         self.mensaje = mensaje
-        self.size_hint = (.3, .3)
-        msg = WrappedLabel(text=mensaje, font_size=self.height * 0.2)
+        self.size_hint = (.35, .35)
+        msg = WrappedLabel(text=mensaje)
+        msg.bind(height=lambda *args: setattr(msg, 'font_size', msg.height * .15))
         self.add_widget(msg)
 
 
