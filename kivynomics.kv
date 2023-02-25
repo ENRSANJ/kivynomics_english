@@ -135,6 +135,8 @@
 
     StackelbergVentana:
 
+    StackelbergMasInfoScreen:
+
     BertrandVentana:
 
     JugarVentana:
@@ -174,18 +176,16 @@
             text: 'Menú Principal'
             on_release: app.root.transition.direction = 'right'; app.root.current = 'MenuPrincipal'
 
-# Layout general para cada ventana
-<VentanaLayout2>:
-    BoxLayout:
-        spacing: '10dp'
-        size_hint: (.15, .1)
-        pos_hint: {'right': 1}
-        padding: '10dp'
-
-        HoverButton3:
-            text: 'Menú Principal'
-            on_release: app.root.transition.direction = 'right'; app.root.current = 'MenuPrincipal'
-
+# Clase básica para las ventanas de más información
+<Scroll@ScrollView>:
+    size_hint: (1, .9)
+    pos_hint: {'top': 1}
+    canvas.before:
+        Color:
+            rgba: (1, 0, 0, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
 
 <MasInfoVentana>:
     canvas.before:
@@ -194,6 +194,7 @@
         Rectangle:
             size: self.size
             pos: self.pos
+
     BoxLayout:
         spacing: '10dp'
         size_hint: (.15, .1)
@@ -234,15 +235,3 @@
         RoundedRectangle:
             pos: self.pos
             size: self.size
-
-
-# REVISARRARRARARARARARARARA
-<MoreInfo>:
-    ScrollView:
-        Label:
-            text: 'This is a long text that will require scrolling to view all  this with your own text.'*100
-            color: (0, 0, 0, 1)
-            size_hint_y: None
-            height: self.texture_size[1] + dp(20)
-            width: self.texture_size[0] + dp(200)
-            text_size: (self.width - dp(20), None)

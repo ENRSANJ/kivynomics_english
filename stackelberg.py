@@ -2,10 +2,11 @@ import numpy as np
 from kivy.garden.matplotlib import FigureCanvasKivyAgg
 from kivy.lang import Builder
 import sympy as sp
+from kivy.uix.scrollview import ScrollView
 from matplotlib import pyplot as plt
 from bimatrix_games import MensajeDeError
 from cournot import CournotVentana
-
+from main import MasInfoVentana
 
 Builder.load_file('stackelberg.kv')
 
@@ -15,7 +16,7 @@ class StackelbergVentana(CournotVentana):
 
     # Sobreescribimos el método obtenermasinfo para abrir una ventana de más info distinta
     def obtenermasinfo(self):
-        print('soyStackelberg')
+        self.manager.current = 'StackelbergMasInfoScreen'
 
     # Sobreescribimos también el método "calcula" pues el equilibrio hallado es diferente
     def calcula(self):
@@ -105,3 +106,12 @@ class StackelbergVentana(CournotVentana):
         canvas = FigureCanvasKivyAgg(figure=fig)
         self.ids.graficournot.clear_widgets()
         self.ids.graficournot.add_widget(canvas)
+
+
+class StackelbergMasInfoScreen(MasInfoVentana):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        scroll = ScrollView()
+
+        self.add_widget(scroll)

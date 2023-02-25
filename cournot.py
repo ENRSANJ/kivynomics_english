@@ -2,7 +2,7 @@ from kivy.lang import Builder
 from kivy.properties import StringProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.textinput import TextInput
-from main import VentanaLayout, MoreInfo
+from main import VentanaLayout, MasInfoVentana
 import sympy as sp
 from kivy.garden.matplotlib.backend_kivyagg import FigureCanvasKivyAgg
 import matplotlib.pyplot as plt
@@ -177,5 +177,5 @@ class GrafiCournot(BoxLayout):
         super().__init__(**kwargs)
 
 
-class CournotMasInfoScreen(MoreInfo):
+class CournotMasInfoScreen(MasInfoVentana):
     pass

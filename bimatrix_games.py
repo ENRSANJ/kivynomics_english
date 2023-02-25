@@ -11,7 +11,7 @@ from kivy.uix.scrollview import ScrollView
 from kivy.uix.textinput import TextInput
 from kivymd.theming import ThemableBehavior
 from kivymd.uix.behaviors import HoverBehavior
-from main import VentanaLayout, WrappedLabel, WrappedLabel2, MoreInfo
+from main import VentanaLayout, WrappedLabel, WrappedLabel2, MasInfoVentana
 
 Builder.load_file('bimatrix_games.kv')
 
@@ -237,5 +237,5 @@ class SeleccionaInput(TextInput):
     pass
 
 
-class BimatrixMasInfoScreen(MoreInfo):
+class BimatrixMasInfoScreen(MasInfoVentana):
     pass

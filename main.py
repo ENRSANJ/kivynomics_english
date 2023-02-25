@@ -29,8 +29,7 @@ class WrappedLabel2(Label):
         super().__init__(**kwargs)
         self.halign = 'center'
         self.bind(
-            width=lambda *x:
-            self.setter('text_size')(self, (self.width, None)))
+            width=lambda *x: self.setter('text_size')(self, (self.width, None)))
 
 
 # Botones de selección de ventana del menú principal
@@ -87,7 +86,7 @@ class CournotButton(RoundedButton, ThemableBehavior, HoverBehavior):
 
 # Root de la aplicación
 class Manager(ScreenManager):
-    # b: size_hint de los botones "ajustes" e "información",,,solo height,,, cambiar????
+    # size_hint de los botones "ajustes" e "información"
     size1 = (1, .27)
 
 
@@ -101,24 +100,8 @@ class VentanaLayout(Screen):
     pass
 
 
-# La clase VentanaLayout contendrá las características generales para las ventanas secundarias
-class VentanaLayout2(Screen):
-    pass
-
-
-# Inicio de las clases de las ventanas que luego iniciaremos en otro lado por guardar un orden
-class InformacionVentana(VentanaLayout2):
-    pass
-
-
-class AjustesVentana(VentanaLayout2):
-    pass
-
-
-# Clase para la ventana de más información del menú principal
+# Clase para las ventanas de más información de cada apartado de la aplicación
 class MasInfoVentana(Screen):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
 
     def volver(self):
         self.manager.transition = FadeTransition()
@@ -126,9 +109,17 @@ class MasInfoVentana(Screen):
         self.manager.transition = SlideTransition()
 
 
-# Clase para las ventanas de más información de cada apartado de la aplicación
-class MoreInfo(Screen):
-    pass
+# Ventanas de información y ajustes del menú principal
+class InformacionVentana(MasInfoVentana):
+    def volver(self):
+        self.manager.current = 'MenuPrincipal'
+        self.manager.transition.direction = 'right'
+
+
+class AjustesVentana(MasInfoVentana):
+    def volver(self):
+        self.manager.current = 'MenuPrincipal'
+        self.manager.transition.direction = 'right'
 
 
 class kivynomicsApp(MDApp):
@@ -139,7 +130,6 @@ class kivynomicsApp(MDApp):
         # REVISAR WINDOW.SIZE,,,,¿no se puede hacer relativo?,,,,en móvil da igual
         Window.size = (1000, 600)
         minwinsize = ('1000dp', '600dp')
-        Window.clearcolor = (0, .4, .6, 1)
         Window.minimum_width, Window.minimum_height = minwinsize
         return Manager()
 

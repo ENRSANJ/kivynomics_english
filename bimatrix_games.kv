@@ -3,6 +3,7 @@
 #: import mainbtcolor main
 #: import secondarybgcolor main
 #: import secondarybtcolor main
+#: import Scroll main
 
 
 <BimatrixVentana>:
@@ -153,3 +154,25 @@
 
 <BimatrixMasInfoScreen>:
     name: 'BimatrixMasInfoScreen'
+    Scroll:
+        GridLayout:
+            cols: 1
+            size_hint_y: None
+            height: self.minimum_height*1.05
+            padding: '10dp'
+
+            Label:
+                text: 'Hello, world!'*1000
+                size_hint_y: None
+                height: self.texture_size[1]
+                text_size: (self.width, None)
+                halign: 'center'
+
+
+            Label:
+                text: '2 strings that are long ' * 10
+                text_size: self.width, None
+                size_hint_y: None
+                height: self.texture_size[1]
+            Button:
+                text: 'just testing'
