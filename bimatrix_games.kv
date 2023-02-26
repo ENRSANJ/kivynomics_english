@@ -158,21 +158,17 @@
         GridLayout:
             cols: 1
             size_hint_y: None
-            height: self.minimum_height*1.05
-            padding: '10dp'
+            height: self.minimum_height
+            spacing: '10dp'
 
-            Label:
-                text: 'Hello, world!'*1000
+            WrappedLabel2:
                 size_hint_y: None
-                height: self.texture_size[1]
-                text_size: (self.width, None)
                 halign: 'center'
+                bold: True
+                font_size: self.height*.4
+                text: 'JUEGOS BIMATRICIALES'
 
-
-            Label:
-                text: '2 strings that are long ' * 10
-                text_size: self.width, None
+            WrappedLabel2:
                 size_hint_y: None
-                height: self.texture_size[1]
-            Button:
-                text: 'just testing'
+                halign: 'center'
+                font_size: self.height*.2

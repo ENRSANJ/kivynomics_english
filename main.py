@@ -1,4 +1,5 @@
 from kivy.animation import Animation
+from kivy.metrics import dp
 from kivy.uix.label import Label
 from kivymd.app import MDApp
 from kivy.core.window import Window
@@ -74,16 +75,6 @@ class HoverButton4(RoundedButton, ThemableBehavior, HoverBehavior):
         Animation(size_hint=(.09, .09), d=0.05).start(self)
 
 
-# Botones de acción de Cournot
-class CournotButton(RoundedButton, ThemableBehavior, HoverBehavior):
-
-    def on_enter(self, *args):
-        Animation(size_hint=(1.1, 1.1), d=0.1).start(self)
-
-    def on_leave(self, *args):
-        Animation(size_hint=(1, 1), d=0.1).start(self)
-
-
 # Root de la aplicación
 class Manager(ScreenManager):
     # size_hint de los botones "ajustes" e "información"
@@ -128,7 +119,7 @@ class kivynomicsApp(MDApp):
 
     def build(self):
         # REVISAR WINDOW.SIZE,,,,¿no se puede hacer relativo?,,,,en móvil da igual
-        Window.size = (1000, 600)
+        Window.size = (dp(1000), dp(600))
         minwinsize = ('1000dp', '600dp')
         Window.minimum_width, Window.minimum_height = minwinsize
         return Manager()
