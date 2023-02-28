@@ -12,6 +12,11 @@ from kivy.uix.textinput import TextInput
 from kivymd.theming import ThemableBehavior
 from kivymd.uix.behaviors import HoverBehavior
 from main import VentanaLayout, WrappedLabel, WrappedLabel2, MasInfoVentana
+from docx import Document
+from docx.shared import Inches
+from docx.enum.table import WD_TABLE_ALIGNMENT
+from docx.enum.table import WD_CELL_VERTICAL_ALIGNMENT
+
 
 Builder.load_file('bimatrix_games.kv')
 
@@ -39,7 +44,7 @@ class MensajeDeError(Popup):
 
 
 # Mensaje de error específico, para errores en input de bimatrix_games
-class MensajeDeError2(MensajeDeError):
+class MensajeDeErrorNash(MensajeDeError):
     def __init__(self, **kwargs):
         a = 'Debe rellenar todas las posiciones de cada matriz de pagos con valores numéricos'
         super().__init__(mensaje=a, **kwargs)
@@ -54,7 +59,7 @@ class PopupNash(DragBehavior, Popup):
 
 # Ventana principal de Juegos Bimatriciales
 class BimatrixVentana(VentanaLayout):
-    altura1 = .75
+    altura1 = .8
     espaciado1 = .105
 
     # Cálculo de los equilibrios de Nash
@@ -89,6 +94,9 @@ class BimatrixVentana(VentanaLayout):
             scroll.add_widget(grid)
             grid.bind(minimum_height=grid.setter('height'))
 
+            # Para el output en Word
+            listatotal2 = []
+
         # Mostramos como output los equilibrios de Nash, con un formato accesible
             for eq in pg.nash.enummixed_solve(juego, rational=False):
                 strats = np.array(eq)
@@ -100,11 +108,23 @@ class BimatrixVentana(VentanaLayout):
 
                 c = WrappedLabel2(text=a, color=(0, 0, 0, 1), font_size=self.height * 0.022, size_hint=(1, None))
                 grid.add_widget(c)
+                listatotal2.append(a)
+
+            # Generamos el output en Word si el usuario lo requiere
+            try:
+                if self.ids.a_word.active:
+                    listatotal = []
+                    for i, j in zip(lista1, lista2):
+                        listatotal.append((i, j))
+                    crear_bimatrix_word(listatotal, rows, cols, listatotal2)
+            except PermissionError:
+                alerta = MensajeDeError("Cierra el archivo de Word con el nombre 'bimatrix_output.docx'")
+                alerta.open()
 
             solpopupnash.open()
 
         except ValueError:
-            alertanash = MensajeDeError2()
+            alertanash = MensajeDeErrorNash()
             alertanash.open()
 
     def sumanula(self):
@@ -120,7 +140,7 @@ class BimatrixVentana(VentanaLayout):
                     nieta.text = str(-a)
 
         except ValueError:
-            alertanash = MensajeDeError2()
+            alertanash = MensajeDeErrorNash()
             alertanash.open()
 
     def simetrico(self):
@@ -135,7 +155,7 @@ class BimatrixVentana(VentanaLayout):
                     for nieta, a in zip(hija.children, sublista):
                         nieta.text = str(a)
             except ValueError:
-                alertanash = MensajeDeError2()
+                alertanash = MensajeDeErrorNash()
                 alertanash.open()
         else:
             matricesnosimetricas = MensajeDeError('Las matrices de pagos deben ser cuadradas para un juego simétrico')
@@ -239,3 +259,49 @@ class SeleccionaInput(TextInput):
 
 class BimatrixMasInfoScreen(MasInfoVentana):
     pass
+
+
+# Método para exportar los resultados a Word
+def crear_bimatrix_word(datos, filas, columnas, equilibrios):
+    # Create a new Word document
+    document = Document()
+
+    # Add some text to the document
+    document.add_paragraph('Título')
+
+    # Create a table with the desired shape
+
+    table = document.add_table(rows=filas, cols=columnas)
+
+    # Fill in the cells of the table with the values from the data list
+    for i in range(filas):
+        row_cells = table.rows[i].cells
+        for j in range(columnas):
+            value = datos[i * cols + j]
+            row_cells[j].text = str(value)
+
+    # Set table properties
+    table.alignment = WD_TABLE_ALIGNMENT.CENTER
+    table.style = 'Table Grid'
+    table.autofit = True
+
+    # Set cell properties
+    for row in table.rows:
+        for cell in row.cells:
+            cell.vertical_alignment = WD_CELL_VERTICAL_ALIGNMENT.CENTER
+            cell.paragraphs[0].alignment = WD_TABLE_ALIGNMENT.CENTER
+
+    for row in table.rows:
+        for cell in row.cells:
+            cell.width = Inches(1)
+
+    # Añadimos los equilibrios de Nash
+    document.add_paragraph('')
+    document.add_paragraph('Equilibrios de Nash: ')
+    for i in equilibrios:
+        document.add_paragraph(i)
+
+    # Save the Word document
+    document.save('bimatrix_output.docx')
+
+    print("Se ha creado el documento de Word 'bimatrix_output.docx' exitosamente")

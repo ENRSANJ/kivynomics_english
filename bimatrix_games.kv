@@ -1,6 +1,5 @@
 #: import HoverButton4 main
 #: import mainbgcolor main
-#: import mainbtcolor main
 #: import secondarybgcolor main
 #: import secondarybtcolor main
 #: import Scroll main
@@ -40,29 +39,42 @@
         pos_hint: {'center_x': .5, 'center_y': (root.altura1-root.espaciado1)}
         on_release: root.calculanash()
 
+    # Interruptor para seleccionar la opción de exportar a Word
+    BoxLayout:
+        size_hint: (.09, .09)
+        orientation: 'horizontal'
+        pos_hint: {'center_x': .515, 'center_y': (root.altura1-1.8*root.espaciado1)}
+        Label:
+            text: 'Exportar '
+            font_size: self.height * 0.3
+        CheckBox:
+            id: a_word
+
     HoverButton4:
         text: 'Suma nula'
         size_hint: (.09, .09)
-        pos_hint: {'center_x': .5, 'center_y': (root.altura1-2*root.espaciado1)}
+        pos_hint: {'center_x': .5, 'center_y': (root.altura1-3*root.espaciado1)}
         on_release: root.sumanula()
 
     HoverButton4:
         text: 'Simétrico'
         size_hint: (.09, .09)
-        pos_hint: {'center_x': .5, 'center_y': (root.altura1-3*root.espaciado1)}
+        pos_hint: {'center_x': .5, 'center_y': (root.altura1-4*root.espaciado1)}
         on_release: root.simetrico()
 
     HoverButton4:
         text: 'Aleatorio'
         size_hint: (.09, .09)
-        pos_hint: {'center_x': .5, 'center_y': (root.altura1-4*root.espaciado1)}
+        pos_hint: {'center_x': .5, 'center_y': (root.altura1-5*root.espaciado1)}
         on_release: root.aleatorio()
 
     HoverButton4:
         text: 'Vaciar'
         size_hint: (.09, .09)
-        pos_hint: {'center_x': .5, 'center_y': (root.altura1-5*root.espaciado1)}
+        pos_hint: {'center_x': .5, 'center_y': (root.altura1-6*root.espaciado1)}
         on_release: root.vaciar()
+
+
 
     SeleccionaRango:
 
