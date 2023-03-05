@@ -86,6 +86,16 @@
                     text: 'Resuelve'
                     on_release: root.calcula()
 
+                # Interruptor para seleccionar la opción de exportar a Word
+                BoxLayout:
+                    orientation: 'vertical'
+                    WrappedLabel:
+                        text: 'Exportar '
+                        font_size: self.height * 0.55
+                    CheckBox:
+                        id: a_word
+
+
                 CournotButton:
                     text: 'Vacía'
                     on_release: root.vacia()
@@ -93,10 +103,6 @@
                 CournotButton:
                     text: 'Aleatorio'
                     on_release: root.aleatorio()
-
-                CournotButton:
-                    text: 'Guardar'
-                    on_release: all.export_to_png("test.png")
 
         # Separador
         BoxLayout:

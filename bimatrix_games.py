@@ -97,7 +97,7 @@ class BimatrixVentana(VentanaLayout):
             # Para el output en Word
             listatotal2 = []
 
-        # Mostramos como output los equilibrios de Nash, con un formato accesible
+            # Mostramos como output los equilibrios de Nash, con un formato accesible
             for eq in pg.nash.enummixed_solve(juego, rational=False):
                 strats = np.array(eq)
                 eq_payoff = np.array2string(np.array([eq.payoff(player) for player in range(2)]), separator=', ')
@@ -110,6 +110,8 @@ class BimatrixVentana(VentanaLayout):
                 grid.add_widget(c)
                 listatotal2.append(a)
 
+            solpopupnash.open()
+
             # Generamos el output en Word si el usuario lo requiere
             try:
                 if self.ids.a_word.active:
@@ -117,11 +119,12 @@ class BimatrixVentana(VentanaLayout):
                     for i, j in zip(lista1, lista2):
                         listatotal.append((i, j))
                     crear_bimatrix_word(listatotal, rows, cols, listatotal2)
+                    alerta = MensajeDeError("Se ha creado el documento de Word 'bimatrix_output.docx' exitosamente")
+                    alerta.title = ''
+                    alerta.open()
             except PermissionError:
                 alerta = MensajeDeError("Cierra el archivo de Word con el nombre 'bimatrix_output.docx'")
                 alerta.open()
-
-            solpopupnash.open()
 
         except ValueError:
             alertanash = MensajeDeErrorNash()
@@ -267,7 +270,7 @@ def crear_bimatrix_word(datos, filas, columnas, equilibrios):
     document = Document()
 
     # Add some text to the document
-    document.add_paragraph('Título')
+    document.add_paragraph('JUEGOS BIMATRICIALES')
 
     # Create a table with the desired shape
 
@@ -303,5 +306,3 @@ def crear_bimatrix_word(datos, filas, columnas, equilibrios):
 
     # Save the Word document
     document.save('bimatrix_output.docx')
-
-    print("Se ha creado el documento de Word 'bimatrix_output.docx' exitosamente")

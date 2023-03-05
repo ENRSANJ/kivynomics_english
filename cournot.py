@@ -8,6 +8,9 @@ from kivy.garden.matplotlib.backend_kivyagg import FigureCanvasKivyAgg
 import matplotlib.pyplot as plt
 import numpy as np
 from bimatrix_games import MensajeDeError
+from docx import Document
+from docx.shared import Inches
+
 
 Builder.load_file('cournot.kv')
 
@@ -153,7 +156,24 @@ class CournotVentana(VentanaLayout):
         self.ids.graficournot.clear_widgets()
         self.ids.graficournot.add_widget(canvas)
 
-        # plt.savefig('graph.png', bbox_inches='tight')
+        # Generamos el output en Word si el usuario lo requiere
+        try:
+            if self.ids.a_word.active:
+                fdemanda = f'p(X) = {a} - {b}X ,    X = x\u2081 + x\u2082'
+                ct1 = f'CT(x\u2081) = {c}x\u2081'
+                ct2 = f'CT(x\u2082) = {e}x\u2082'
+                freacc1 = f'x\u2081(x\u2082) = ({a} - {c})/2*{b} - (x\u2082/2)'
+                freacc2 = f'x\u2082(x\u2081) = ({a} - {e})/2*{b} - (x\u2081/2)'
+
+                fig.savefig('cournot_graph.png')
+                crear_bimatrix_word(fdemanda, ct1, ct2, freacc1, freacc2, self.precio, self.prod_1, self.beneficio1,
+                                    self.prod_2, self.beneficio2)
+                alerta = MensajeDeError("Se ha creado el documento de Word 'bimatrix_output.docx' exitosamente")
+                alerta.title = ''
+                alerta.open()
+        except PermissionError:
+            alerta = MensajeDeError("Cierra los archivos con nombre 'bimatrix_output.docx' o 'cournot_graph.png'")
+            alerta.open()
 
 
 # clase para el estilo de cuadros de input de Cournot (5 caracteres, float positivo)
@@ -175,6 +195,37 @@ class CournotInput(TextInput):
 class GrafiCournot(BoxLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+
+# Método para exportar los resultados a Word
+def crear_bimatrix_word(fdemanda, ct1, ct2, freacc1, freacc2, precio, prod1, beneficio1, prod2, beneficio2):
+    # Create a new Word document
+    document = Document()
+
+    # Añadimos nuestros datos al documento
+    document.add_paragraph('MODELO DE COURNOT')
+    document.add_paragraph('Función de demanda del mercado: ' + fdemanda)
+    document.add_paragraph('Costes totales de la empresa 1: ' + ct1)
+    document.add_paragraph('Costes totales de la empresa 2: ' + ct2)
+    document.add_paragraph()
+    document.add_paragraph('Funciones de reacción: ')
+    document.add_paragraph('Empresa 1: ' + freacc1)
+    document.add_paragraph('Empresa 2: ' + freacc2)
+    document.add_paragraph()
+    document.add_picture('cournot_graph.png', width=Inches(6))
+    document.add_paragraph('Resultados: ')
+    document.add_paragraph(precio)
+    document.add_paragraph()
+    document.add_paragraph('EMPRESA 1: ')
+    document.add_paragraph(prod1)
+    document.add_paragraph(beneficio1)
+    document.add_paragraph()
+    document.add_paragraph('EMPRESA 2: ')
+    document.add_paragraph(prod2)
+    document.add_paragraph(beneficio2)
+
+    # Save the Word document
+    document.save('cournot_output.docx')
 
 
 class CournotMasInfoScreen(MasInfoVentana):
