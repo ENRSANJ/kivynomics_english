@@ -29,6 +29,12 @@ class StackelbergVentana(CournotVentana):
         c = float(self.ids.c.text)
         e = float(self.ids.e.text)
 
+        # Comprobamos si los parámetros son compatibles con una solución razonable del modelo
+        if a < (2*c-e) or a < (3*e-2*c):
+            alerta = MensajeDeError('Introduzca parámetro válidos')
+            alerta.open()
+            return
+
         # Definimos las variables del problema (cantidad producida por la empresa líder, la 1)
         x = sp.symbols('x')
 
@@ -40,10 +46,6 @@ class StackelbergVentana(CournotVentana):
         x2_sol = (a - 3*e + 2*c)/(4*b)
         self.prod_1 = 'Producción óptima: ' + str(np.around(x1_sol, 3))
         self.prod_2 = 'Producción óptima: ' + str(np.around(x2_sol, 3))
-
-        if (x1_sol < 0) or (x2_sol < 0):
-            alerta = MensajeDeError('CANTIDAD ÓPTIMA NEGATIVA, modifique los parámetros')
-            alerta.open()
 
         # Calculamos el beneficio de cada empresa y el precio final
         p = a - b * (x1_sol + x2_sol)

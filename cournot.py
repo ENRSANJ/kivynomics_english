@@ -56,9 +56,10 @@ class CournotVentana(VentanaLayout):
         e = self.ids.e.text
         lista = [a, b, c, e]
 
-        if '.' in lista or '' in lista or (b == '0'):
+        if '.' in lista or '' in lista or '0' in lista:
             alerta = MensajeDeError('Introduzca parámetros válidos')
             alerta.open()
+
         else:
             return True
 
@@ -71,6 +72,12 @@ class CournotVentana(VentanaLayout):
         b = float(self.ids.b.text)
         c = float(self.ids.c.text)
         e = float(self.ids.e.text)
+
+        # Comprobamos si los parámetros son compatibles con una solución razonable del modelo
+        if a < (2*c-e) or a < (2*e-c):
+            alerta = MensajeDeError('Introduzca parámetro válidos')
+            alerta.open()
+            return
 
         # Definimos las variables del problema (cantidad producida por la empresa 1)
         x = sp.symbols('x')
@@ -85,14 +92,10 @@ class CournotVentana(VentanaLayout):
         self.prod_1 = 'Producción óptima: ' + str(np.around(x1_sol, 3))
         self.prod_2 = 'Producción óptima: ' + str(np.around(x2_sol, 3))
 
-        if (x1_sol < 0) or (x2_sol < 0):
-            alerta = MensajeDeError('CANTIDAD ÓPTIMA NEGATIVA, modifique los parámetros')
-            alerta.open()
-
         # Calculamos el beneficio de cada empresa y el precio final
         p = a - b*(x1_sol + x2_sol)
         self.beneficio1 = 'Beneficio: ' + str(np.around((p-c)*x1_sol, 3))
-        self.beneficio2 = 'Beneficio: ' + str(np.around((p-e)*x1_sol, 3))
+        self.beneficio2 = 'Beneficio: ' + str(np.around((p-e)*x2_sol, 3))
         self.precio = 'Precio en el mercado: ' + str(np.around(p, 3))
         self.empresa1 = 'EMPRESA 1'
         self.empresa2 = 'EMPRESA 2'
@@ -166,8 +169,8 @@ class CournotVentana(VentanaLayout):
                 freacc2 = f'x\u2082(x\u2081) = ({a} - {e})/2*{b} - (x\u2081/2)'
 
                 fig.savefig('cournot_graph.png')
-                crear_bimatrix_word(fdemanda, ct1, ct2, freacc1, freacc2, self.precio, self.prod_1, self.beneficio1,
-                                    self.prod_2, self.beneficio2)
+                crear_cournot_word(fdemanda, ct1, ct2, freacc1, freacc2, self.precio, self.prod_1, self.beneficio1,
+                                   self.prod_2, self.beneficio2)
                 alerta = MensajeDeError("Se ha creado el documento de Word 'bimatrix_output.docx' exitosamente")
                 alerta.title = ''
                 alerta.open()
@@ -198,7 +201,7 @@ class GrafiCournot(BoxLayout):
 
 
 # Método para exportar los resultados a Word
-def crear_bimatrix_word(fdemanda, ct1, ct2, freacc1, freacc2, precio, prod1, beneficio1, prod2, beneficio2):
+def crear_cournot_word(fdemanda, ct1, ct2, freacc1, freacc2, precio, prod1, beneficio1, prod2, beneficio2):
     # Create a new Word document
     document = Document()
 
