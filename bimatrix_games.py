@@ -102,7 +102,7 @@ class BimatrixVentana(VentanaLayout):
                 strats = np.array(eq)
                 eq_payoff = np.array2string(np.array([eq.payoff(player) for player in range(2)]), separator=', ')
 
-                a = str('V*[' + np.array2string(strats[:rows], separator=', ').replace('[', '(').replace(']', ')') +
+                a = str('EE: [' + np.array2string(strats[:rows], separator=', ').replace('[', '(').replace(']', ')') +
                         ', ' + np.array2string(strats[cols:], separator=', ').replace('[', '(').replace(']', ')') +
                         ']  EP: ' + str(eq_payoff))
 
