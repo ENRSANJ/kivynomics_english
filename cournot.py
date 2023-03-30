@@ -25,6 +25,8 @@ class CournotVentana(VentanaLayout):
     precio = StringProperty('')
     empresa1 = StringProperty('')
     empresa2 = StringProperty('')
+    freacc1 = StringProperty('')
+    freacc2 = StringProperty('')
 
     def obtenermasinfo(self):
         self.manager.current = 'CournotMasInfoScreen'
@@ -42,6 +44,8 @@ class CournotVentana(VentanaLayout):
         self.precio = ''
         self.empresa1 = ''
         self.empresa2 = ''
+        self.ids.fr1.text = ''
+        self.ids.fr2.text = ''
 
     def aleatorio(self):
         self.ids.a.text = str(np.random.randint(20, 150))
@@ -85,6 +89,10 @@ class CournotVentana(VentanaLayout):
         # Obtenemos las funciones de reacción de cada empresa, en función de x1 para poder graficarlo
         f1 = ((a - c)/b) - (2*x)
         f2 = ((a - e)/(2*b)) - (x/2)
+
+        # Obtenemos las funciones de reacción como strings a mostrar
+        self.freacc1 = f'{a - c}/{2*b}'
+        self.freacc2 = f'{a - e}/{2*b}'
 
         # Obtenemos la producción óptima de cada empresa y pasamos el valor a la StringProperty a mostrar
         x1_sol = (a - (2*c) + e)/(3*b)
@@ -165,12 +173,10 @@ class CournotVentana(VentanaLayout):
                 fdemanda = f'p(X) = {a} - {b}X ,    X = x\u2081 + x\u2082'
                 ct1 = f'CT(x\u2081) = {c}x\u2081'
                 ct2 = f'CT(x\u2082) = {e}x\u2082'
-                freacc1 = f'x\u2081(x\u2082) = ({a} - {c})/2*{b} - (x\u2082/2)'
-                freacc2 = f'x\u2082(x\u2081) = ({a} - {e})/2*{b} - (x\u2081/2)'
 
                 fig.savefig('cournot_graph.png')
-                crear_cournot_word(fdemanda, ct1, ct2, freacc1, freacc2, self.precio, self.prod_1, self.beneficio1,
-                                   self.prod_2, self.beneficio2)
+                crear_cournot_word(fdemanda, ct1, ct2, self.freacc1, self.freacc2, self.precio, self.prod_1,
+                                   self.beneficio1, self.prod_2, self.beneficio2)
                 alerta = MensajeDeError("Se ha creado el documento de Word 'bimatrix_output.docx' exitosamente")
                 alerta.title = ''
                 alerta.open()

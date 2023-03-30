@@ -60,6 +60,7 @@
                     HoverButton:
                         text: 'Modelo de Cournot'
                         on_press: root.transition.direction= 'left'; root.current = 'CournotScreen'
+                        on_release: root.clicked1()
                         on_enter: app.cambiar2()
                         on_leave: app.descambiar()
                     HoverButton:
@@ -130,7 +131,7 @@
     BimatrixMasInfoScreen:
 
     CournotVentana:
-
+        id: cournotid
     CournotMasInfoScreen:
 
     StackelbergVentana:

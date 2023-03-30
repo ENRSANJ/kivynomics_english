@@ -3,7 +3,6 @@
 
 <CournotVentana>:
     name: 'CournotScreen'
-
     # BoxLayout que contiene ttodo el contenido de la pantalla
     BoxLayout:
         id: all
@@ -152,6 +151,10 @@
                             markup: True
                             underline: True
                         AutoFontLabel:
+                            id: fr1
+                            text: 'x[sub]1[/sub](x[sub]2[/sub]) = ' + root.freacc1 + ' - x[sub]2[/sub]/2'
+                            markup: True
+                        AutoFontLabel:
                             text: root.prod_1
                         AutoFontLabel:
                             text: root.beneficio1
@@ -164,13 +167,14 @@
                             markup: True
                             underline: True
                         AutoFontLabel:
+                            id: fr2
+                            text: 'x[sub]2[/sub](x[sub]1[/sub]) = ' + root.freacc2 + ' - x[sub]1[/sub]/2'
+                            markup: True
+                        AutoFontLabel:
                             text: root.prod_2
                         AutoFontLabel:
                             text: root.beneficio2
 
-                # Hueco para los botones de navegación
-                BoxLayout:
-                    size_hint: (1, .5)
         # Separador
         BoxLayout:
             size_hint: (.02, 1)

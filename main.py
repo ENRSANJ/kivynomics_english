@@ -79,6 +79,16 @@ class HoverButton4(RoundedButton, ThemableBehavior, HoverBehavior):
 class Manager(ScreenManager):
     # size_hint de los botones "ajustes" e "información"
     size1 = (1, .27)
+    clicked1bool = True
+
+    # Método para vaciar el output de Cournot si es la primera vez que entramos
+    def clicked1(self):
+        if self.clicked1bool:
+            self.ids.cournotid.ids.fr1.text = ''
+            self.ids.cournotid.ids.fr2.text = ''
+            self.clicked1bool = False
+        else:
+            pass
 
 
 # Ventana principal de la aplicación
