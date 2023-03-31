@@ -59,13 +59,14 @@
                         on_leave: app.descambiar()
                     HoverButton:
                         text: 'Modelo de Cournot'
-                        on_press: root.transition.direction= 'left'; root.current = 'CournotScreen'
-                        on_release: root.clicked1()
+                        on_press: root.clicked1()
+                        on_release: root.transition.direction= 'left'; root.current = 'CournotScreen';
                         on_enter: app.cambiar2()
                         on_leave: app.descambiar()
                     HoverButton:
                         text: 'Modelo de Stackelberg'
-                        on_press: root.transition.direction= 'left'; root.current = 'StackelbergScreen'
+                        on_press: root.clicked2(); root.ids.stackelbergid.ids.fr1.text = ''
+                        on_release: root.transition.direction= 'left'; root.current = 'StackelbergScreen'
                         on_enter: app.cambiar3()
                         on_leave: app.descambiar()
                     HoverButton:
@@ -135,7 +136,7 @@
     CournotMasInfoScreen:
 
     StackelbergVentana:
-
+        id: stackelbergid
     StackelbergMasInfoScreen:
 
     BertrandVentana:

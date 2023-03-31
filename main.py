@@ -80,6 +80,7 @@ class Manager(ScreenManager):
     # size_hint de los botones "ajustes" e "información"
     size1 = (1, .27)
     clicked1bool = True
+    clicked2bool = True
 
     # Método para vaciar el output de Cournot si es la primera vez que entramos
     def clicked1(self):
@@ -90,6 +91,13 @@ class Manager(ScreenManager):
         else:
             pass
 
+    # Método para vaciar el output de Stackelberg si es la primera vez que entramos
+    def clicked2(self):
+        if self.clicked2bool:
+            self.ids.stackelbergid.ids.fr2.text = ''
+            self.clicked2bool = False
+        else:
+            pass
 
 # Ventana principal de la aplicación
 class MenuPrincipal(Screen):

@@ -177,11 +177,11 @@ class CournotVentana(VentanaLayout):
                 fig.savefig('cournot_graph.png')
                 crear_cournot_word(fdemanda, ct1, ct2, self.freacc1, self.freacc2, self.precio, self.prod_1,
                                    self.beneficio1, self.prod_2, self.beneficio2)
-                alerta = MensajeDeError("Se ha creado el documento de Word 'bimatrix_output.docx' exitosamente")
+                alerta = MensajeDeError("Se ha creado el documento de Word 'cournot_output.docx' exitosamente")
                 alerta.title = ''
                 alerta.open()
         except PermissionError:
-            alerta = MensajeDeError("Cierra los archivos con nombre 'bimatrix_output.docx' o 'cournot_graph.png'")
+            alerta = MensajeDeError("Cierra los archivos con nombre 'cournot_output.docx' o 'cournot_graph.png'")
             alerta.open()
 
 
@@ -218,8 +218,8 @@ def crear_cournot_word(fdemanda, ct1, ct2, freacc1, freacc2, precio, prod1, bene
     document.add_paragraph('Costes totales de la empresa 2: ' + ct2)
     document.add_paragraph()
     document.add_paragraph('Funciones de reacción: ')
-    document.add_paragraph('Empresa 1: ' + freacc1)
-    document.add_paragraph('Empresa 2: ' + freacc2)
+    document.add_paragraph(f'Empresa 1: x\u2081(x\u2082) = {freacc1} - x\u2082/2 ')
+    document.add_paragraph(f'Empresa 2: x\u2082(x\u2081) = {freacc2} - x\u2081/2 ')
     document.add_paragraph()
     document.add_picture('cournot_graph.png', width=Inches(6))
     document.add_paragraph('Resultados: ')
