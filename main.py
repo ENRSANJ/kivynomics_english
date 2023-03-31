@@ -99,6 +99,7 @@ class Manager(ScreenManager):
         else:
             pass
 
+
 # Ventana principal de la aplicación
 class MenuPrincipal(Screen):
     pass
@@ -149,7 +150,8 @@ class kivynomicsApp(MDApp):
 
     def cambiar1(self):
         self.root.ids.imagencita.source = 'images/bimatricillo.jpg'
-        self.root.ids.etiqueta.text = 'Halla todos los equilibrios de Nash de un juego dadas las matrices de pagos de los 2 jugadores.'
+        self.root.ids.etiqueta.text = '''Halla todos los equilibrios de Nash de un juego dadas \
+las matrices de pagos de los 2 jugadores.'''
 
     def cambiar2(self):
         self.root.ids.imagencita.source = 'images/cournotillo.jpg'

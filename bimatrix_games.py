@@ -261,7 +261,19 @@ class SeleccionaInput(TextInput):
 
 
 class BimatrixMasInfoScreen(MasInfoVentana):
-    pass
+    # Texto a mostrar. Escrito aquí porque Kivy lang no lee los triple-quoted strings de la misma forma
+    a = '''El output consiste en:
+
+EE: Equilibrio Extremo (probabilidades asignadas por cada jugador a sus estrategias en el equilibrio de Nash
+
+EP: (Expected Payoff) Pago esperado para cada jugador en el equilibrio'''
+
+    b = '''En este ejemplo tenemos como resultado 2 equilibrios:
+
+1º: Es un equilibrio en estrategias puras donde los jugadores juegan su segunda y primera estrategia respectivamente, \
+obteniendo unos pagos de 6 y 7.
+
+2º: Es un equilibrio en estrategias mixtas, donde cada jugador juega sus jugadas 1 y 2 con diferentes probabilidades.'''
 
 
 # Método para exportar los resultados a Word

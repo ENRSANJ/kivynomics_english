@@ -91,8 +91,8 @@ class CournotVentana(VentanaLayout):
         f2 = ((a - e)/(2*b)) - (x/2)
 
         # Obtenemos las funciones de reacción como strings a mostrar
-        self.freacc1 = f'{a - c}/{2*b}'
-        self.freacc2 = f'{a - e}/{2*b}'
+        self.freacc1 = f'{np.around(a - c, 3)}/{np.around(2*b, 3)}'
+        self.freacc2 = f'{np.around(a - e, 3)}/{np.around(2*b, 3)}'
 
         # Obtenemos la producción óptima de cada empresa y pasamos el valor a la StringProperty a mostrar
         x1_sol = (a - (2*c) + e)/(3*b)

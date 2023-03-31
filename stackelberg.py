@@ -44,7 +44,7 @@ class StackelbergVentana(CournotVentana):
         f2 = ((a - e) / (2 * b)) - (x / 2)
 
         # Obtenemos la función de reacción como strings a mostrar
-        self.freacc2 = f'{a - e}/{2 * b}'
+        self.freacc2 = f'{np.around(a - e, 3)}/{np.around(2*b, 3)}'
 
         # Obtenemos la producción óptima de cada empresa y pasamos el valor a la StringProperty a mostrar
         x1_sol = (a + e - 2 * c) / (2 * b)

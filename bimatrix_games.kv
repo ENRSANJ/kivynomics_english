@@ -3,6 +3,7 @@
 #: import secondarybgcolor main
 #: import secondarybtcolor main
 #: import Scroll main
+#:import Window kivy.core.window.Window
 
 
 <BimatrixVentana>:
@@ -168,19 +169,48 @@
     name: 'BimatrixMasInfoScreen'
     Scroll:
         GridLayout:
-            cols: 1
+            cols: 2
             size_hint_y: None
-            height: self.minimum_height
+            height: self.minimum_height + 100
             spacing: '10dp'
+
+            WrappedLabel2:
+                size_hint_x: 1.6
+                size_hint_y: None
+                halign: 'center'
+                bold: True
+                font_size: self.height*.4
+                text: 'JUEGOS BIMATRICIALES: '
 
             WrappedLabel2:
                 size_hint_y: None
                 halign: 'center'
                 bold: True
-                font_size: self.height*.4
-                text: 'JUEGOS BIMATRICIALES'
+                font_size: self.height*.3
+                text: 'MÁS INFORMACIÓN'
+
+            Image:
+                size_hint_y: None
+                size: (1, '400dp')
+                source: 'images/Bimatrix_tutorial.jpg'
 
             WrappedLabel2:
                 size_hint_y: None
-                halign: 'center'
-                font_size: self.height*.2
+                size: (1, '400dp')
+                halign: 'left'
+                text: root.a
+                bold: True
+                font_size: kivy.core.window.Window.height * 0.03
+
+            Image:
+                size_hint_y: None
+                size: (1, '150dp')
+                source: 'images/bimatrix_output_tutorial.jpg'
+
+            WrappedLabel2:
+                size_hint_y: None
+                size: (1, '150dp')
+                halign: 'left'
+                text: root.b
+                bold: True
+                font_size: kivy.core.window.Window.height * 0.03
