@@ -4,7 +4,6 @@ from docx.shared import Inches
 from kivy.garden.matplotlib import FigureCanvasKivyAgg
 from kivy.lang import Builder
 import sympy as sp
-from kivy.uix.scrollview import ScrollView
 from matplotlib import pyplot as plt
 from bimatrix_games import MensajeDeError
 from cournot import CournotVentana
@@ -164,9 +163,12 @@ def crear_stackelberg_word(fdemanda, ct1, ct2, freacc2, precio, prod1, beneficio
 
 
 class StackelbergMasInfoScreen(MasInfoVentana):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    a = '''El duopolio de Stackelberg, al igual que el modelo de Cournot, es también un modelo económico en el que dos\
+ empresas compiten decidiendo sobre su producción.
 
-        scroll = ScrollView()
-
-        self.add_widget(scroll)
+Las empresas determinan la cantidad producida de forma secuencial; una empresa (líder) determina su producción en el\
+ primer periodo. Esta decisión es irreversible: no puede cambiarse en el segundo periodo. Teniendo en cuenta la\
+  producción de la líder, la otra empresa (seguidora) determina su producción óptima en el segundo periodo.
+  
+El modelo es, por tanto, un juego dinámico con información perfecta: un jugador toma una decisión tras conocer\
+ la decisión que ha tomado el otro jugador'''

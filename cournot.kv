@@ -206,3 +206,37 @@
 
 <CournotMasInfoScreen>:
     name: 'CournotMasInfoScreen'
+    Scroll:
+        GridLayout:
+            cols: 2
+            size_hint_y: None
+            height: self.minimum_height + 100
+            spacing: '10dp'
+
+            WrappedLabel2:
+                size_hint_x: 1.6
+                size_hint_y: None
+                halign: 'center'
+                bold: True
+                font_size: self.height*.4
+                text: 'MODELO DE COURNOT'
+
+            WrappedLabel2:
+                size_hint_y: None
+                halign: 'center'
+                bold: True
+                font_size: self.height*.3
+                text: ''
+
+            Image:
+                size_hint_y: None
+                size: (1, '400dp')
+                source: 'images/cournot_tutorial.jpg'
+
+            WrappedLabel2:
+                size_hint_y: None
+                size: (1, '400dp')
+                halign: 'left'
+                text: root.a
+                bold: True
+                font_size: kivy.core.window.Window.height * 0.03

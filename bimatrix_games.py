@@ -264,7 +264,7 @@ class BimatrixMasInfoScreen(MasInfoVentana):
     # Texto a mostrar. Escrito aquí porque Kivy lang no lee los triple-quoted strings de la misma forma
     a = '''El output consiste en:
 
-EE: Equilibrio Extremo (probabilidades asignadas por cada jugador a sus estrategias en el equilibrio de Nash
+EE: Equilibrio Extremo probabilidades asignadas por cada jugador a sus estrategias en el equilibrio de Nash
 
 EP: (Expected Payoff) Pago esperado para cada jugador en el equilibrio'''
 

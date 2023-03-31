@@ -238,4 +238,11 @@ def crear_cournot_word(fdemanda, ct1, ct2, freacc1, freacc2, precio, prod1, bene
 
 
 class CournotMasInfoScreen(MasInfoVentana):
-    pass
+    a = '''El duopolio de Cournot es un modelo económico en el que dos empresas compiten\
+ determinando simultáneamente la cantidad que van a producir.
+
+Las empresas determinan simultánea e independientemente\
+ la cantidad producida, considerando que la producción de las demás es independiente de las decisiones propias.
+ 
+La solución del modelo es el equilibrio de Nash, donde cada empresa produce la cantidad que maximiza su beneficio\
+ dada la producción de la rival (correspondencia de respuesta óptima).'''
