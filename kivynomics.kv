@@ -150,6 +150,53 @@
 
 
 <InformacionVentana>:
+    Scroll:
+        GridLayout:
+            cols: 2
+            size_hint_y: None
+            height: self.minimum_height + 100
+            spacing: '10dp'
+            padding: (0, '20dp', 0, 0)
+
+            WrappedLabel:
+                size_hint_x: 1.6
+                size_hint_y: None
+                halign: 'center'
+                bold: True
+                font_size: kivy.core.window.Window.height * 0.03
+                text: root.a
+
+            HoverButton7:
+                background_color: (1, 0, 0, 1)
+                size_hint_y: None
+
+                size: (1, '100dp')
+                text: 'Github source code'
+                bold: True
+                font_size: kivy.core.window.Window.height * 0.03
+                on_release:
+                    import webbrowser
+                    webbrowser.open('https://github.com/ENRSANJ/Kivynomics.git')
+
+            WrappedLabel:
+                size_hint_x: 1.6
+                size_hint_y: None
+                halign: 'center'
+                bold: True
+                font_size: kivy.core.window.Window.height * 0.03
+                text: root.b
+
+            HoverButton7:
+                background_color: (1, 0, 0, 1)
+                size_hint_y: None
+                size: (1, '100dp')
+                text: 'TFG pdf'
+                bold: True
+                font_size: kivy.core.window.Window.height * 0.03
+                on_release:
+                    import webbrowser
+                    webbrowser.open('https://drive.google.com/drive/folders/1QooAmQHTVd8keyGHeqa_X5vMOSCjETG1?usp=sharing')
+
 
 
 <AjustesVentana>:

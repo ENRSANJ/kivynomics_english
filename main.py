@@ -75,6 +75,16 @@ class HoverButton4(RoundedButton, ThemableBehavior, HoverBehavior):
         Animation(size_hint=(.09, .09), d=0.05).start(self)
 
 
+# Botones transparentes con hipervínculos
+class HoverButton7(RoundedButton, ThemableBehavior, HoverBehavior):
+
+    def on_enter(self, *args):
+        Window.set_system_cursor('hand')
+
+    def on_leave(self, *args):
+        Window.set_system_cursor('arrow')
+
+
 # Root de la aplicación
 class Manager(ScreenManager):
     # size_hint de los botones "ajustes" e "información"
@@ -121,6 +131,17 @@ class MasInfoVentana(Screen):
 
 # Ventanas de información y ajustes del menú principal
 class InformacionVentana(MasInfoVentana):
+
+    a = '''Esta aplicación es el resultado de un trabajo de fin de grado en economía centrado\
+ en la teoría de juegos. La aplicación implementa los modelos de teoría de juegos fundamentales\
+ en sus versiones más básicas, con el fin de ofrecer una aproximación accesible y comprensible\
+ a la materia. Para más información sobre los modelos y su implementación concreta, puedes\
+ acceder al texto completo del TFG haciendo click sobre el botón correspondiente.'''
+
+    b = '''También puedes acceder al código fuente completo en Github. Para cualquier\
+ pregunta, sugerencia o aporte puedes contactarme a través de Github'''
+
+
     def volver(self):
         self.manager.current = 'MenuPrincipal'
         self.manager.transition.direction = 'right'
