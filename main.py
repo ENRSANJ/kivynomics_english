@@ -183,7 +183,7 @@ las matrices de pagos de los 2 jugadores.'''
         self.root.ids.etiqueta.text = 'Modelo de Stackelberg'
 
     def cambiar4(self):
-        self.root.ids.imagencita.source = 'images/bertranillo.png'
+        self.root.ids.imagencita.source = 'images/bertranillo.jpg'
         self.root.ids.etiqueta.text = 'Modelo de Bertrand'
 
     def cambiar5(self):

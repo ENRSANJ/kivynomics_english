@@ -71,7 +71,8 @@
                         on_leave: app.descambiar()
                     HoverButton:
                         text: 'Modelo de Bertrand'
-                        on_press: root.transition.direction= 'left'; root.current = 'BertrandScreen'
+                        on_press: root.ids.bertrandid.ids.fr1.text = ''; root.ids.bertrandid.ids.fr2.text = ''
+                        on_release: root.transition.direction= 'left'; root.current = 'BertrandScreen'
                         on_enter: app.cambiar4()
                         on_leave: app.descambiar()
                     HoverButton:
@@ -140,6 +141,8 @@
     StackelbergMasInfoScreen:
 
     BertrandVentana:
+        id: bertrandid
+    BertrandMasInfoScreen:
 
     JugarVentana:
 
