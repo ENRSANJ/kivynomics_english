@@ -139,7 +139,7 @@ class InformacionVentana(MasInfoVentana):
  acceder al texto completo del TFG haciendo click sobre el botón correspondiente.'''
 
     b = '''También puedes acceder al código fuente completo en Github. Para cualquier\
- pregunta, sugerencia o aporte puedes contactarme a través de Github'''
+ problema, pregunta, sugerencia o aporte puedes contactarme a través de Github'''
 
 
     def volver(self):

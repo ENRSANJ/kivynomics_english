@@ -3,3 +3,118 @@
 
 <JugarVentana>:
     name: 'JugarScreen'
+
+    # BoxLayout con ttodo el contenido de la pantalla
+    BoxLayout:
+        padding: '5dp'
+        spacing: '5dp'
+
+        # Parte izquierda de la pantalla
+        BoxLayout:
+            orientation: 'vertical'
+
+            # Datos cuantitativos
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint: (.55, .25)
+
+                canvas.before:
+                    Color:
+                        rgba: (1, 0, 0, 1)
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+
+                # Función de demanda del mercado
+                Label:
+                    text: 'Demanda del mercado: '
+
+                # Costes totales de la empresa del jugador
+                Label:
+                    text: 'Costes totales: '
+
+            # Narrativa del juego
+            BoxLayout:
+                size_hint: (1, 1)
+                canvas.before:
+                    Color:
+                        rgba: (1, 1, 0, 1)
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+                Label:
+                    text: 'laosf eofj aowsefjsajfj salkfjwo jefojsa jfsoldaj fsoaj fojweoj gfiosajo j'
+
+            # Tu decisión
+            BoxLayout:
+                size_hint: (1, .25)
+                canvas.before:
+                    Color:
+                        rgba: (0, 0, 1, 1)
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+
+                Label:
+                    text: 'Tu decisión: '
+
+                TextInput:
+
+                Label:
+                    text: 'uds/€'
+
+                Button:
+                    text: 'Confirmar'
+
+        # Parte derecha de la pantalla
+        BoxLayout:
+            padding: '5dp'
+            spacing: '5dp'
+            size_hint: (.43, .9)
+            pos_hint: {'top': 1}
+            orientation: 'vertical'
+            canvas.before:
+                Color:
+                    rgba: (0, 0, 0, 1)
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+
+            # NPC
+            BoxLayout:
+                padding: '5dp'
+                orientation: 'vertical'
+                canvas.before:
+                    Color:
+                        rgba: (1, 0, 0, 1)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                size_hint: (.8, .7)
+                pos_hint: {'center_x': .5}
+
+                Image:
+                    source: 'images/johnnash.jpg'
+
+                Label:
+                    size_hint: (1, .4)
+                    text: 'Te vas a enterar, ¡pedazo de monopolista!'
+
+            # Historial
+            BoxLayout:
+                orientation: 'vertical'
+
+                Label:
+                    text: 'HISTORIAL'
+                Label:
+                    text: 'Stage 1'
+                Label:
+                    text: 'Stage 2'
+                Label:
+                    text: 'Stage 3'
+
+
+
+
+
+
