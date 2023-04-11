@@ -1,4 +1,4 @@
-
+#: import CournotInput cournot
 
 
 <JugarVentana>:
@@ -12,7 +12,7 @@
         # Parte izquierda de la pantalla
         BoxLayout:
             orientation: 'vertical'
-
+            padding: '10dp'
             # Datos cuantitativos
             BoxLayout:
                 orientation: 'vertical'
@@ -20,63 +20,75 @@
 
                 canvas.before:
                     Color:
-                        rgba: (1, 0, 0, 1)
-                    Rectangle:
+                        rgba: mainbtcolor
+                    RoundedRectangle:
                         size: self.size
                         pos: self.pos
 
                 # Función de demanda del mercado
-                Label:
-                    text: 'Demanda del mercado: '
+                WrappedLabel:
+                    text: 'Demanda del mercado: p(x) = ' + root.demanda_mercado
+                    font_size: self.height * .35
 
                 # Costes totales de la empresa del jugador
-                Label:
-                    text: 'Costes totales: '
+                WrappedLabel:
+                    text: 'Costes totales: ' + root.costes_totales
+                    font_size: self.height * .35
 
             # Narrativa del juego
             BoxLayout:
-                size_hint: (1, 1)
-                canvas.before:
-                    Color:
-                        rgba: (1, 1, 0, 1)
-                    Rectangle:
-                        size: self.size
-                        pos: self.pos
+
                 Label:
-                    text: 'laosf eofj aowsefjsajfj salkfjwo jefojsa jfsoldaj fsoaj fojweoj gfiosajo j'
+                    text: root.narrativa
 
             # Tu decisión
             BoxLayout:
-                size_hint: (1, .25)
+                padding: '10dp'
+                size_hint: (.8, .15)
                 canvas.before:
                     Color:
-                        rgba: (0, 0, 1, 1)
-                    Rectangle:
+                        rgba: mainbtcolor
+                    RoundedRectangle:
                         size: self.size
                         pos: self.pos
 
                 Label:
                     text: 'Tu decisión: '
+                    font_size: self.height * .4
 
-                TextInput:
+                CournotInput:
+                    id: respuesta
+                    font_size: self.height * .4
+                    size_hint: (.5, 1)
+                    pos_hint: {'center_x': .5, 'center_y': .5}
 
-                Label:
-                    text: 'uds/€'
+                WrappedLabel:
+                    text: '   uds/€'
+                    halign: 'left'
+                    font_size: self.height * .4
 
-                Button:
+                HoverButton3:
                     text: 'Confirmar'
+                    font_size: self.height * .4
+                    on_release: root.confirma()
+                    canvas.before:
+                        Color:
+                            rgba: secondarybtcolor
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
 
         # Parte derecha de la pantalla
         BoxLayout:
             padding: '5dp'
-            spacing: '5dp'
+
             size_hint: (.43, .9)
             pos_hint: {'top': 1}
             orientation: 'vertical'
             canvas.before:
                 Color:
-                    rgba: (0, 0, 0, 1)
-                Rectangle:
+                    rgba: mainbtcolor
+                RoundedRectangle:
                     size: self.size
                     pos: self.pos
 
@@ -84,17 +96,12 @@
             BoxLayout:
                 padding: '5dp'
                 orientation: 'vertical'
-                canvas.before:
-                    Color:
-                        rgba: (1, 0, 0, 1)
-                    RoundedRectangle:
-                        size: self.size
-                        pos: self.pos
+
                 size_hint: (.8, .7)
                 pos_hint: {'center_x': .5}
 
                 Image:
-                    source: 'images/johnnash.jpg'
+                    source: root.imagen
 
                 Label:
                     size_hint: (1, .4)
@@ -110,9 +117,9 @@
                     text: 'Stage 1'
                 Label:
                     text: 'Stage 2'
-                Label:
+                WrappedLabel:
                     text: 'Stage 3'
-
+                    font_size: self.height * .2
 
 
 

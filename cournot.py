@@ -79,7 +79,7 @@ class CournotVentana(VentanaLayout):
 
         # Comprobamos si los parámetros son compatibles con una solución razonable del modelo
         if a < (2*c-e) or a < (2*e-c):
-            alerta = MensajeDeError('Introduzca parámetro válidos')
+            alerta = MensajeDeError('Introduzca parámetros válidos')
             alerta.open()
             return
 
