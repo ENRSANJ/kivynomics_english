@@ -1,6 +1,8 @@
 import numpy as np
+from kivy.app import App
 from kivy.lang import Builder
 from kivy.properties import StringProperty
+from kivy.uix.popup import Popup
 
 from bimatrix_games import MensajeDeError
 from main import VentanaLayout
@@ -35,6 +37,10 @@ class NPCNash(NPC):
 
 npc_Nash = NPCNash('images/johnnash.jpg', ['frase 1', 'frase 999'])
 
+npc_Marx = NPCNash('images/karlmarx.jpeg', ['frase 1', 'frase 999'])
+
+npc_Smith = NPCNash('images/adamsmith.jpg', ['frase 1', 'frase 999'])
+
 
 class NPCSmith:
     pass
@@ -42,6 +48,28 @@ class NPCSmith:
 
 class NPCMarx:
     pass
+
+
+class SelectPlayer(Popup):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        self.referencia = App.get_running_app().root.ids.jugarid
+
+    def selection1(self):
+        self.referencia.player2 = npc_Nash
+        self.dismiss()
+        self.referencia.inicio_juego()
+
+    def selection2(self):
+        self.referencia.player2 = npc_Smith
+        self.dismiss()
+        self.referencia.inicio_juego()
+
+    def selection3(self):
+        self.referencia.player2 = npc_Marx
+        self.dismiss()
+        self.referencia.inicio_juego()
 
 
 class JugarVentana(VentanaLayout):
@@ -56,12 +84,16 @@ class JugarVentana(VentanaLayout):
     demanda_mercado = StringProperty(f'{a} - {b}x')
     costes_totales = StringProperty(f'{c}x')
     imagen = StringProperty('')
+    rival = None
+
+    def on_enter(self, *args):
+        selector = SelectPlayer()
+        selector.open()
 
     def obtenermasinfo(self):
         print('adiós')
 
-    def select_player(self):
-        self.player2 = npc_Nash
+    def inicio_juego(self):
         self.imagen = str(self.player2.img)
 
     def evento_aleatorio(self):
@@ -93,7 +125,7 @@ class JugarVentana(VentanaLayout):
         self.costes_totales = f'{self.c}x'
 
     def confirma(self):
-        self.select_player()
+
         # Comprobamos si el usuario introdujo un valor admitido
         try:
             respuesta = np.around(float(self.ids.respuesta.text), 3)

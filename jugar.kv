@@ -122,6 +122,25 @@
                     font_size: self.height * .2
 
 
+<SelectPlayer>:
+    size_hint: (.5, .5)
+    title: "Selecciona un rival"
+    auto_dismiss: False
 
+    BoxLayout:
+        orientation: "vertical"
+
+        Button:
+            text: "John Forbes Nash"
+            on_release: root.selection1()
+
+        Button:
+            text: "Adam Smith"
+            on_release: root.selection2()
+
+
+        Button:
+            text: "Karl Marx"
+            on_release: root.selection3()
 
 
