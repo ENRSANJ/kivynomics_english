@@ -37,8 +37,12 @@
 
             # Narrativa del juego
             BoxLayout:
+                orientation: 'vertical'
 
-                Label:
+                WrappedLabel:
+                    text: root.modelo
+
+                WrappedLabel:
                     text: root.narrativa
 
             # Tu decisión
@@ -128,19 +132,39 @@
     auto_dismiss: False
 
     BoxLayout:
-        orientation: "vertical"
 
-        Button:
-            text: "John Forbes Nash"
-            on_release: root.selection1()
+        # Botones de selección de NPC
+        BoxLayout:
+            orientation: "vertical"
 
-        Button:
-            text: "Adam Smith"
-            on_release: root.selection2()
+            Button:
+                text: "John Forbes Nash"
+                on_release: root.selection1()
 
-
-        Button:
-            text: "Karl Marx"
-            on_release: root.selection3()
+            Button:
+                text: "Adam Smith"
+                on_release: root.selection2()
 
 
+            Button:
+                text: "Karl Marx"
+                on_release: root.selection3()
+
+        # Información sobre NPC
+        BoxLayout:
+            orientation: "vertical"
+
+            Label:
+                text: "John Forbes Nash"
+
+            Label:
+                text: "Adam Smith"
+
+
+            Label:
+                text: "Karl Marx"
+
+
+
+<JugarMasInfoScreen>:
+    name: 'JugarMasInfoScreen'

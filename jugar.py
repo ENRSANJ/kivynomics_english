@@ -5,7 +5,7 @@ from kivy.properties import StringProperty
 from kivy.uix.popup import Popup
 
 from bimatrix_games import MensajeDeError
-from main import VentanaLayout
+from main import VentanaLayout, MasInfoVentana
 
 Builder.load_file('jugar.kv')
 
@@ -20,6 +20,7 @@ class NPCNash(NPC):
     def __init__(self, img, frases):
         super().__init__(img, frases)
 
+    # Cournot
     def cournot(self, a, b, c):
         return (a - c) / (3 * b)
 
@@ -31,6 +32,7 @@ class NPCNash(NPC):
     def stackelberg2(self, a, b, c):
         return (a - c) / (4 * b)
 
+    # Bertrand
     def bertrand(self, a, b, c):
         return a + b + c
 
@@ -73,13 +75,23 @@ class SelectPlayer(Popup):
 
 
 class JugarVentana(VentanaLayout):
+    stage = 0
     player2 = None
+    prod2 = 0
+    precio = 0
+    beneficio1 = 0
+    beneficio2 = 0
+    cantidad_total = 0
+    evento = 0
+    historial = {}
+
     # Asignamos valores aleatorios al inicio del juego
     a = np.random.randint(43, 100)
     b = np.random.randint(2, 10)
     c = np.random.randint(21, 30)
 
     # Valores a mostrar en pantalla
+    modelo = StringProperty('')
     narrativa = StringProperty('')
     demanda_mercado = StringProperty(f'{a} - {b}x')
     costes_totales = StringProperty(f'{c}x')
@@ -87,34 +99,38 @@ class JugarVentana(VentanaLayout):
     rival = None
 
     def on_enter(self, *args):
-        selector = SelectPlayer()
-        selector.open()
+        if self.stage == 0:
+            selector = SelectPlayer()
+            selector.open()
+        else:
+            pass
 
     def obtenermasinfo(self):
-        print('adiós')
+        self.manager.current = 'JugarMasInfoScreen'
 
     def inicio_juego(self):
         self.imagen = str(self.player2.img)
 
     def evento_aleatorio(self):
         # Selección aleatoria del evento y la cuantía
-        evento = np.random.randint(1, 6)
+        self.evento = np.random.randint(1, 6)
         cuantia = np.random.randint(1, 10)
 
         # Si el evento afecta a la demanda, modificamos la demanda (y viceversa)
-        if evento == 1:
+        if self.evento == 1:
             self.narrativa = 'Aumento demanda del mercado'
             self.a = self.a + cuantia
 
-        elif evento == 2:
+        elif self.evento == 2:
             self.narrativa = 'Reducción demanda del mercado'
             self.a = self.a - cuantia
 
-        elif evento == 3:
-            self.narrativa = f'El Gobierno introdujo un impuesto de {cuantia} u.m. sobre la producción'
+        elif self.evento == 3:
             self.c = self.c + cuantia
+            self.narrativa = f'''El Gobierno introdujo un impuesto de {cuantia} u.m. sobre la producción.\
+ Los cambios se han introducido en tu función de costes'''
 
-        elif evento == 4:
+        elif self.evento == 4:
             self.narrativa = 'Reducción de costes totales'
             self.c = self.c - cuantia
 
@@ -126,6 +142,16 @@ class JugarVentana(VentanaLayout):
 
     def confirma(self):
 
+        # Comprobamos si el juego se ha acabado
+        if self.stage == 3:
+            alerta = MensajeDeError('Ha finalizado el juego')
+            alerta.open()
+            self.historial = {}
+            self.stage = 0
+            return
+        else:
+            self.stage += 1
+
         # Comprobamos si el usuario introdujo un valor admitido
         try:
             respuesta = np.around(float(self.ids.respuesta.text), 3)
@@ -134,27 +160,41 @@ class JugarVentana(VentanaLayout):
             alerta.open()
             return
 
-        stage = np.random.randint(1, 5)
+        model = np.random.randint(1, 5)
 
         # Cournot
-        if stage == 1:
+        if model == 1:
+            self.modelo = 'MODELO DE COURNOT'
             self.prod2 = self.player2.cournot(self.a, self.b, self.c)
 
         # NPC Stackelberg líder
-        elif stage == 2:
+        elif model == 2:
+            self.modelo = 'MODELO DE LÍDER'
             self.prod2 = self.player2.stackelberg1(self.a, self.b, self.c)
 
         # NPC Stackelberg seguidor
-        elif stage == 3:
+        elif model == 3:
+            self.modelo = 'MODELO DE STACKELBERG SEGUIDOR'
             self.prod2 = self.player2.stackelberg2(self.a, self.b, self.c)
 
         # Bertrand
         else:
+            self.modelo = 'MODELO DE BERTRAND'
             self.prod2 = self.player2.bertrand(self.a, self.b, self.c)
 
-        self.precio = self.a - self.b * (respuesta + self.prod2)
-        self.beneficio1 = (self.precio - self.c) * respuesta
-        self.beneficio2 = (self.precio - self.c) * self.prod2
+        self.prod2 = np.around(self.prod2)
+        self.cantidad_total = np.around(respuesta + self.prod2, 3)
+        self.precio = np.around(self.a - self.b * self.cantidad_total, 3)
+        self.beneficio1 = np.around((self.precio - self.c) * respuesta, 3)
+        self.beneficio2 = np.around((self.precio - self.c) * self.prod2, 3)
 
-        print(self.prod2)
-        print(stage)
+        # Rellenamos el historial
+        self.historial[self.stage] = [[model, self.a, self.b, self.c], [self.precio, self.cantidad_total],
+                                      [respuesta, self.beneficio1], [self.prod2, self.beneficio2]]
+        print(self.historial)
+
+        self.evento_aleatorio()
+
+
+class JugarMasInfoScreen(MasInfoVentana):
+    pass
