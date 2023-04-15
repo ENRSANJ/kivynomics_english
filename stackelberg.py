@@ -110,6 +110,7 @@ class StackelbergVentana(CournotVentana):
 
         # Creamos el widget FigureCanvasKivyAgg (vaciamos "graficournot" para eliminar el gráfico anterior)
         canvas = FigureCanvasKivyAgg(figure=fig)
+        plt.close("all")
         self.ids.graficournot.clear_widgets()
         self.ids.graficournot.add_widget(canvas)
 

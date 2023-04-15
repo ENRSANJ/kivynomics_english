@@ -40,6 +40,10 @@
                 orientation: 'vertical'
 
                 WrappedLabel:
+                    size_hint: (.5, .5)
+                    text: 'Etapa: ' + str(root.stage)
+
+                WrappedLabel:
                     text: root.modelo
 
                 WrappedLabel:
@@ -107,9 +111,10 @@
                 Image:
                     source: root.imagen
 
-                Label:
+                # Comentario del NPC
+                WrappedLabel:
                     size_hint: (1, .4)
-                    text: 'Te vas a enterar, ¡pedazo de monopolista!'
+                    text: root.comentario
 
             # Historial
             BoxLayout:
@@ -117,12 +122,15 @@
 
                 Label:
                     text: 'HISTORIAL'
+
                 Label:
-                    text: 'Stage 1'
+                    text: root.stage1
+
                 Label:
-                    text: 'Stage 2'
-                WrappedLabel:
-                    text: 'Stage 3'
+                    text: root.stage2
+
+                Label:
+                    text: root.stage3
                     font_size: self.height * .2
 
 
@@ -164,6 +172,23 @@
             Label:
                 text: "Karl Marx"
 
+
+<ResetGame>:
+    size_hint: (.5, .5)
+    title: "El juego ha finalizado"
+    auto_dismiss: False
+
+    # Selección de acción al terminar la partida
+    BoxLayout:
+        orientation: "vertical"
+
+        Button:
+            text: 'Volver a jugar'
+            on_release: app.root.ids.jugarid.inicio_juego(); root.dismiss()
+
+        Button:
+            text: 'Menú principal'
+            on_release: app.root.transition.direction = 'right'; app.root.current = 'MenuPrincipal'; root.dismiss()
 
 
 <JugarMasInfoScreen>:

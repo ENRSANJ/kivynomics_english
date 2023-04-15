@@ -162,8 +162,9 @@ class CournotVentana(VentanaLayout):
         for spine in ['bottom', 'left']:
             ax.spines[spine].set_linewidth(2)
 
-        # Creamos el widget FigureCanvasKivyAgg (vaciamos "graficournot" para eliminar el gráfico anterior)
+        # Creamos el widget FigureCanvasKivyAgg (vaciamos "graficournot" y vaciamos la memoria de figuras de mpl)
         canvas = FigureCanvasKivyAgg(figure=fig)
+        plt.close("all")
         self.ids.graficournot.clear_widgets()
         self.ids.graficournot.add_widget(canvas)
 

@@ -12,6 +12,57 @@ import sympy as sp
 Builder.load_file('bertrand.kv')
 
 
+# Función que resuelve el modelo de Bertrand dados 4 parámetros (f.demanda y costes marginales)
+def solve_bertrand(a, b, c, e):
+
+    # Comprobamos si los parámetros son compatibles con una solución razonable del modelo
+    if a <= c and a <= e:
+        raise ValueError('Introduce parámetros válidos')
+
+    if c < e:
+        # La empresa 1 se lleva toda la demanda
+        if (c + a) / 2 >= e:
+            # Si no puede establecer precio de monopolio, establece
+            # un precio marginalmente inferior al Coste Marginal de la empresa 2
+            p = e - .001
+
+        else:
+            p = (c + a) / 2
+
+        x1_sol = (a - p) / b
+        x2_sol = 0
+        x_total = x1_sol + x2_sol
+        beneficio1 = (p - c) * x1_sol
+        beneficio2 = 0
+
+    elif c > e:
+        # La empresa 2 se lleva toda la demanda
+        if (e + a) / 2 >= c:
+            # Si no puede establecer precio de monopolio, establece
+            # un precio marginalmente inferior al Coste Marginal de la empresa 2
+            p = c - .001
+
+        else:
+            p = (e + a) / 2
+
+        x1_sol = 0
+        x2_sol = (a - p) / b
+        x_total = x1_sol + x2_sol
+        beneficio1 = 0
+        beneficio2 = (p - e) * x2_sol
+
+    else:
+        # Distribuimos la demanda a partes iguales
+        p = c
+        x1_sol = (a - c) / (2 * b)
+        x2_sol = (a - c) / (2 * b)
+        x_total = x1_sol + x2_sol
+        beneficio1 = 0
+        beneficio2 = 0
+
+    return {'p': p, 'q': x_total, 'q1': x1_sol, 'q2': x2_sol, 'profit1': beneficio1, 'profit2': beneficio2}
+
+
 class BertrandVentana(CournotVentana):
 
     def obtenermasinfo(self):
@@ -33,66 +84,29 @@ class BertrandVentana(CournotVentana):
         c = float(self.ids.c.text)
         e = float(self.ids.e.text)
 
-        # Comprobamos si los parámetros son compatibles con una solución razonable del modelo
-        if a <= c and a <= e:
+        # Obtenemos los resultados, redondeados
+        try:
+            solucion = {key: np.around(value, 3) for key, value in solve_bertrand(a, b, c, e).items()}
+        except ValueError:
             alerta = MensajeDeError('Introduzca parámetro válidos')
             alerta.open()
             return
 
-        if c < e:
-            # La empresa 1 se lleva toda la demanda
-            if (c + a) / 2 > e:
-                # Si no puede establecer precio de monopolio, establece
-                # un precio marginalmente inferior al Coste Marginal de la empresa 2
-                p = e - .001
-
-            else:
-                p = (c + a) / 2
-
-            x1_sol = (a - p) / b
-            x2_sol = 0
-            self.prod_1 = 'Producción óptima: ' + str(np.around(x1_sol, 3))
-            self.prod_2 = 'Producción óptima: 0'
-
-            self.beneficio1 = 'Beneficio: ' + str(np.around((p - c) * x1_sol, 3))
-            self.beneficio2 = 'Beneficio: 0'
-
-        elif c > e:
-            # La empresa 2 se lleva toda la demanda
-            if (e + a) / 2 > c:
-                # Si no puede establecer precio de monopolio, establece
-                # un precio marginalmente inferior al Coste Marginal de la empresa 2
-                p = c - .001
-
-            else:
-                p = (e + a) / 2
-
-            x1_sol = 0
-            x2_sol = (a - p) / b
-            self.prod_1 = 'Producción óptima: 0'
-            self.prod_2 = 'Producción óptima: ' + str(np.around(x2_sol, 3))
-
-            self.beneficio1 = 'Beneficio: 0'
-            self.beneficio2 = 'Beneficio: ' + str(np.around((p - e) * x2_sol, 3))
-
-        else:
-            # Distribuimos la demanda a partes iguales
-            p = c
-            x1_sol = (a - c) / (2 * b)
-            x2_sol = (a - c) / (2 * b)
-            self.prod_1 = 'Producción óptima: ' + str(np.around(x1_sol, 3))
-            self.prod_2 = 'Producción óptima: ' + str(np.around(x2_sol, 3))
-
-            self.beneficio1 = 'Beneficio: 0'
-            self.beneficio2 = 'Beneficio: 0'
-
-        self.precio = 'Precio en el mercado: ' + str(np.around(p, 3))
+        self.precio = 'Precio en el mercado: ' + str(solucion['p'])
         self.empresa1 = 'EMPRESA 1'
         self.empresa2 = 'EMPRESA 2'
+        self.prod_1 = 'Producción óptima: ' + str(solucion['q1'])
+        self.prod_2 = 'Producción óptima: ' + str(solucion['q2'])
+        self.beneficio1 = 'Beneficio: ' + str(solucion['profit1'])
+        self.beneficio2 = 'Beneficio: ' + str(solucion['profit2'])
+
+        x1_sol = solucion['q1']
+        x2_sol = solucion['q2']
+        x_total = solucion['q']
+        p = solucion['p']
 
         # Gráfico
         # Generamos los valores de x
-
         demanda_max = int(np.ceil((a/b)*1.1))
         x_vals = np.linspace(0, demanda_max)
 
@@ -115,7 +129,6 @@ class BertrandVentana(CournotVentana):
         plt.axhline(y=e, color='r', linestyle='--')
 
         # Dibujamos la producción
-        x_total = x1_sol+x2_sol
         ax.plot(x_total, p, marker='o', markersize=5, c='black', alpha=1)
         ax.annotate(f'Eq ({x_total:.3f}, {p:.3f})', xy=(x_total, p),
                     xycoords='data', xytext=(5, 5), textcoords='offset points')
@@ -142,6 +155,7 @@ class BertrandVentana(CournotVentana):
 
         # Creamos el widget FigureCanvasKivyAgg (vaciamos "graficournot" para eliminar el gráfico anterior)
         canvas = FigureCanvasKivyAgg(figure=fig)
+        plt.close("all")
         self.ids.graficournot.clear_widgets()
         self.ids.graficournot.add_widget(canvas)
 
