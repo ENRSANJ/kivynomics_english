@@ -120,75 +120,134 @@
             BoxLayout:
                 orientation: 'vertical'
 
-                Label:
+                JugarLabel:
                     text: 'HISTORIAL'
 
-                Label:
+                JugarLabel:
                     text: root.stage1
 
-                Label:
+                JugarLabel:
                     text: root.stage2
 
-                Label:
+                JugarLabel:
                     text: root.stage3
-                    font_size: self.height * .2
 
 
 <SelectPlayer>:
-    size_hint: (.5, .5)
-    title: "Selecciona un rival"
+    size_hint: (.65, .5)
     auto_dismiss: False
 
     BoxLayout:
+        padding: '5dp'
+        orientation: "vertical"
+        canvas.before:
+            Color:
+                rgba: mainbtcolor
+            RoundedRectangle:
+                size: self.size
+                pos: self.pos
 
-        # Botones de selección de NPC
+        # Título
         BoxLayout:
-            orientation: "vertical"
+            size_hint: (1, .2)
+            WrappedLabel:
+                text: '[u]Selecciona tu rival[/u]'
+                markup: True
 
-            Button:
-                text: "John Forbes Nash"
-                on_release: root.selection1()
-
-            Button:
-                text: "Adam Smith"
-                on_release: root.selection2()
-
-
-            Button:
-                text: "Karl Marx"
-                on_release: root.selection3()
-
-        # Información sobre NPC
         BoxLayout:
-            orientation: "vertical"
 
-            Label:
-                text: "John Forbes Nash"
+            # Botones de selección de NPC
+            BoxLayout:
+                size_hint: (.8, 1)
+                orientation: "vertical"
+                spacing: '10dp'
+                padding: '5dp'
 
-            Label:
-                text: "Adam Smith"
+                CournotButton:
+                    text: "John Forbes Nash"
+                    on_release: root.selection1()
 
+                CournotButton:
+                    text: "Adam Smith"
+                    on_release: root.selection2()
 
-            Label:
-                text: "Karl Marx"
+                CournotButton:
+                    text: "Karl Marx"
+                    on_release: root.selection3()
+
+            # Separador
+            BoxLayout:
+                size_hint: (.1, 1)
+
+            # Información sobre NPC
+            BoxLayout:
+                orientation: "vertical"
+
+                JugarLabel:
+                    text: '(Difícil) Creador de la Teoría de Juegos y conceptos como "equilibrio de Nash". Jugador experimentado y con gran conocimiento que optimizará sus decisiones al máximo'
+
+                JugarLabel:
+                    text: '(Medio) Considerado padre de la economía. Economista liberal que ignora las actuaciones del Gobierno pues las considera "ineficientes".'
+
+                JugarLabel:
+                    text: '(Fácil) Uno de los filósofos más influyentes de la historia. Sobreestima sus costes un 20% pues no quiere extraer plusvalía de sus trabajadores'
 
 
 <ResetGame>:
-    size_hint: (.5, .5)
-    title: "El juego ha finalizado"
+    size_hint: (.4, .4)
     auto_dismiss: False
 
-    # Selección de acción al terminar la partida
     BoxLayout:
+        padding: '5dp'
         orientation: "vertical"
+        canvas.before:
+            Color:
+                rgba: mainbtcolor
+            RoundedRectangle:
+                size: self.size
+                pos: self.pos
 
-        Button:
-            text: 'Volver a jugar'
-            on_release: app.root.ids.jugarid.inicio_juego(); root.dismiss()
+        # Título
+        BoxLayout:
+            size_hint: (1, .2)
+            WrappedLabel:
+                text: '[u]El juego ha finalizado[/u]'
+                markup: True
 
-        Button:
-            text: 'Menú principal'
-            on_release: app.root.transition.direction = 'right'; app.root.current = 'MenuPrincipal'; root.dismiss()
+
+        # Selección de acción al terminar la partida
+        BoxLayout:
+            orientation: "vertical"
+            spacing: '10dp'
+            padding: '5dp'
+
+            CournotButton:
+                text: 'Volver a jugar'
+                on_release:
+                    app.root.ids.jugarid.reset_parametros()
+                    app.root.ids.jugarid.on_enter()
+                    root.dismiss()
+
+            CournotButton:
+                text: 'Menú principal'
+                on_release:
+                    app.root.ids.jugarid.reset_parametros()
+                    app.root.transition.direction = 'right'
+                    app.root.current = 'MenuPrincipal'
+                    root.dismiss()
+
+            CournotButton:
+                text: 'Exportar resultados'
+                on_release:
+                    root.exportar_resultados(app.root.ids.jugarid.historial)
+                    app.root.ids.jugarid.reset_parametros()
+                    app.root.transition.direction = 'right'
+                    app.root.current = 'MenuPrincipal'
+                    root.dismiss()
+
+
+<JugarLabel@WrappedLabel>:
+    font_size: self.height * .15
 
 
 <JugarMasInfoScreen>:
