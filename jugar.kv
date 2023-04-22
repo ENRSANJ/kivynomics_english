@@ -252,3 +252,26 @@
 
 <JugarMasInfoScreen>:
     name: 'JugarMasInfoScreen'
+
+    Scroll:
+        GridLayout:
+            cols: 1
+            size_hint_y: None
+            height: self.minimum_height + 100
+            spacing: '10dp'
+
+            WrappedLabel2:
+                size_hint_x: 1.6
+                size_hint_y: None
+                halign: 'center'
+                bold: True
+                font_size: self.height*.4
+                text: 'JUGAR vs NPC'
+
+            WrappedLabel2:
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'left'
+                text: root.a
+                bold: True
+                font_size: kivy.core.window.Window.height * 0.03

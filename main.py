@@ -171,24 +171,28 @@ class kivynomicsApp(MDApp):
 
     def cambiar1(self):
         self.root.ids.imagencita.source = 'images/bimatricillo.jpg'
-        self.root.ids.etiqueta.text = '''Halla todos los equilibrios de Nash de un juego dadas \
-las matrices de pagos de los 2 jugadores.'''
+        self.root.ids.etiqueta.text = '''Halla todos los equilibrios extremos de Nash de un juego dadas \
+las matrices de pagos de los dos jugadores.'''
 
     def cambiar2(self):
         self.root.ids.imagencita.source = 'images/cournotillo.jpg'
-        self.root.ids.etiqueta.text = 'Modelo de Cournot'
+        self.root.ids.etiqueta.text = '''Dadas la función de demanda del mercado y las funciones de costes de dos\
+ empresas, calcula el equilibrio de Cournot-Nash.'''
 
     def cambiar3(self):
         self.root.ids.imagencita.source = 'images/stackillo.jpg'
-        self.root.ids.etiqueta.text = 'Modelo de Stackelberg'
+        self.root.ids.etiqueta.text = '''Dadas la función de demanda del mercado y las funciones de costes de dos\
+ empresas, calcula el equilibrio de Stackelberg-Nash.'''
 
     def cambiar4(self):
         self.root.ids.imagencita.source = 'images/bertranillo.jpg'
-        self.root.ids.etiqueta.text = 'Modelo de Bertrand'
+        self.root.ids.etiqueta.text = '''Dadas la función de demanda del mercado y las funciones de costes de dos\
+ empresas, calcula el equilibrio de Bertrand.'''
 
     def cambiar5(self):
         self.root.ids.imagencita.source = 'images/npcillo.jpg'
-        self.root.ids.etiqueta.text = 'Jugar contra el ordenador'
+        self.root.ids.etiqueta.text = '''Enfréntate al ordenador en varias etapas donde tendrás decidir una estrategia\
+ óptima para dar respuesta a los modelos desarrollados en la aplicación.'''
 
 
 if __name__ == '__main__':

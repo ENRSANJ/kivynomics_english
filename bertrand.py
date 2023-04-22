@@ -31,9 +31,6 @@ def solve_bertrand(a, b, c, e):
 
         x1_sol = (a - p) / b
         x2_sol = 0
-        x_total = x1_sol + x2_sol
-        beneficio1 = (p - c) * x1_sol
-        beneficio2 = 0
 
     elif c > e:
         # La empresa 2 se lleva toda la demanda
@@ -47,18 +44,16 @@ def solve_bertrand(a, b, c, e):
 
         x1_sol = 0
         x2_sol = (a - p) / b
-        x_total = x1_sol + x2_sol
-        beneficio1 = 0
-        beneficio2 = (p - e) * x2_sol
 
     else:
         # Distribuimos la demanda a partes iguales
         p = c
         x1_sol = (a - c) / (2 * b)
         x2_sol = (a - c) / (2 * b)
-        x_total = x1_sol + x2_sol
-        beneficio1 = 0
-        beneficio2 = 0
+
+    x_total = x1_sol + x2_sol
+    beneficio1 = (p - c) * x1_sol
+    beneficio2 = (p - e) * x2_sol
 
     return {'p': p, 'q': x_total, 'q1': x1_sol, 'q2': x2_sol, 'profit1': beneficio1, 'profit2': beneficio2}
 
@@ -205,5 +200,14 @@ def crear_bertrand_word(fdemanda, ct1, ct2, precio, prod1, beneficio1, prod2, be
 
 
 class BertrandMasInfoScreen(MasInfoVentana):
-    a = '''El duopolio de Stackelberg, al igual que el modelo de Cournot, es también un modelo económico en el que dos\
- empresas compiten decidiendo sobre su producción.'''
+    a = '''El modelo de Bertrand es un modelo de competencia entre dos o más empresas en el que, a diferencia de\
+ en los modelos anteriores, la variable de decisión es el precio. Esto es, las empresas deciden a qué precio\
+ venderán su producto y la cantidad será la determinada por la demanda del mercado para dicho precio.
+ 
+Partiendo de costes marginales iguales, solo existe un equilibrio de Nash en el modelo: precio_1 = precio_2 =\
+ Coste Marginal ya que siempre que el precio sea superior al coste marginal, existen incentivos para desviarse de la\
+ situación.
+ 
+Cuando las empresas presentan costes marginales distintos, la que menores costes tenga se podrá hacer con\
+ toda la demanda del mercado y tendrá que decidir entre establecer su precio de monopolio (si puede hacerlo dejando\
+ fuera a la empresa rival) o un precio marginalmente inferior al coste marginal de la otra empresa. '''
