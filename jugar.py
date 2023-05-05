@@ -123,7 +123,7 @@ class JugarVentana(VentanaLayout):
         # Asignamos valores aleatorios al inicio del juego
         self.a = np.random.randint(250, 500)
         self.b = np.random.randint(2, 25)
-        self.c = np.random.randint(21, 50)
+        self.c = np.random.randint(21, 40)
 
         self.imagen = str(self.player2.img)
         self.comentario = self.player2.frases[np.random.randint(0, 2)]
@@ -174,32 +174,33 @@ class JugarVentana(VentanaLayout):
 
     def evento_aleatorio(self):
         # Selección aleatoria del evento y la cuantía
-        self.evento = np.random.randint(1, 6)
-        cuantia = np.random.randint(1, 10)
+        self.evento = np.random.randint(1, 5)
+        cuantia = np.random.randint(3, 10)
 
         # Si el evento afecta a la demanda, modificamos la demanda (y viceversa)
         if self.evento == 1:
-            self.narrativa = 'Aumento demanda del mercado'
+            self.narrativa = '''Recientemente se publicaron los resultados de un estudio llevado a cabo por la\
+ universidad de Massachusetts que resaltan los beneficios del uso de tu producto. Esto ha producido un aumento\
+ de la demanda de mercado.'''
             self.a = self.a + cuantia
 
         elif self.evento == 2:
-            self.narrativa = 'Reducción demanda del mercado'
+            self.narrativa = '''Como consecuencia de una pandemia mundial, el número de personas que\
+ pueden acceder y utilizar tu producto se ha reducido considerablemente. Los cambios se han introducido\
+ en la función de demanda del mercado.'''
             self.a = self.a - cuantia
 
         elif self.evento == 3:
             self.c = self.c + cuantia
             NPCSmith.tax = NPCSmith.tax - cuantia
             self.narrativa = f'''El Gobierno introdujo un impuesto de {cuantia} u.m. sobre la producción.\
- Los cambios se han introducido en tu función de costes'''
+ El aumento aumento de costes asociado se ha introducido en tu función de costes.'''
 
         elif self.evento == 4:
             self.c = self.c - cuantia
             NPCSmith.tax = NPCSmith.tax + cuantia
             self.narrativa = f'''El Gobierno introdujo una subvención de {cuantia} u.m. por cada unidad producida.\
- Los cambios se han introducido en tu función de costes'''
-
-        else:
-            self.narrativa = 'No sucedió ningún evento'
+ Los cambios se han introducido en tu función de costes.'''
 
         self.update_screen()
 
@@ -365,28 +366,34 @@ class NPCMarx:
 
 
 class JugarMasInfoScreen(MasInfoVentana):
-    a = '''El juego consiste en 3 etapas en las que tú, dueño de una empresa, competirás con uno de los tres NPCs disponibles, dueño de la empresa rival. Cada uno de estos jugadores tiene un comportamiento predefinido distinto, cambiando la facilidad con la que podrás obtener beneficios en cada periodo:
-- John Nash: es el considerado “nivel difícil”. Siempre tomará las decisiones más adecuadas, teniendo en cuenta la teoría existente.
-- Adam Smith: “nivel medio”. Conoce la teoría pero tiene una debilidad: la intervención estatal. Por principios, no la aprueba por lo que ignorará los impuestos establecidos y las subvenciones concedidas por el Gobierno. Lo ignorará de cara a su decisión de producción, sin embargo, sus costes reales serán igual a los tuyos por lo que puedes aprovecharte de esta circunstancia. Ten en cuenta que su desaprobación de la intervención estatal es permanente, por lo que “acumulará” la ignorancia sobre las intervenciones pasadas, por ejemplo:
+    a = '''El juego consiste en 3 etapas en las que tú, dueño de una empresa, com-petirás con uno de los tres NPCs\
+ disponibles, dueño de la empresa rival. Cada uno de estos jugadores tiene un comportamiento predefinido distinto,\
+ cambiando la facilidad con la que podrás obtener beneficios en cada periodo:
+    - John Nash: siempre tomará las decisiones más adecuadas, teniendo en cuenta la teoría existente al respecto.
+    - Adam Smith: responderá generalmente de forma acertada pero tiene una debilidad: la intervención estatal.\
+ Ignorará los impuestos establecidos y las subvenciones concedidas por el Gobierno. Lo ignorará de cara a su decisión\
+ de producción, sin embargo, sus costes reales serán igual a los tuyos por lo que puedes aprovecharte de esta\
+ circunstancia. Ten en cuenta que su desaproba-ción de la intervención estatal es permanente, por lo que “acumulará”\
+ la ignorancia sobre las intervenciones pasadas, así que es recomendable ir apuntán-dolo para optimizar tus\
+ decisiones, por ejemplo:
 CT = 10x
 Etapa 1:
 “El Gobierno introduce un impuesto sobre la producción de 2 u.m.”
 Adam Smith producirá como si siguiera teniendo CT = 10x, cuando en realidad sus costes son mayores (12x).
 Etapa 2:
 “El Gobierno concede una subvención sobre la producción de 4 u.m.”
-Adam Smith producirá como si siguiera teniendo CT = 10x (ignora tanto el impuesto del anterior periodo como la subvención de este), cuando en realidad sus costes reales son de 8x.
-- Karl Marx: “nivel fácil”. Conoce también la teoría pero sobreestima sus costes con la intención de no extraer plusvalía de sus trabajadores. En concreto, producirá como si tuviera unos costes un 20% mayores a los reales:
+Adam Smith producirá como si siguiera teniendo CT = 10x (ignora tanto el impuesto del anterior periodo como la\
+ subvención de este), cuando en realidad sus costes reales son de 8x.
+    - Karl Marx: sobreestima sus costes con la intención de no extraer plus-valía de sus trabajadores. En concreto,\
+ producirá como si tuviera unos costes un 20% mayores a los reales. En este caso, el NPC tiene en cuenta todos los\
+ eventos que sucedan. Además, ese 20% no es acumulativo, es decir, en cada periodo actuará como si sus costes fueran\
+ un 20% superiores a los tuyos para ese mismo periodo:
 CT = 10x
-Karl Marx producirá como si tuviera CT = 12x 
-
-Cabe recordar que el enfrentamiento con el ordenador no es siempre rigurosamente equitativo puesto que, a pesar de tener los mismos CT en todo momento, en el modelo de Stackelberg el orden de entrada en el mercado desequilibra la balanza. 
-A lo largo del juego deberás decidir la cantidad a producir (modelos de Cournot y Stackelberg) o el precio que estableces (modelo de Bertrand) teniendo en cuenta la personalidad del NPC, el modelo a tratar en la etapa y, por supuesto, las funciones de demanda del mercado y costes totales.
-La selección del NPC rival deberás hacerla al iniciar el juego. La selección del modelo es completamente aleatoria.
-Además, como ya se puede intuir por las descripciones de los NPCs, se introducen eventos aleatorios en cada etapa, que afectarán a las funciones de costes o a la demanda del mercado. Existen, en concreto, 4 posibles eventos aleatorios que se pueden definir como:
--	Aumento de la demanda del mercado: por
--	Reducción de la demanda del mercado: por
--	Aumento de los costes totales: como consecuencia de la introducción de un impuesto sobre la producción.
--	Reducción de los costes totales: como resultado de la concesión de subvenciones para la producción.
-Todos los jugadores se verán afectados por estos eventos. Los cambios que estos eventos conlleven serán introducidos actualizando los parámetros de las funciones de demanda y costes, según el caso.
-Al final del juego podrás exportar los resultados a Word. Ten en cuenta que el Word generado mostrará los costes reales de los jugadores, no los costes que el NPC tiene en cuenta para tomar sus decisiones (estos deberás intuirlos según su “personalidad”).
+Karl Marx producirá como si tuviera CT = 12x . 
+Cabe recordar que el enfrentamiento con el ordenador no es siempre rigu-rosamente equitativo puesto que, a pesar de\
+ tener los mismos costes totales en todo momento, en el modelo de Stackelberg el orden de entrada en el mercado\
+ desequilibra la balanza (favorece a la empresa líder considerablemente).
+A lo largo del juego deberás decidir la cantidad a producir (modelos de Cournot y Stackelberg) o el precio que vas\
+ a establecer (modelo de Bertrand) teniendo en cuenta la personalidad del NPC, el modelo a tratar en la etapa y, por\
+ supuesto, las funciones de demanda del mercado y costes totales.
 '''

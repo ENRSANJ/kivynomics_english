@@ -32,7 +32,7 @@ class StackelbergVentana(CournotVentana):
 
         # Comprobamos si los parámetros son compatibles con una solución razonable del modelo
         if a < (2 * c - e) or a < (3 * e - 2 * c):
-            alerta = MensajeDeError('Introduzca parámetro válidos')
+            alerta = MensajeDeError('Introduzca parámetros válidos')
             alerta.open()
             return
 
@@ -164,7 +164,10 @@ def crear_stackelberg_word(fdemanda, ct1, ct2, freacc2, precio, prod1, beneficio
 
 
 class StackelbergMasInfoScreen(MasInfoVentana):
-    a = '''El duopolio de Stackelberg, al igual que el modelo de Cournot, es también un modelo económico en el que dos\
+    a = '''Heinrich Freiherr von Stackelberg (1905-1946), economista alemán, introduce su fa-moso modelo de duopolio en\
+ su obra “Estructura de Mercado y Equilibrio” publicada en 1934.
+ 
+ El duopolio de Stackelberg, al igual que el modelo de Cournot, es también un modelo económico en el que dos\
  empresas compiten decidiendo sobre su producción.
 
 Las empresas determinan la cantidad producida de forma secuencial; una empresa (líder) determina su producción en el\

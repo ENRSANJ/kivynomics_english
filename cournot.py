@@ -239,7 +239,11 @@ def crear_cournot_word(fdemanda, ct1, ct2, freacc1, freacc2, precio, prod1, bene
 
 
 class CournotMasInfoScreen(MasInfoVentana):
-    a = '''El duopolio de Cournot es un modelo económico en el que dos empresas compiten\
+    a = '''Antoine Augustin Cournot (1801-1877), matemático y economista francés, es uno de los primeros autores en intuir la\
+ teoría de juegos con su modelo de duopolio propuesto en su obra de 1838 “Investigaciones acerca de los principios\
+ matemáticos de la teoría de las riquezas”.
+
+El duopolio de Cournot es un modelo económico en el que dos empresas compiten\
  determinando simultáneamente la cantidad que van a producir.
 
 Las empresas determinan simultánea e independientemente\

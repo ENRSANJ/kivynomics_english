@@ -142,7 +142,7 @@ class BertrandVentana(CournotVentana):
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
         ax.legend(handles=[plt.plot([], [], 'b-', label='Función de demanda')[0],
-                  plt.plot([], [], 'r--', label='Costes Marginales')[0]])
+                  plt.plot([], [], 'r--', label='Costes marginales')[0]])
 
         # Cambiamos el grosor de los bordes
         for spine in ['bottom', 'left']:
@@ -200,7 +200,11 @@ def crear_bertrand_word(fdemanda, ct1, ct2, precio, prod1, beneficio1, prod2, be
 
 
 class BertrandMasInfoScreen(MasInfoVentana):
-    a = '''El modelo de Bertrand es un modelo de competencia entre dos o más empresas en el que, a diferencia de\
+    a = '''Joseph Louis François Bertrand (1822-1900), matemático y economista francés del si-glo XIX, revisó el modelo\
+ de duopolio de Cournot, indicando que en una situación de duopolio las empresas acabarían compitiendo en precios,\
+ dando forma al conocido como modelo de Bertrand.
+    
+ El modelo de Bertrand es un modelo de competencia entre dos o más empresas en el que, a diferencia de\
  en los modelos anteriores, la variable de decisión es el precio. Esto es, las empresas deciden a qué precio\
  venderán su producto y la cantidad será la determinada por la demanda del mercado para dicho precio.
  

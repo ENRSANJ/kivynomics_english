@@ -262,9 +262,13 @@ class SeleccionaInput(TextInput):
 
 class BimatrixMasInfoScreen(MasInfoVentana):
     # Texto a mostrar. Escrito aquí porque Kivy lang no lee los triple-quoted strings de la misma forma
-    a = '''El output consiste en:
+    a = '''En los años 50, John Forbes Nash (1928-2015), matemático estadounidense y premio Nobel de Economía en 1994,\
+ introduce conceptos muy relevantes en el campo de la teoría de juegos (equilibrio de Nash, negociación de Nash).\
+ Además, demuestra la existencia de al menos un equilibrio de Nash en todo juego finito. 
 
-EE: Equilibrio Extremo probabilidades asignadas por cada jugador a sus estrategias en el equilibrio de Nash
+El output proporcionado por la aplicación consiste en:
+
+EE: (Extreme Equilibria) probabilidades asignadas por cada jugador a sus estrategias en el equilibrio de Nash
 
 EP: (Expected Payoff) Pago esperado para cada jugador en el equilibrio'''
 

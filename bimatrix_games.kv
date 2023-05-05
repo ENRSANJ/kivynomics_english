@@ -173,6 +173,7 @@
             size_hint_y: None
             height: self.minimum_height + 100
             spacing: '10dp'
+            padding: '10dp'
 
             WrappedLabel2:
                 size_hint_x: 1.6
@@ -196,8 +197,8 @@
 
             WrappedLabel2:
                 size_hint_y: None
-                size: (1, '400dp')
-                halign: 'left'
+                height: self.texture_size[1]
+                halign: 'justify'
                 text: root.a
                 bold: True
                 font_size: kivy.core.window.Window.height * 0.03
@@ -209,8 +210,8 @@
 
             WrappedLabel2:
                 size_hint_y: None
-                size: (1, '150dp')
-                halign: 'left'
+                height: self.texture_size[1]
+                halign: 'justify'
                 text: root.b
                 bold: True
                 font_size: kivy.core.window.Window.height * 0.03
