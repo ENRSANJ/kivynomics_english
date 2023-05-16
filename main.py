@@ -125,9 +125,12 @@ class InformacionVentana(MasInfoVentana):
  en la teoría de juegos. La aplicación implementa los modelos de teoría de juegos fundamentales\
  en sus versiones más básicas, con el fin de ofrecer una aproximación accesible y comprensible\
  a la materia. Para más información sobre los modelos y su implementación concreta, puedes\
- acceder al texto completo del TFG haciendo click sobre el botón correspondiente.'''
+ acceder al texto completo del TFG haciendo click sobre el botón correspondiente.\
 
-    b = '''También puedes acceder al código fuente completo en Github. Para cualquier\
+
+Puedes acceder al código fuente completo de la aplicación en Github. Asimismo, existe una versión de la aplicación\
+ para Android, que contiene el apartado "Jugar vs NPC". El código completo de la app de Android también está\
+ disponible en su correspondiente repositorio de Github junto con el apk ya empaquetado. Para cualquier\
  problema, pregunta, sugerencia o aporte puedes contactarme a través de Github'''
 
     def volver(self):

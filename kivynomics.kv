@@ -159,40 +159,36 @@
     BoxLayout:
         size_hint: (1, .9)
         pos_hint: {'top': 1}
-        spacing: '20dp'
+        spacing: '10dp'
         padding: '20dp'
+        orientation: 'vertical'
+
+        WrappedLabel:
+            size_hint: (1, 9)
+            halign: 'justify'
+            bold: True
+            font_size: self.height * .05
+            text: root.a
 
         BoxLayout:
-            size_hint: (1.6, 1)
-            orientation: 'vertical'
-            WrappedLabel:
-                halign: 'justify'
-                bold: True
-                font_size: self.height * .07
-                text: root.a
+            spacing: '10dp'
 
-            Button:
-                size_hint: (1, .5)
+            MDFillRoundFlatButton:
+                md_bg_color: mainbtcolor
+                size_hint: (1, 1)
                 text: 'Github source code'
                 bold: True
-                font_size: self.height * .2
+                font_size: self.height * .5
                 on_release:
                     import webbrowser
-                    webbrowser.open('https://github.com/ENRSANJ/Kivynomics.git')
+                    webbrowser.open('https://github.com/ENRSANJ')
 
-        BoxLayout:
-            orientation: 'vertical'
-            WrappedLabel:
-                halign: 'justify'
-                bold: True
-                font_size: self.height * .07
-                text: root.b
-
-            Button:
-                size_hint: (1, .5)
+            MDFillRoundFlatButton:
+                size_hint: (1, 1)
+                md_bg_color: mainbtcolor
                 text: 'TFG (pdf)'
                 bold: True
-                font_size: self.height * .2
+                font_size: self.height * .5
                 on_release:
                     import webbrowser
                     webbrowser.open('https://drive.google.com/drive/folders/1QooAmQHTVd8keyGHeqa_X5vMOSCjETG1?usp=sharing')
