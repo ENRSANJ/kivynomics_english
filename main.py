@@ -129,9 +129,9 @@ class InformacionVentana(MasInfoVentana):
 
 
 Puedes acceder al código fuente completo de la aplicación en Github. Asimismo, existe una versión de la aplicación\
- para Android, que contiene el apartado "Jugar vs NPC". El código completo de la app de Android también está\
+ para Android, que reproduce el apartado "Jugar vs NPC". El código completo de la app de Android también está\
  disponible en su correspondiente repositorio de Github junto con el apk ya empaquetado. Para cualquier\
- problema, pregunta, sugerencia o aporte puedes contactarme a través de Github'''
+ problema, pregunta, sugerencia o aporte puedes contactarme a través de Github.'''
 
     def volver(self):
         self.manager.current = 'MenuPrincipal'
