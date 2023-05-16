@@ -13,10 +13,13 @@
         BoxLayout:
             orientation: 'vertical'
             padding: '10dp'
+            spacing: '10dp'
+
             # Datos cuantitativos
             BoxLayout:
                 orientation: 'vertical'
-                size_hint: (.55, .25)
+                size_hint: (.65, .25)
+                padding: ('20dp', 0, 0, 0)
 
                 canvas.before:
                     Color:
@@ -29,29 +32,58 @@
                 WrappedLabel:
                     text: 'Demanda del mercado: p(x) = ' + root.demanda_mercado
                     font_size: self.height * .35
+                    halign: 'left'
 
                 # Costes totales de la empresa del jugador
                 WrappedLabel:
                     text: 'Costes totales: ' + root.costes_totales
                     font_size: self.height * .35
+                    halign: 'left'
 
             # Narrativa del juego
             BoxLayout:
                 orientation: 'vertical'
+                spacing: '10dp'
 
                 WrappedLabel:
-                    size_hint: (.5, .5)
+                    canvas.before:
+                        Color:
+                            rgba: mainbtcolor
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                    size_hint: (.25, .25)
                     text: 'Etapa: ' + str(root.stage)
+                    font_size: self.height * .4
+                BoxLayout:
+                    padding: '10dp'
+                    canvas.before:
+                        Color:
+                            rgba: mainbtcolor
+                        Line:
+                            width: 2
+                            rectangle: (self.x, self.y, self.width, self.height)
+                    WrappedLabel:
+                        text: root.narrativa
+                        font_size: self.height * .1
+                        halign: 'justify'
 
-                WrappedLabel:
-                    text: root.modelo
-
-                WrappedLabel:
-                    text: root.narrativa
+                BoxLayout:
+                    padding: '10dp'
+                    canvas.before:
+                        Color:
+                            rgba: mainbtcolor
+                        Line:
+                            width: 2
+                            rectangle: (self.x, self.y, self.width, self.height)
+                    WrappedLabel:
+                        text: root.modelo
+                        font_size: self.height * .1
 
             # Tu decisión
             BoxLayout:
                 padding: '10dp'
+                spacing: '10dp'
                 size_hint: (.8, .15)
                 canvas.before:
                     Color:
@@ -67,8 +99,9 @@
                 CournotInput:
                     id: respuesta
                     font_size: self.height * .4
-                    size_hint: (.5, 1)
+                    size_hint: (.6, 1)
                     pos_hint: {'center_x': .5, 'center_y': .5}
+                    on_text_validate: root.confirma()
 
                 WrappedLabel:
                     text: '   uds/€'
@@ -79,6 +112,17 @@
                     text: 'Confirmar'
                     font_size: self.height * .4
                     on_release: root.confirma()
+                    canvas.before:
+                        Color:
+                            rgba: secondarybtcolor
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+
+                HoverButton3:
+                    text: 'Reiniciar'
+                    font_size: self.height * .4
+                    on_release: root.reiniciar()
                     canvas.before:
                         Color:
                             rgba: secondarybtcolor
@@ -102,7 +146,8 @@
 
             # NPC
             BoxLayout:
-                padding: '5dp'
+                padding: '3dp'
+                spacing: '7dp'
                 orientation: 'vertical'
 
                 size_hint: (.8, .7)
@@ -115,26 +160,31 @@
                 WrappedLabel:
                     size_hint: (1, .4)
                     text: root.comentario
+                    font_size: self.height*.25
 
             # Historial
             BoxLayout:
                 orientation: 'vertical'
 
-                JugarLabel:
+                WrappedLabel:
                     text: 'HISTORIAL'
+                    font_size: self.height*.25
 
-                JugarLabel:
+                WrappedLabel:
                     text: root.stage1
+                    font_size: self.height*.25
 
-                JugarLabel:
+                WrappedLabel:
                     text: root.stage2
+                    font_size: self.height*.25
 
-                JugarLabel:
+                WrappedLabel:
                     text: root.stage3
+                    font_size: self.height*.25
 
 
 <SelectPlayer>:
-    size_hint: (.65, .5)
+    size_hint: (.65, .6)
     auto_dismiss: False
 
     BoxLayout:
@@ -153,9 +203,10 @@
             WrappedLabel:
                 text: '[u]Selecciona tu rival[/u]'
                 markup: True
+                font_size: self.height*.4
 
         BoxLayout:
-
+            padding: '15dp'
             # Botones de selección de NPC
             BoxLayout:
                 size_hint: (.8, 1)
@@ -168,7 +219,7 @@
                     on_release: root.selection1()
 
                 CournotButton:
-                    text: "Adam Smith"
+                    text: "Murray Rothbard"
                     on_release: root.selection2()
 
                 CournotButton:
@@ -194,7 +245,7 @@
 
 
 <ResetGame>:
-    size_hint: (.4, .4)
+    size_hint: (.4, .6)
     auto_dismiss: False
 
     BoxLayout:
@@ -213,13 +264,13 @@
             WrappedLabel:
                 text: '[u]El juego ha finalizado[/u]'
                 markup: True
-
+                font_size: self.height*.4
 
         # Selección de acción al terminar la partida
         BoxLayout:
             orientation: "vertical"
             spacing: '10dp'
-            padding: '5dp'
+            padding: '20dp'
 
             CournotButton:
                 text: 'Volver a jugar'
@@ -276,3 +327,52 @@
                 text: root.a
                 bold: True
                 font_size: kivy.core.window.Window.height * 0.03
+
+# Pantalla de confirmación de reinicio
+<ConfirmationScreen>:
+    size_hint: (.3, .23)
+    auto_dismiss: False
+    BoxLayout:
+        spacing: '10dp'
+        padding: '10dp'
+        orientation: 'vertical'
+        canvas.before:
+            Color:
+                rgba: mainbtcolor
+            RoundedRectangle:
+                size: self.size
+                pos: self.pos
+        # Título
+        BoxLayout:
+            size_hint: (1, .2)
+            WrappedLabel:
+                text: '¿Desea reiniciar la partida?'
+        # Selección de opción
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'bottom'
+            spacing: '10dp'
+            padding: '10dp'
+
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint: (None, None)
+                size: (self.minimum_width, self.minimum_height)
+
+                MDIconButton:
+                    icon: 'check-circle-outline'
+                    theme_icon_color: 'Custom'
+                    icon_color: (1, 1, 1, 1)
+                    icon_size: '64sp'
+                    on_release:
+                        app.root.ids.jugarid.reset_parametros()
+                        app.root.ids.jugarid.on_enter()
+                        root.dismiss()
+
+                MDIconButton:
+                    icon: 'close-circle-outline'
+                    theme_icon_color: 'Custom'
+                    icon_color: (1, 1, 1, 1)
+                    icon_size: '64sp'
+                    on_release:
+                        root.dismiss()

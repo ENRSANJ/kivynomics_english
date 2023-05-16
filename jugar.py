@@ -18,25 +18,37 @@ class SelectPlayer(MDDialog):
 
     def selection1(self):
         self.referencia.player2 = NPCNash('images/johnnash.jpg',
-                                          ['Buen día, prepárese para reportar las pérdidas más cuantiosas de su vida',
-                                           'Llevo esperando este momento desde la salida de mi último libro'])
+                                          ['''"[...]Pero, después de una vida de búsqueda me digo, ¿Qué es la lógica?\
+ ¿Quién decide la razón?"''',
+                                           '''"Caballeros, debo recordarles que, mis probabilidades de éxito, aumentan\
+ en cada nuevo intento"''',
+                                           '"No, no creo en la suerte, pero sí en asignar valor a las cosas"'])
         self.dismiss()
         self.referencia.inicio_juego()
 
     def selection2(self):
-        self.referencia.player2 = NPCSmith('images/adamsmith.jpg',
-                                           ['frase 1',
-                                            'frase 999'])
+        self.referencia.player2 = NPCMurray('images/rothbard.jpg',
+                                            ['''"El Estado obtiene su renta mediante el uso de la compulsión, es decir,\
+ la amenaza de la cárcel y la bayoneta"''',
+                                             '''"Si los humanos son tan malos, ¿cómo podemos esperar que un gobierno\
+ coercitivo, compuesto por humanos, mejore la situación?"''',
+                                             '''"La contribución es, pura y simplemente, un robo, un robo a grande\
+ y colosal escala"'''])
         self.dismiss()
         self.referencia.inicio_juego()
 
     def selection3(self):
-        self.referencia.player2 = NPCMarx('images/karlmarx.jpeg',
-                                          ['''Espero trates bien a tus trabajadores, no te quiero ver extrayendo 
-                                          plusvalía''',
-                                              'frase 999'])
+        self.referencia.player2 = NPCMarx('images/karlmarx.jpg',
+                                          ['"¡Proletarios de todos los países, uníos!"',
+                                           '''"La historia de todas las sociedades hasta el día de hoy es historia\
+ de luchas de clases"''',
+                                           '"¡De cada cual según sus capacidades, a cada cual según sus necesidades!"'])
         self.dismiss()
         self.referencia.inicio_juego()
+
+
+class ConfirmationScreen(MDDialog):
+    pass
 
 
 class ResetGame(MDDialog):
@@ -119,6 +131,11 @@ class JugarVentana(VentanaLayout):
         else:
             pass
 
+    @staticmethod
+    def reiniciar():
+        dialog = ConfirmationScreen()
+        dialog.open()
+
     def inicio_juego(self):
         # Asignamos valores aleatorios al inicio del juego
         self.a = np.random.randint(250, 500)
@@ -126,7 +143,7 @@ class JugarVentana(VentanaLayout):
         self.c = np.random.randint(21, 40)
 
         self.imagen = str(self.player2.img)
-        self.comentario = self.player2.frases[np.random.randint(0, 2)]
+        self.comentario = self.player2.frases[np.random.randint(0, 3)]
         self.update_screen()
         self.selecciona_modelo()
         self.stage += 1
@@ -145,12 +162,12 @@ class JugarVentana(VentanaLayout):
 
         # NPC Stackelberg líder
         elif self.model == 2:
-            self.prod2 = np.around(self.player2.stackelberg1(self.a, self.b, self.c), 3)
-            self.modelo = f'MODELO DE NPC = LÍDER. {self.player2.name} produjo {self.prod2} unidades.'
+            self.prod2 = round(self.player2.stackelberg1(self.a, self.b, self.c), 3)
+            self.modelo = f'MODELO DE STACKELBERG. TÚ ERES LA EMPRESA SEGUIDORA. {self.player2.name} produjo {self.prod2} unidades.'
 
         # NPC Stackelberg seguidor
         elif self.model == 3:
-            self.modelo = 'MODELO DE STACKELBERG NPC = SEGUIDOR'
+            self.modelo = 'MODELO DE STACKELBERG. TÚ ERES LA EMPRESA LÍDER'
 
         # Bertrand
         else:
@@ -170,7 +187,7 @@ class JugarVentana(VentanaLayout):
         self.narrativa = ''
         self.demanda_mercado = ''
         self.costes_totales = ''
-        NPCSmith.tax = 0
+        NPCMurray.tax = 0
 
     def evento_aleatorio(self):
         # Selección aleatoria del evento y la cuantía
@@ -181,7 +198,7 @@ class JugarVentana(VentanaLayout):
         if self.evento == 1:
             self.narrativa = '''Recientemente se publicaron los resultados de un estudio llevado a cabo por la\
  universidad de Massachusetts que resaltan los beneficios del uso de tu producto. Esto ha producido un aumento\
- de la demanda de mercado.'''
+ de la demanda de mercado. Los cambios se han registrado en la función de demanda.'''
             self.a = self.a + cuantia
 
         elif self.evento == 2:
@@ -192,13 +209,13 @@ class JugarVentana(VentanaLayout):
 
         elif self.evento == 3:
             self.c = self.c + cuantia
-            NPCSmith.tax = NPCSmith.tax - cuantia
+            NPCMurray.tax = NPCMurray.tax - cuantia
             self.narrativa = f'''El Gobierno introdujo un impuesto de {cuantia} u.m. sobre la producción.\
  El aumento aumento de costes asociado se ha introducido en tu función de costes.'''
 
         elif self.evento == 4:
             self.c = self.c - cuantia
-            NPCSmith.tax = NPCSmith.tax + cuantia
+            NPCMurray.tax = NPCMurray.tax + cuantia
             self.narrativa = f'''El Gobierno introdujo una subvención de {cuantia} u.m. por cada unidad producida.\
  Los cambios se han introducido en tu función de costes.'''
 
@@ -260,7 +277,7 @@ class JugarVentana(VentanaLayout):
 
         stage_dict = {1: 'stage1', 2: 'stage2', 3: 'stage3'}
         stage_key = stage_dict.get(self.stage)
-        setattr(self, stage_key, f'Beneficio: {self.beneficio1}')
+        setattr(self, stage_key, f'Beneficio_{self.stage}:  {self.beneficio1}')
 
         # Pasamos de etapa
         self.ids.respuesta.text = ''
@@ -299,7 +316,11 @@ class NPCNash:
     # Seguidora
     @staticmethod
     def stackelberg2(a, b, c, x1):
-        return ((a - c) / (2 * b)) - (x1 / 2)
+        result = ((a - c) / (2 * b)) - (x1 / 2)
+        if result > 0:
+            return result
+        else:
+            return 0
 
     # Bertrand
     @staticmethod
@@ -307,35 +328,38 @@ class NPCNash:
         return c
 
 
-class NPCSmith:
-
-    # Variable que (des)informará al NPCSmith sobre los impuestos del Gobierno
+class NPCMurray:
+    # Variable que (des)informará al NPCMurray sobre los impuestos del Gobierno
     tax = 0
 
     def __init__(self, img, frases):
         self.img = img
         self.frases = frases
-        self.name = 'Adam Smith'
+        self.name = 'Murray Rothbard'
 
     # Cournot
     @staticmethod
     def cournot(a, b, c):
-        return (a - (c + NPCSmith.tax)) / (3 * b)
+        return (a - (c + NPCMurray.tax)) / (3 * b)
 
     # Líder
     @staticmethod
     def stackelberg1(a, b, c):
-        return (a - (c + NPCSmith.tax)) / (2 * b)
+        return (a - (c + NPCMurray.tax)) / (2 * b)
 
     # Seguidora
     @staticmethod
     def stackelberg2(a, b, c, x1):
-        return ((a - (c + NPCSmith.tax)) / (2 * b)) - (x1 / 2)
+        result = ((a - (c + NPCMurray.tax)) / (2 * b)) - (x1 / 2)
+        if result > 0:
+            return result
+        else:
+            return 0
 
     # Bertrand
     @staticmethod
     def bertrand(c):
-        return c + NPCSmith.tax
+        return c + NPCMurray.tax
 
 
 class NPCMarx:
@@ -347,53 +371,65 @@ class NPCMarx:
     # Cournot
     @staticmethod
     def cournot(a, b, c):
-        return (a - (1.2*c)) / (3 * b)
+        return (a - (1.2 * c)) / (3 * b)
 
     # Líder
     @staticmethod
     def stackelberg1(a, b, c):
-        return (a - (1.2*c)) / (2 * b)
+        return (a - (1.2 * c)) / (2 * b)
 
     # Seguidora
     @staticmethod
     def stackelberg2(a, b, c, x1):
-        return ((a - (1.2*c)) / (2 * b)) - (x1 / 2)
+        result = ((a - (1.2*c)) / (2 * b)) - (x1 / 2)
+        if result > 0:
+            return result
+        else:
+            return 0
 
     # Bertrand
     @staticmethod
     def bertrand(c):
-        return 1.2*c
+        return 1.2 * c
 
 
 class JugarMasInfoScreen(MasInfoVentana):
-    a = '''El juego consiste en 3 etapas en las que tú, dueño de una empresa, com-petirás con uno de los tres NPCs\
+    a = '''El juego consiste en 3 etapas en las que tú, dueño de una empresa, competirás con uno de los tres NPCs\
  disponibles, dueño de la empresa rival. Cada uno de estos jugadores tiene un comportamiento predefinido distinto,\
  cambiando la facilidad con la que podrás obtener beneficios en cada periodo:
     - John Nash: siempre tomará las decisiones más adecuadas, teniendo en cuenta la teoría existente al respecto.
-    - Adam Smith: responderá generalmente de forma acertada pero tiene una debilidad: la intervención estatal.\
+
+    - Murray Rothbard: responderá generalmente de forma acertada pero tiene una debilidad: la intervención estatal.\
  Ignorará los impuestos establecidos y las subvenciones concedidas por el Gobierno. Lo ignorará de cara a su decisión\
  de producción, sin embargo, sus costes reales serán igual a los tuyos por lo que puedes aprovecharte de esta\
- circunstancia. Ten en cuenta que su desaproba-ción de la intervención estatal es permanente, por lo que “acumulará”\
- la ignorancia sobre las intervenciones pasadas, así que es recomendable ir apuntán-dolo para optimizar tus\
+ circunstancia. Ten en cuenta que su desaprobación de la intervención estatal es permanente, por lo que “acumulará”\
+ la ignorancia sobre las intervenciones pasadas, así que es recomendable ir apuntándolo para optimizar tus\
  decisiones, por ejemplo:
+
 CT = 10x
 Etapa 1:
 “El Gobierno introduce un impuesto sobre la producción de 2 u.m.”
-Adam Smith producirá como si siguiera teniendo CT = 10x, cuando en realidad sus costes son mayores (12x).
+Rothbard producirá como si siguiera teniendo CT = 10x, cuando en realidad sus costes son mayores (12x).
 Etapa 2:
 “El Gobierno concede una subvención sobre la producción de 4 u.m.”
-Adam Smith producirá como si siguiera teniendo CT = 10x (ignora tanto el impuesto del anterior periodo como la\
+Rothbard producirá como si siguiera teniendo CT = 10x (ignora tanto el impuesto del anterior periodo como la\
  subvención de este), cuando en realidad sus costes reales son de 8x.
-    - Karl Marx: sobreestima sus costes con la intención de no extraer plus-valía de sus trabajadores. En concreto,\
+
+    -Karl Marx: sobreestima sus costes con la intención de no extraer plusvalía de sus trabajadores. En concreto,\
  producirá como si tuviera unos costes un 20% mayores a los reales. En este caso, el NPC tiene en cuenta todos los\
  eventos que sucedan. Además, ese 20% no es acumulativo, es decir, en cada periodo actuará como si sus costes fueran\
  un 20% superiores a los tuyos para ese mismo periodo:
+
 CT = 10x
 Karl Marx producirá como si tuviera CT = 12x . 
-Cabe recordar que el enfrentamiento con el ordenador no es siempre rigu-rosamente equitativo puesto que, a pesar de\
+
+Cabe recordar que el enfrentamiento con el ordenador no es siempre rigurosamente equitativo puesto que, a pesar de\
  tener los mismos costes totales en todo momento, en el modelo de Stackelberg el orden de entrada en el mercado\
  desequilibra la balanza (favorece a la empresa líder considerablemente).
+
 A lo largo del juego deberás decidir la cantidad a producir (modelos de Cournot y Stackelberg) o el precio que vas\
  a establecer (modelo de Bertrand) teniendo en cuenta la personalidad del NPC, el modelo a tratar en la etapa y, por\
  supuesto, las funciones de demanda del mercado y costes totales.
+
+Al final de la partida podrás exportar los resultados obtenidos por etapa a un documento Word.
 '''
