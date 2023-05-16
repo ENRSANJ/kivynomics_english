@@ -156,53 +156,46 @@
 
 
 <InformacionVentana>:
-    Scroll:
-        GridLayout:
-            cols: 2
-            size_hint_y: None
-            height: self.minimum_height + 100
-            spacing: '10dp'
-            padding: (0, '20dp', 0, 0)
+    BoxLayout:
+        size_hint: (1, .9)
+        pos_hint: {'top': 1}
+        spacing: '20dp'
+        padding: '20dp'
 
+        BoxLayout:
+            size_hint: (1.6, 1)
+            orientation: 'vertical'
             WrappedLabel:
-                size_hint_x: 1.6
-                size_hint_y: None
-                halign: 'center'
+                halign: 'justify'
                 bold: True
-                font_size: kivy.core.window.Window.height * 0.03
+                font_size: self.height * .07
                 text: root.a
 
-            HoverButton7:
-                background_color: (1, 0, 0, 1)
-                size_hint_y: None
-
-                size: (1, '100dp')
+            Button:
+                size_hint: (1, .5)
                 text: 'Github source code'
                 bold: True
-                font_size: kivy.core.window.Window.height * 0.03
+                font_size: self.height * .2
                 on_release:
                     import webbrowser
                     webbrowser.open('https://github.com/ENRSANJ/Kivynomics.git')
 
+        BoxLayout:
+            orientation: 'vertical'
             WrappedLabel:
-                size_hint_x: 1.6
-                size_hint_y: None
-                halign: 'center'
+                halign: 'justify'
                 bold: True
-                font_size: kivy.core.window.Window.height * 0.03
+                font_size: self.height * .07
                 text: root.b
 
-            HoverButton7:
-                background_color: (1, 0, 0, 1)
-                size_hint_y: None
-                size: (1, '100dp')
-                text: 'TFG pdf'
+            Button:
+                size_hint: (1, .5)
+                text: 'TFG (pdf)'
                 bold: True
-                font_size: kivy.core.window.Window.height * 0.03
+                font_size: self.height * .2
                 on_release:
                     import webbrowser
                     webbrowser.open('https://drive.google.com/drive/folders/1QooAmQHTVd8keyGHeqa_X5vMOSCjETG1?usp=sharing')
-
 
 
 <AjustesVentana>:

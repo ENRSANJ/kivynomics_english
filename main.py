@@ -74,17 +74,6 @@ class HoverButton4(RoundedButton, ThemableBehavior, HoverBehavior):
     def on_leave(self, *args):
         Animation(size_hint=(.09, .09), d=0.05).start(self)
 
-
-# Botones transparentes con hipervínculos
-class HoverButton7(RoundedButton, ThemableBehavior, HoverBehavior):
-
-    def on_enter(self, *args):
-        Window.set_system_cursor('hand')
-
-    def on_leave(self, *args):
-        Window.set_system_cursor('arrow')
-
-
 # Root de la aplicación
 class Manager(ScreenManager):
     # size_hint de los botones "ajustes" e "información"
@@ -140,7 +129,6 @@ class InformacionVentana(MasInfoVentana):
 
     b = '''También puedes acceder al código fuente completo en Github. Para cualquier\
  problema, pregunta, sugerencia o aporte puedes contactarme a través de Github'''
-
 
     def volver(self):
         self.manager.current = 'MenuPrincipal'
