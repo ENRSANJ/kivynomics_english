@@ -3,9 +3,12 @@ from kivy.app import App
 from kivy.lang import Builder
 from kivy.properties import StringProperty, NumericProperty
 from docx import Document
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.popup import Popup
+from kivy.uix.scrollview import ScrollView
 from kivymd.uix.dialog import MDDialog
 from bimatrix_games import MensajeDeError
-from main import VentanaLayout, MasInfoVentana
+from main import VentanaLayout, MasInfoVentana, WrappedLabel
 
 Builder.load_file('jugar.kv')
 
@@ -51,6 +54,11 @@ class ConfirmationScreen(MDDialog):
     pass
 
 
+# Para mostrar los resultados en pantalla
+class Popup_resultado(Popup):
+    pass
+
+
 class ResetGame(MDDialog):
 
     @staticmethod
@@ -92,6 +100,51 @@ class ResetGame(MDDialog):
         alerta = MensajeDeError("Se ha creado el documento 'vsNPC_output.docx' exitosamente")
         alerta.open()
 
+        # Creamos el output a mostrar en pantalla
+        scroll = ScrollView()
+        popup = Popup_resultado(content=scroll)
+        grid = GridLayout(cols=3, size_hint=(1, None), padding='5dp')
+        scroll.add_widget(grid)
+        grid.bind(minimum_height=grid.setter('height'))
+
+        for key, value in resultados.items():
+            text_list = [
+                '[b]ETAPA: ' + f'{key}[/b]',
+                '\n[u]MODELO:[/u] ' + f'{value[0]}',
+                '\n[u]Datos[/u]',
+                f'p(X) = {value[1]} - {value[2]}X',
+                'CT[sub]1[/sub]: ' + f'{value[3]}x[sub]1[/sub]',
+                'CT[sub]2[/sub]: ' + f'{value[3]}x[sub]2[/sub]',
+                '\n[u]RESPUESTAS:[/u] ',
+                '\n[u]Tu empresa:[/u] ',
+                'Producción: ' + f'{value[6]} uds',
+                'Beneficio: ' + f'{value[7]} €',
+                '\n[u]Empresa del NPC:[/u] ',
+                'Producción: ' + f'{value[8]} uds',
+                'Beneficio: ' + f'{value[9]} €',
+                '\n[u]Datos del mercado:[/u] ',
+                'Precio: ' + f'{value[4]} €',
+                'Cantidad: ' + f'{value[5]} uds',
+            ]
+
+            grid2 = GridLayout(cols=1, size_hint=(1, None), padding='5dp')
+            grid2.bind(minimum_height=grid2.setter('height'))
+            for text in text_list:
+                grid2.add_widget(
+                    WrappedLabel(text=text, color=(0, 0, 0, 1), size_hint=(1, None), markup=True))
+            grid.add_widget(grid2)
+
+        '''text_list2 = [
+        'RESULTADOS GLOBALES:',
+        'Tu beneficio total: ' + f'{historial[1][7] + historial[2][7] + historial[3][7]} €',
+        'Beneficio total NPC: ' + f'{historial[1][9] + historial[2][9] + historial[3][9]} €'
+        ]
+        for text in text_list2:
+            grid.add_widget(
+                WrappedLabel(text=text, color=(0, 0, 0, 1), font_size=grid.height * 0.022, size_hint=(1, None)))'''
+
+        popup.open()
+
 
 class JugarVentana(VentanaLayout):
     player2 = None
@@ -105,6 +158,7 @@ class JugarVentana(VentanaLayout):
     historial = {}
     model = 0
     precio2 = 0
+    modelos = {1: 'COURNOT', 2: 'STACKELBERG (NPC=líder)', 3: 'STACKELBERG (NPC=seguidora)', 4: 'BERTRAND'}
 
     # Asignamos valores aleatorios al inicio del juego
     a = 0
@@ -272,7 +326,7 @@ class JugarVentana(VentanaLayout):
         self.beneficio2 = np.around((self.precio - self.c) * self.prod2, 3)
 
         # Rellenamos el historial
-        self.historial[self.stage] = [self.model, self.a, self.b, self.c, self.precio, self.cantidad_total,
+        self.historial[self.stage] = [self.modelos.get(self.model, self.model), self.a, self.b, self.c, self.precio, self.cantidad_total,
                                       self.prod1, self.beneficio1, self.prod2, self.beneficio2]
 
         stage_dict = {1: 'stage1', 2: 'stage2', 3: 'stage3'}
