@@ -14,14 +14,14 @@
             text_size: self.size
             valign: 'middle'
             halign: 'center'
-            text: 'Matriz de pagos del jugador 1'
+            text: "Player 1's payoff matrix"
             pos_hint: {'y': .24}
 
         Label:
             text_size: self.size
             valign: 'middle'
             halign: 'center'
-            text: 'Matriz de pagos del jugador 2'
+            text: "Player 2's payoff matrix"
             pos_hint: {'y': .24}
 
     Caja:
@@ -35,7 +35,7 @@
         pos_hint: {'right': .975, 'y': .17}
 
     HoverButton4:
-        text: 'Calcula'
+        text: 'Calculate'
         size_hint: (.09, .09)
         pos_hint: {'center_x': .5, 'center_y': (root.altura1-root.espaciado1)}
         on_release: root.calculanash()
@@ -46,31 +46,31 @@
         orientation: 'horizontal'
         pos_hint: {'center_x': .515, 'center_y': (root.altura1-1.8*root.espaciado1)}
         Label:
-            text: 'Exportar '
+            text: 'Export '
             font_size: self.height * 0.3
         CheckBox:
             id: a_word
 
     HoverButton4:
-        text: 'Suma nula'
+        text: 'Zero-sum'
         size_hint: (.09, .09)
         pos_hint: {'center_x': .5, 'center_y': (root.altura1-3*root.espaciado1)}
         on_release: root.sumanula()
 
     HoverButton4:
-        text: 'Simétrico'
+        text: 'Symmetric'
         size_hint: (.09, .09)
         pos_hint: {'center_x': .5, 'center_y': (root.altura1-4*root.espaciado1)}
         on_release: root.simetrico()
 
     HoverButton4:
-        text: 'Aleatorio'
+        text: 'Random'
         size_hint: (.09, .09)
         pos_hint: {'center_x': .5, 'center_y': (root.altura1-5*root.espaciado1)}
         on_release: root.aleatorio()
 
     HoverButton4:
-        text: 'Vaciar'
+        text: 'Empty'
         size_hint: (.09, .09)
         pos_hint: {'center_x': .5, 'center_y': (root.altura1-6*root.espaciado1)}
         on_release: root.vaciar()
@@ -97,14 +97,14 @@
     BoxLayout:
         Label:
             markup: True
-            text: '[b]nº filas: [/b]'
+            text: '[b]# rows: [/b]'
         SeleccionaInput:
             id: numrows
 
     BoxLayout:
         Label:
             markup: True
-            text: '[b]nº columnas: [/b]'
+            text: '[b]# columns: [/b]'
         SeleccionaInput:
             id: numcols
 
@@ -130,7 +130,7 @@
     drag_distance: 0
 
     title_color: (0, 0, 0, 1)
-    title: 'Equilibrios de Nash'
+    title: 'Nash equilibria'
     overlay_color: (0, 0, 0, 0) # no ensombrece el fondo
     size_hint: (.6, .65)
     background: '' # white
@@ -181,7 +181,7 @@
                 halign: 'center'
                 bold: True
                 font_size: self.height*.4
-                text: 'JUEGOS BIMATRICIALES'
+                text: 'BRIMATRIX GAMES'
 
             WrappedLabel2:
                 size_hint_y: None

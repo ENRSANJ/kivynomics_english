@@ -29,7 +29,7 @@
 
                 BoxLayout:
                     Cinput_wrappedlabel:
-                        text: 'Función de demanda del mercado:'
+                        text: 'Market demand function:'
 
                 BoxLayout:
                     Cinput_wrappedlabel2:
@@ -49,7 +49,7 @@
 
                 BoxLayout:
                     Cinput_wrappedlabel:
-                        text: 'Costes totales de la empresa 1:'
+                        text: 'Total Costs of firm 1:'
 
                 BoxLayout:
                     Cinput_wrappedlabel2:
@@ -65,7 +65,7 @@
 
                 BoxLayout:
                     Cinput_wrappedlabel:
-                        text: 'Costes totales de la empresa 2:'
+                        text: 'Total Costs of firm 2:'
 
                 BoxLayout:
                     Cinput_wrappedlabel2:
@@ -82,25 +82,25 @@
                 spacing: '5dp'
 
                 CournotButton:
-                    text: 'Resuelve'
+                    text: 'Calculate'
                     on_release: root.calcula()
 
                 # Interruptor para seleccionar la opción de exportar a Word
                 BoxLayout:
                     orientation: 'vertical'
                     WrappedLabel:
-                        text: 'Exportar '
+                        text: 'Export '
                         font_size: self.height * 0.55
                     CheckBox:
                         id: a_word
 
 
                 CournotButton:
-                    text: 'Vacía'
+                    text: 'Empty'
                     on_release: root.vacia()
 
                 CournotButton:
-                    text: 'Aleatorio'
+                    text: 'Random'
                     on_release: root.aleatorio()
 
         # Separador
@@ -220,7 +220,7 @@
                 halign: 'center'
                 bold: True
                 font_size: self.height*.4
-                text: 'MODELO DE COURNOT'
+                text: 'COURNOT MODEL'
 
             WrappedLabel2:
                 size_hint_y: None

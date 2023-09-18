@@ -126,26 +126,26 @@ class MasInfoVentana(Screen):
 # Ventanas de información y ajustes del menú principal
 class InformacionVentana(MasInfoVentana):
 
-    a = '''Esta aplicación es el resultado de un trabajo de fin de grado en economía centrado\
- en la teoría de juegos. La aplicación implementa los modelos de teoría de juegos fundamentales\
- en sus versiones más básicas, con el fin de ofrecer una aproximación accesible y comprensible\
- a la materia. Para más información sobre los modelos y su implementación concreta, puedes\
- acceder al texto completo del TFG haciendo click sobre el botón correspondiente.\
+    a = '''This application is the result of a bachelor's degree thesis in economics focused on game theory. \
+The application implements fundamental game theory models in their most basic versions, aiming to provide an accessible \
+and understandable approach to the subject. For more information about the models and their specific implementation, \
+you can access the full text of the bachelor's degree thesis by clicking on the corresponding button.\
 
 
-Puedes acceder al código fuente completo de la aplicación en Github. Asimismo, existe una versión de la aplicación\
- para Android, que reproduce el apartado "Jugar vs NPC". El código completo de la app de Android también está\
- disponible en su correspondiente repositorio de Github junto con el apk ya empaquetado. Para cualquier\
- problema, pregunta, sugerencia o aporte puedes contactarme a través de Github.'''
+
+You can access the complete source code of the application on Github. Additionally, there is an Android version of the \
+application that replicates the "Play vs NPC" section. The complete code for the Android app is also available in its \
+respective Github repository along with the packaged apk. For any issues, questions, suggestions, or contributions, you \
+can contact me through Github.'''
 
     def volver(self):
-        self.manager.current = 'MenuPrincipal'
+        self.manager.current = 'Main Menu'
         self.manager.transition.direction = 'right'
 
 
 class AjustesVentana(MasInfoVentana):
     def volver(self):
-        self.manager.current = 'MenuPrincipal'
+        self.manager.current = 'Main Menu'
         self.manager.transition.direction = 'right'
 
 
@@ -163,28 +163,28 @@ class kivynomicsApp(MDApp):
 
     def cambiar1(self):
         self.root.ids.imagencita.source = 'images/bimatricillo.jpg'
-        self.root.ids.etiqueta.text = '''Halla todos los equilibrios extremos de Nash de un juego dadas \
-las matrices de pagos de los dos jugadores.'''
+        self.root.ids.etiqueta.text = '''Find all Nash's extreme equilibria of a game given the payment matrices of two
+players'''
 
     def cambiar2(self):
         self.root.ids.imagencita.source = 'images/cournotillo.jpg'
-        self.root.ids.etiqueta.text = '''Dadas la función de demanda del mercado y las funciones de costes de dos\
- empresas, calcula el equilibrio de Cournot-Nash.'''
+        self.root.ids.etiqueta.text = '''Given the market demand function and the cost functions of two companies,
+calculate Cournot's equilibrium'''
 
     def cambiar3(self):
         self.root.ids.imagencita.source = 'images/stackillo.jpg'
-        self.root.ids.etiqueta.text = '''Dadas la función de demanda del mercado y las funciones de costes de dos\
- empresas, calcula el equilibrio de Stackelberg-Nash.'''
+        self.root.ids.etiqueta.text = '''Given the market demand function and the cost functions of two companies,
+calculate Stackelberg's equilibrium'''
 
     def cambiar4(self):
         self.root.ids.imagencita.source = 'images/bertranillo.jpg'
-        self.root.ids.etiqueta.text = '''Dadas la función de demanda del mercado y las funciones de costes de dos\
- empresas, calcula el equilibrio de Bertrand.'''
+        self.root.ids.etiqueta.text = '''Given the market demand function and the cost functions of two companies,
+calculate Bertrand's equilibrium'''
 
     def cambiar5(self):
         self.root.ids.imagencita.source = 'images/npcillo.jpg'
-        self.root.ids.etiqueta.text = '''Enfréntate al ordenador en varias etapas donde tendrás decidir una estrategia\
- óptima para dar respuesta a los modelos desarrollados en la aplicación.'''
+        self.root.ids.etiqueta.text = '''Face the computer in several stages where you will have to decide an optimal
+strategy to respond to the models developed in the application'''
 
 
 if __name__ == '__main__':

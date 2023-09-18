@@ -53,30 +53,30 @@
                     spacing: '10dp'
 
                     HoverButton:
-                        text: 'Juegos Bimatriciales (2 jugadores)'
+                        text: 'Bimatrix Games (2 players)'
                         on_press: root.transition.direction= 'left'; root.current = 'BimatrixScreen'
                         on_enter: app.cambiar1()
                         on_leave: app.descambiar()
                     HoverButton:
-                        text: 'Modelo de Cournot'
+                        text: 'Cournot Model'
                         on_press: root.clicked1()
                         on_release: root.transition.direction= 'left'; root.current = 'CournotScreen';
                         on_enter: app.cambiar2()
                         on_leave: app.descambiar()
                     HoverButton:
-                        text: 'Modelo de Stackelberg'
+                        text: 'Stackelberg Model'
                         on_press: root.clicked2(); root.ids.stackelbergid.ids.fr1.text = ''
                         on_release: root.transition.direction= 'left'; root.current = 'StackelbergScreen'
                         on_enter: app.cambiar3()
                         on_leave: app.descambiar()
                     HoverButton:
-                        text: 'Modelo de Bertrand'
+                        text: 'Bertrand Model'
                         on_press: root.ids.bertrandid.ids.fr1.text = ''; root.ids.bertrandid.ids.fr2.text = ''
                         on_release: root.transition.direction= 'left'; root.current = 'BertrandScreen'
                         on_enter: app.cambiar4()
                         on_leave: app.descambiar()
                     HoverButton:
-                        text: 'Jugar contra el ordenador'
+                        text: 'Play against the computer'
                         on_press: root.transition.direction= 'left'; root.current = 'JugarScreen'
                         on_enter: app.cambiar5()
                         on_leave: app.descambiar()
@@ -107,7 +107,7 @@
                     Label:
                         id: etiqueta
                         size_hint: (1, .2)
-                        text: 'Seleccione un ítem'
+                        text: 'Select an item'
                         text_size: self.size
                         font_size: self.height * .2
                         color: (0, 0, 0, 1)
@@ -120,12 +120,12 @@
                     spacing: '25dp'
 
                     HoverButton2:
-                        text: 'Información'
+                        text: 'Information'
                         size_hint: root.size1
                         on_press: root.transition.direction= 'left'; root.current = 'InformacionScreen'
 
                     HoverButton2:
-                        text: 'Ajustes'
+                        text: 'Settings'
                         size_hint: root.size1
                         on_press: root.transition.direction= 'left'; root.current = 'AjustesScreen'
     BimatrixVentana:
@@ -216,7 +216,7 @@
             text: '+info'
             on_release: self.parent.parent.obtenermasinfo(); app.root.transition = SlideTransition()
         HoverButton3:
-            text: 'Menú Principal'
+            text: 'Main Menu'
             on_release: app.root.transition.direction = 'right'; app.root.current = 'MenuPrincipal'
 
 # Clase básica para las ventanas de más información
@@ -245,7 +245,7 @@
         padding: '10dp'
 
         HoverButton3:
-            text: 'Volver'
+            text: 'Back'
             on_release: self.parent.parent.volver()
 
 # Botones de la aplicación

@@ -61,7 +61,7 @@ class CournotVentana(VentanaLayout):
         lista = [a, b, c, e]
 
         if '.' in lista or '' in lista or '0' in lista:
-            alerta = MensajeDeError('Introduzca parámetros válidos')
+            alerta = MensajeDeError('Enter valid parameters')
             alerta.open()
 
         else:
@@ -79,7 +79,7 @@ class CournotVentana(VentanaLayout):
 
         # Comprobamos si los parámetros son compatibles con una solución razonable del modelo
         if a < (2*c-e) or a < (2*e-c):
-            alerta = MensajeDeError('Introduzca parámetros válidos')
+            alerta = MensajeDeError('Enter valid parameters')
             alerta.open()
             return
 
@@ -97,16 +97,16 @@ class CournotVentana(VentanaLayout):
         # Obtenemos la producción óptima de cada empresa y pasamos el valor a la StringProperty a mostrar
         x1_sol = (a - (2*c) + e)/(3*b)
         x2_sol = (a - (2*e) + c)/(3*b)
-        self.prod_1 = 'Producción óptima: ' + str(np.around(x1_sol, 3))
-        self.prod_2 = 'Producción óptima: ' + str(np.around(x2_sol, 3))
+        self.prod_1 = 'Optimal production: ' + str(np.around(x1_sol, 3))
+        self.prod_2 = 'Optimal production: ' + str(np.around(x2_sol, 3))
 
         # Calculamos el beneficio de cada empresa y el precio final
         p = a - b*(x1_sol + x2_sol)
-        self.beneficio1 = 'Beneficio: ' + str(np.around((p-c)*x1_sol, 3))
-        self.beneficio2 = 'Beneficio: ' + str(np.around((p-e)*x2_sol, 3))
-        self.precio = 'Precio en el mercado: ' + str(np.around(p, 3))
-        self.empresa1 = 'EMPRESA 1'
-        self.empresa2 = 'EMPRESA 2'
+        self.beneficio1 = 'Profit: ' + str(np.around((p-c)*x1_sol, 3))
+        self.beneficio2 = 'Profit: ' + str(np.around((p-e)*x2_sol, 3))
+        self.precio = 'Market price: ' + str(np.around(p, 3))
+        self.empresa1 = 'FIRM 1'
+        self.empresa2 = 'FIRM 2'
 
         # GRÁFICO
         # Convert the sp equation to a lambda function
@@ -144,7 +144,7 @@ class CournotVentana(VentanaLayout):
                     xycoords='data', xytext=(5, 5), textcoords='offset points')
 
         # Editamos las características del gráfico
-        plt.title('Funciones de reacción')
+        plt.title('Reaction functions')
         plt.xlabel('x$_{1}$')
         plt.ylabel('x$_{2}$')
 
@@ -178,11 +178,11 @@ class CournotVentana(VentanaLayout):
                 fig.savefig('cournot_graph.png')
                 crear_cournot_word(fdemanda, ct1, ct2, self.freacc1, self.freacc2, self.precio, self.prod_1,
                                    self.beneficio1, self.prod_2, self.beneficio2)
-                alerta = MensajeDeError("Se ha creado el documento de Word 'cournot_output.docx' exitosamente")
+                alerta = MensajeDeError("The Word document 'cournot_output.docx' has been succesfully created")
                 alerta.title = ''
                 alerta.open()
         except PermissionError:
-            alerta = MensajeDeError("Cierra los archivos con nombre 'cournot_output.docx' o 'cournot_graph.png'")
+            alerta = MensajeDeError("Close all files named 'cournot_output.docx' or 'cournot_graph.png'")
             alerta.open()
 
 
@@ -213,24 +213,24 @@ def crear_cournot_word(fdemanda, ct1, ct2, freacc1, freacc2, precio, prod1, bene
     document = Document()
 
     # Añadimos nuestros datos al documento
-    document.add_paragraph('MODELO DE COURNOT')
-    document.add_paragraph('Función de demanda del mercado: ' + fdemanda)
-    document.add_paragraph('Costes totales de la empresa 1: ' + ct1)
-    document.add_paragraph('Costes totales de la empresa 2: ' + ct2)
+    document.add_paragraph('COURNOT MODEL')
+    document.add_paragraph('Market demand function: ' + fdemanda)
+    document.add_paragraph('Total Costs of firm 1: ' + ct1)
+    document.add_paragraph('Total Costs of firm 2: ' + ct2)
     document.add_paragraph()
-    document.add_paragraph('Funciones de reacción: ')
-    document.add_paragraph(f'Empresa 1: x\u2081(x\u2082) = {freacc1} - x\u2082/2 ')
-    document.add_paragraph(f'Empresa 2: x\u2082(x\u2081) = {freacc2} - x\u2081/2 ')
+    document.add_paragraph('Reaction functions: ')
+    document.add_paragraph(f'Firm 1: x\u2081(x\u2082) = {freacc1} - x\u2082/2 ')
+    document.add_paragraph(f'Firm 2: x\u2082(x\u2081) = {freacc2} - x\u2081/2 ')
     document.add_paragraph()
     document.add_picture('cournot_graph.png', width=Inches(6))
-    document.add_paragraph('Resultados: ')
+    document.add_paragraph('Results: ')
     document.add_paragraph(precio)
     document.add_paragraph()
-    document.add_paragraph('EMPRESA 1: ')
+    document.add_paragraph('FIRM 1: ')
     document.add_paragraph(prod1)
     document.add_paragraph(beneficio1)
     document.add_paragraph()
-    document.add_paragraph('EMPRESA 2: ')
+    document.add_paragraph('FIRM 2: ')
     document.add_paragraph(prod2)
     document.add_paragraph(beneficio2)
 
@@ -239,15 +239,15 @@ def crear_cournot_word(fdemanda, ct1, ct2, freacc1, freacc2, precio, prod1, bene
 
 
 class CournotMasInfoScreen(MasInfoVentana):
-    a = '''Antoine Augustin Cournot (1801-1877), matemático y economista francés, es uno de los primeros autores en intuir la\
- teoría de juegos con su modelo de duopolio propuesto en su obra de 1838 “Investigaciones acerca de los principios\
- matemáticos de la teoría de las riquezas”.
+    a = '''Antoine Augustin Cournot (1801-1877), a French mathematician and economist, is one of the early authors to \
+grasp the theory of games with his duopoly model proposed in his 1838 work "Researches into the Mathematical \
+Principles of the Theory of Wealth." \
 
-El duopolio de Cournot es un modelo económico en el que dos empresas compiten\
- determinando simultáneamente la cantidad que van a producir.
+Cournot's duopoly is an economic model in which two companies compete by determining the quantity they will produce \
+simultaneously. 
 
-Las empresas determinan simultánea e independientemente\
- la cantidad producida, considerando que la producción de las demás es independiente de las decisiones propias.
- 
-La solución del modelo es el equilibrio de Nash, donde cada empresa produce la cantidad que maximiza su beneficio\
- dada la producción de la rival (correspondencia de respuesta óptima).'''
+The companies determine the quantity produced simultaneously and independently, considering that the production of \
+others is independent of their own decisions.\
+
+The solution to the model is the Nash equilibrium, where each company produces the quantity that maximizes its profit \
+given the rival's production (optimal response correspondence).'''

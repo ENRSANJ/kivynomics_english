@@ -46,7 +46,7 @@ class MensajeDeError(Popup):
 # Mensaje de error específico, para errores en input de bimatrix_games
 class MensajeDeErrorNash(MensajeDeError):
     def __init__(self, **kwargs):
-        a = 'Debe rellenar todas las posiciones de cada matriz de pagos con valores numéricos'
+        a = 'You must fill in all the positions of each payoff matrix with numerical values'
         super().__init__(mensaje=a, **kwargs)
 
 
@@ -119,11 +119,11 @@ class BimatrixVentana(VentanaLayout):
                     for i, j in zip(lista1, lista2):
                         listatotal.append((i, j))
                     crear_bimatrix_word(listatotal, rows, cols, listatotal2)
-                    alerta = MensajeDeError("Se ha creado el documento de Word 'bimatrix_output.docx' exitosamente")
+                    alerta = MensajeDeError("The Word document 'bimatrix_output.docx' has been succesfully created")
                     alerta.title = ''
                     alerta.open()
             except PermissionError:
-                alerta = MensajeDeError("Cierra el archivo de Word con el nombre 'bimatrix_output.docx'")
+                alerta = MensajeDeError("Close the  Word file named 'bimatrix_output.docx'")
                 alerta.open()
 
         except ValueError:
@@ -161,7 +161,7 @@ class BimatrixVentana(VentanaLayout):
                 alertanash = MensajeDeErrorNash()
                 alertanash.open()
         else:
-            matricesnosimetricas = MensajeDeError('Las matrices de pagos deben ser cuadradas para un juego simétrico')
+            matricesnosimetricas = MensajeDeError('Payment matrices must be square for a symmetrical game')
             matricesnosimetricas.open()
 
     def aleatorio(self):
@@ -201,11 +201,11 @@ class SeleccionaRango(BoxLayout):
                 Caja.cambiarango(self.parent.ids.matriz1)
                 Caja.cambiarango(self.parent.ids.matriz2)
             else:
-                errorrango = MensajeDeError('Introduzca un número de filas y columnas entre [2 y 6]')
+                errorrango = MensajeDeError('Enter a number of rows and columns between [2 and 6]')
                 errorrango.open()
 
         except ValueError:
-            errorrango = MensajeDeError('Introduzca un número de filas y columnas entre [1 y 6]')
+            errorrango = MensajeDeError('Enter a number of rows and columns between [2 and 6]')
             errorrango.open()
 
         self.ids.numrows.text = ''
@@ -262,22 +262,27 @@ class SeleccionaInput(TextInput):
 
 class BimatrixMasInfoScreen(MasInfoVentana):
     # Texto a mostrar. Escrito aquí porque Kivy lang no lee los triple-quoted strings de la misma forma
-    a = '''En los años 50, John Forbes Nash (1928-2015), matemático estadounidense y premio Nobel de Economía en 1994,\
- introduce conceptos muy relevantes en el campo de la teoría de juegos (equilibrio de Nash, negociación de Nash).\
- Además, demuestra la existencia de al menos un equilibrio de Nash en todo juego finito. 
+    a = '''In the 1950s, John Forbes Nash (1928-2015), an American mathematician and Nobel laureate in Economics in \
+1994, introduced very relevant concepts in the field of game theory (Nash equilibrium, Nash bargaining). \
+Additionally, he demonstrated the existence of at least one Nash equilibrium in every finite game.\
 
-El output proporcionado por la aplicación consiste en:
 
-EE: (Extreme Equilibria) probabilidades asignadas por cada jugador a sus estrategias en el equilibrio de Nash
+The output provided by the application consists of:\
 
-EP: (Expected Payoff) Pago esperado para cada jugador en el equilibrio'''
 
-    b = '''En este ejemplo tenemos como resultado 2 equilibrios:
+EE: (Extreme Equilibria) probabilities assigned by each player to their strategies in the Nash equilibrium\
 
-1º: Es un equilibrio en estrategias puras donde los jugadores juegan su segunda y primera estrategia respectivamente, \
-obteniendo unos pagos de 6 y 7.
 
-2º: Es un equilibrio en estrategias mixtas, donde cada jugador juega sus jugadas 1 y 2 con diferentes probabilidades.'''
+EP: (Expected Payoff) Expected payoff for each player in the equilibrium'''
+
+    b = '''In this example, we have 2 equilibria as a result:\
+    
+
+1st: It is a pure strategy equilibrium where the players play their second and first strategies respectively, \
+obtaining payoffs of 6 and 7.
+
+
+2nd: It is a mixed strategy equilibrium, where each player plays their moves 1 and 2 with different probabilities.'''
 
 
 # Método para exportar los resultados a Word
@@ -286,7 +291,7 @@ def crear_bimatrix_word(datos, filas, columnas, equilibrios):
     document = Document()
 
     # Add some text to the document
-    document.add_paragraph('JUEGOS BIMATRICIALES')
+    document.add_paragraph('BIMATRIX GAMES')
 
     # Create a table with the desired shape
 
@@ -316,7 +321,7 @@ def crear_bimatrix_word(datos, filas, columnas, equilibrios):
 
     # Añadimos los equilibrios de Nash
     document.add_paragraph('')
-    document.add_paragraph('Equilibrios de Nash: ')
+    document.add_paragraph('Nash equilibria: ')
     for i in equilibrios:
         document.add_paragraph(i)
 

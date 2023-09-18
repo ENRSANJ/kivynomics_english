@@ -17,7 +17,7 @@ def solve_bertrand(a, b, c, e):
 
     # Comprobamos si los parámetros son compatibles con una solución razonable del modelo
     if a <= c and a <= e:
-        raise ValueError('Introduce parámetros válidos')
+        raise ValueError('Enter valid parameters')
 
     if c < e:
         # La empresa 1 se lleva toda la demanda
@@ -83,17 +83,17 @@ class BertrandVentana(CournotVentana):
         try:
             solucion = {key: np.around(value, 3) for key, value in solve_bertrand(a, b, c, e).items()}
         except ValueError:
-            alerta = MensajeDeError('Introduzca parámetro válidos')
+            alerta = MensajeDeError('Enter valid parameters')
             alerta.open()
             return
 
-        self.precio = 'Precio en el mercado: ' + str(solucion['p'])
-        self.empresa1 = 'EMPRESA 1'
-        self.empresa2 = 'EMPRESA 2'
-        self.prod_1 = 'Producción óptima: ' + str(solucion['q1'])
-        self.prod_2 = 'Producción óptima: ' + str(solucion['q2'])
-        self.beneficio1 = 'Beneficio: ' + str(solucion['profit1'])
-        self.beneficio2 = 'Beneficio: ' + str(solucion['profit2'])
+        self.precio = 'Market price: ' + str(solucion['p'])
+        self.empresa1 = 'FIRM 1'
+        self.empresa2 = 'FIRM 2'
+        self.prod_1 = 'Optimal production: ' + str(solucion['q1'])
+        self.prod_2 = 'Optimal production: ' + str(solucion['q2'])
+        self.beneficio1 = 'Profit: ' + str(solucion['profit1'])
+        self.beneficio2 = 'Profit: ' + str(solucion['profit2'])
 
         x1_sol = solucion['q1']
         x2_sol = solucion['q2']
@@ -133,7 +133,7 @@ class BertrandVentana(CournotVentana):
         ax.plot([x2_sol, x2_sol], [0, p], ':', c='black')
 
         # Editamos las características del gráfico
-        plt.title('Modelo de Bertrand')
+        plt.title('Bertrand model')
         plt.xlabel('x, x$_{1}$, x$_{2}$')
         plt.ylabel('p')
 
@@ -141,8 +141,8 @@ class BertrandVentana(CournotVentana):
         ax.set_ylim(0, int(np.ceil(a*1.1)))
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
-        ax.legend(handles=[plt.plot([], [], 'b-', label='Función de demanda')[0],
-                  plt.plot([], [], 'r--', label='Costes marginales')[0]])
+        ax.legend(handles=[plt.plot([], [], 'b-', label='Demand function')[0],
+                  plt.plot([], [], 'r--', label='Marginal Costs')[0]])
 
         # Cambiamos el grosor de los bordes
         for spine in ['bottom', 'left']:
@@ -164,11 +164,11 @@ class BertrandVentana(CournotVentana):
                 fig.savefig('bertrand_graph.png')
                 crear_bertrand_word(fdemanda, ct1, ct2, self.precio, self.prod_1,
                                     self.beneficio1, self.prod_2, self.beneficio2)
-                alerta = MensajeDeError("Se ha creado el documento de Word 'bertrand_output.docx' exitosamente")
+                alerta = MensajeDeError("The Word document 'bertrand_output.docx' has been succesfully created")
                 alerta.title = ''
                 alerta.open()
         except PermissionError:
-            alerta = MensajeDeError("Cierra los archivos con nombre 'bertrand_output.docx' o 'bertrand_graph.png'")
+            alerta = MensajeDeError("Close all files named 'bertrand_output.docx' or 'bertrand_graph.png'")
             alerta.open()
 
 
@@ -178,20 +178,20 @@ def crear_bertrand_word(fdemanda, ct1, ct2, precio, prod1, beneficio1, prod2, be
     document = Document()
 
     # Añadimos nuestros datos al documento
-    document.add_paragraph('MODELO DE BERTRAND')
-    document.add_paragraph('Función de demanda del mercado: ' + fdemanda)
-    document.add_paragraph('Costes totales de la empresa 1: ' + ct1)
-    document.add_paragraph('Costes totales de la empresa 2: ' + ct2)
+    document.add_paragraph('BERTRAND MODEL')
+    document.add_paragraph('Market demand function: ' + fdemanda)
+    document.add_paragraph('Total Costs of firm 1: ' + ct1)
+    document.add_paragraph('Total Costs of firm 2: ' + ct2)
     document.add_paragraph()
     document.add_picture('bertrand_graph.png', width=Inches(6))
-    document.add_paragraph('Resultados: ')
+    document.add_paragraph('Results: ')
     document.add_paragraph(precio)
     document.add_paragraph()
-    document.add_paragraph('EMPRESA 1: ')
+    document.add_paragraph('FIRM 1: ')
     document.add_paragraph(prod1)
     document.add_paragraph(beneficio1)
     document.add_paragraph()
-    document.add_paragraph('EMPRESA 2: ')
+    document.add_paragraph('FIRM 2: ')
     document.add_paragraph(prod2)
     document.add_paragraph(beneficio2)
 
@@ -200,18 +200,20 @@ def crear_bertrand_word(fdemanda, ct1, ct2, precio, prod1, beneficio1, prod2, be
 
 
 class BertrandMasInfoScreen(MasInfoVentana):
-    a = '''Joseph Louis François Bertrand (1822-1900), matemático y economista francés del si-glo XIX, revisó el modelo\
- de duopolio de Cournot, indicando que en una situación de duopolio las empresas acabarían compitiendo en precios,\
- dando forma al conocido como modelo de Bertrand.
-    
- El modelo de Bertrand es un modelo de competencia entre dos o más empresas en el que, a diferencia de\
- en los modelos anteriores, la variable de decisión es el precio. Esto es, las empresas deciden a qué precio\
- venderán su producto y la cantidad será la determinada por la demanda del mercado para dicho precio.
- 
-Partiendo de costes marginales iguales, solo existe un equilibrio de Nash en el modelo: precio_1 = precio_2 =\
- Coste Marginal ya que siempre que el precio sea superior al coste marginal, existen incentivos para desviarse de la\
- situación.
- 
-Cuando las empresas presentan costes marginales distintos, la que menores costes tenga se podrá hacer con\
- toda la demanda del mercado y tendrá que decidir entre establecer su precio de monopolio (si puede hacerlo dejando\
- fuera a la empresa rival) o un precio marginalmente inferior al coste marginal de la otra empresa. '''
+    a = '''Joseph Louis François Bertrand (1822-1900), a French mathematician and economist of the 19th century, \
+revised the Cournot duopoly model, indicating that in a duopoly situation, companies would end up competing on prices, \
+shaping what is known as the Bertrand model. \
+
+
+The Bertrand model is a competition model between two or more companies in which, unlike in previous models, the \
+decision variable is the price. That is, companies decide at what price they will sell their product, and the quantity \
+will be determined by the market demand for that price. \
+
+
+Starting from equal marginal costs, there is only one Nash equilibrium in the model: price_1 = price_2 = Marginal Cost \
+since whenever the price is higher than the marginal cost, there are incentives to deviate from the situation. \
+
+
+When companies have different marginal costs, the one with the lowest costs can capture the entire market demand and \
+must decide between setting its monopoly price (if it can do so by excluding the rival company) or a price slightly \ 
+below the marginal cost of the other company.'''

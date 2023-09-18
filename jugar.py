@@ -69,35 +69,35 @@ class ResetGame(MDDialog):
 
         # Añadimos nuestros datos al documento
         for key, value in resultados.items():
-            document.add_paragraph('ETAPA: ' + f'{key}')
-            document.add_paragraph('MODELO: ' + f'{value[0]}')
-            document.add_paragraph('Función de demanda del mercado: ' + f'p(X) = {value[1]} - {value[2]}X')
-            document.add_paragraph('Costes totales de la empresa 1: ' + f'{value[3]}x\u2081')
-            document.add_paragraph('Costes totales de la empresa 2: ' + f'{value[3]}x\u2082')
+            document.add_paragraph('STAGE: ' + f'{key}')
+            document.add_paragraph('MODEL: ' + f'{value[0]}')
+            document.add_paragraph('Market demand function: ' + f'p(X) = {value[1]} - {value[2]}X')
+            document.add_paragraph('Total Costs of firm 1: ' + f'{value[3]}x\u2081')
+            document.add_paragraph('Total Costs of firm 2: ' + f'{value[3]}x\u2082')
             document.add_paragraph()
-            document.add_paragraph('RESPUESTAS: ')
-            document.add_paragraph('Tu empresa: ')
-            document.add_paragraph('Producción: ' + f'{value[6]} uds')
-            document.add_paragraph('Beneficio: ' + f'{value[7]} €')
+            document.add_paragraph('ANSWERS: ')
+            document.add_paragraph('Your firm: ')
+            document.add_paragraph('Production: ' + f'{value[6]} uds')
+            document.add_paragraph('Profit: ' + f'{value[7]} €')
             document.add_paragraph()
-            document.add_paragraph('Empresa del NPC: ')
-            document.add_paragraph('Producción: ' + f'{value[8]} uds')
-            document.add_paragraph('Beneficio: ' + f'{value[9]} €')
+            document.add_paragraph("NPC's firm: ")
+            document.add_paragraph('Production: ' + f'{value[8]} u')
+            document.add_paragraph('Profit: ' + f'{value[9]} €')
             document.add_paragraph()
-            document.add_paragraph('Datos del mercado: ')
-            document.add_paragraph('Precio: ' + f'{value[4]}')
-            document.add_paragraph('Cantidad: ' + f'{value[5]}')
+            document.add_paragraph('Market data: ')
+            document.add_paragraph('Price: ' + f'{value[4]}')
+            document.add_paragraph('Quantity: ' + f'{value[5]}')
             # Siguiente página
             [document.add_paragraph() for i in range(8)]
 
-        document.add_paragraph('RESULTADOS GLOBALES:')
-        document.add_paragraph('Tu beneficio total: ' + f'{resultados[1][7] + resultados[2][7] + resultados[3][7]} €')
-        document.add_paragraph('Beneficio total NPC: ' + f'{resultados[1][9] + resultados[2][9] + resultados[3][9]} €')
+        document.add_paragraph('GLOBAL RESULTS:')
+        document.add_paragraph('Your total profit: ' + f'{resultados[1][7] + resultados[2][7] + resultados[3][7]} €')
+        document.add_paragraph("NPC's total profit: " + f'{resultados[1][9] + resultados[2][9] + resultados[3][9]} €')
 
         # Save the Word document
         document.save('vsNPC_output.docx')
 
-        alerta = MensajeDeError("Se ha creado el documento 'vsNPC_output.docx' exitosamente")
+        alerta = MensajeDeError("The document 'vsNPC_output.docx' has been succesfully created")
         alerta.open()
 
         # Creamos el output a mostrar en pantalla
@@ -109,22 +109,22 @@ class ResetGame(MDDialog):
 
         for key, value in resultados.items():
             text_list = [
-                '[b]ETAPA: ' + f'{key}[/b]',
-                '\n[u]MODELO:[/u] ' + f'{value[0]}',
-                '\n[u]Datos[/u]',
+                '[b]STAGE: ' + f'{key}[/b]',
+                '\n[u]MODEL:[/u] ' + f'{value[0]}',
+                '\n[u]Data[/u]',
                 f'p(X) = {value[1]} - {value[2]}X',
-                'CT[sub]1[/sub]: ' + f'{value[3]}x[sub]1[/sub]',
-                'CT[sub]2[/sub]: ' + f'{value[3]}x[sub]2[/sub]',
-                '\n[u]RESPUESTAS:[/u] ',
-                '\n[u]Tu empresa:[/u] ',
-                'Producción: ' + f'{value[6]} uds',
-                'Beneficio: ' + f'{value[7]} €',
-                '\n[u]Empresa del NPC:[/u] ',
-                'Producción: ' + f'{value[8]} uds',
-                'Beneficio: ' + f'{value[9]} €',
-                '\n[u]Datos del mercado:[/u] ',
-                'Precio: ' + f'{value[4]} €',
-                'Cantidad: ' + f'{value[5]} uds',
+                'TC[sub]1[/sub]: ' + f'{value[3]}x[sub]1[/sub]',
+                'TC[sub]2[/sub]: ' + f'{value[3]}x[sub]2[/sub]',
+                '\n[u]ANSWERS:[/u] ',
+                '\n[u]Your firm:[/u] ',
+                'Production: ' + f'{value[6]} uds',
+                'Profit: ' + f'{value[7]} €',
+                '\n[u]NPC Firm:[/u] ',
+                'Production: ' + f'{value[8]} uds',
+                'Profit: ' + f'{value[9]} €',
+                '\n[u]Market data:[/u] ',
+                'Price: ' + f'{value[4]} €',
+                'Quantity: ' + f'{value[5]} uds',
             ]
 
             grid2 = GridLayout(cols=1, size_hint=(1, None), padding='5dp')
@@ -135,9 +135,9 @@ class ResetGame(MDDialog):
             grid.add_widget(grid2)
 
         '''text_list2 = [
-        'RESULTADOS GLOBALES:',
-        'Tu beneficio total: ' + f'{historial[1][7] + historial[2][7] + historial[3][7]} €',
-        'Beneficio total NPC: ' + f'{historial[1][9] + historial[2][9] + historial[3][9]} €'
+        'GLOBAL RESULTS:',
+        'Your total profit: ' + f'{historial[1][7] + historial[2][7] + historial[3][7]} €',
+        ' total NPC: ' + f'{historial[1][9] + historial[2][9] + historial[3][9]} €'
         ]
         for text in text_list2:
             grid.add_widget(
@@ -158,7 +158,7 @@ class JugarVentana(VentanaLayout):
     historial = {}
     model = 0
     precio2 = 0
-    modelos = {1: 'COURNOT', 2: 'STACKELBERG (NPC=líder)', 3: 'STACKELBERG (NPC=seguidora)', 4: 'BERTRAND'}
+    modelos = {1: 'COURNOT', 2: 'STACKELBERG (NPC=leader)', 3: 'STACKELBERG (NPC=follower)', 4: 'BERTRAND'}
 
     # Asignamos valores aleatorios al inicio del juego
     a = 0
@@ -211,21 +211,21 @@ class JugarVentana(VentanaLayout):
 
         # Cournot
         if self.model == 1:
-            self.modelo = 'MODELO DE COURNOT'
+            self.modelo = 'COURNOT MODEL'
             self.prod2 = np.around(self.player2.cournot(self.a, self.b, self.c), 3)
 
         # NPC Stackelberg líder
         elif self.model == 2:
             self.prod2 = round(self.player2.stackelberg1(self.a, self.b, self.c), 3)
-            self.modelo = f'MODELO DE STACKELBERG. TÚ ERES LA EMPRESA SEGUIDORA. {self.player2.name} produjo {self.prod2} unidades.'
+            self.modelo = f'STACKELBERG MODEL. YOU ARE THE FOLLOWER. {self.player2.name} produced {self.prod2} u.'
 
         # NPC Stackelberg seguidor
         elif self.model == 3:
-            self.modelo = 'MODELO DE STACKELBERG. TÚ ERES LA EMPRESA LÍDER'
+            self.modelo = 'STACKELBERG MODEL. YOU ARE THE LEADER'
 
         # Bertrand
         else:
-            self.modelo = 'MODELO DE BERTRAND'
+            self.modelo = 'BERTRAND MODEL'
             self.precio2 = self.player2.bertrand(self.c)
 
     def reset_parametros(self):
@@ -250,28 +250,27 @@ class JugarVentana(VentanaLayout):
 
         # Si el evento afecta a la demanda, modificamos la demanda (y viceversa)
         if self.evento == 1:
-            self.narrativa = '''Recientemente se publicaron los resultados de un estudio llevado a cabo por la\
- universidad de Massachusetts que resaltan los beneficios del uso de tu producto. Esto ha producido un aumento\
- de la demanda de mercado. Los cambios se han registrado en la función de demanda.'''
+            self.narrativa = '''Recently, the results of a study conducted by the University of Massachusetts were \
+published, highlighting the benefits of using your product. This has led to an increase in market demand. Changes have \
+been recorded in the demand function.'''
             self.a = self.a + cuantia
 
         elif self.evento == 2:
-            self.narrativa = '''Como consecuencia de una pandemia mundial, el número de personas que\
- pueden acceder y utilizar tu producto se ha reducido considerablemente. Los cambios se han introducido\
- en la función de demanda del mercado.'''
+            self.narrativa = '''As a result of a global pandemic, the number of people who can access and use your \
+product has significantly reduced. Changes have been introduced in the market demand function.'''
             self.a = self.a - cuantia
 
         elif self.evento == 3:
             self.c = self.c + cuantia
             NPCMurray.tax = NPCMurray.tax - cuantia
-            self.narrativa = f'''El Gobierno introdujo un impuesto de {cuantia} u.m. sobre la producción.\
- El aumento aumento de costes asociado se ha introducido en tu función de costes.'''
+            self.narrativa = f'''The Government introduced a tax of {cuantia} units of currency (u.m.) on production. \
+The resulting increase in costs has been incorporated into your cost function.'''
 
         elif self.evento == 4:
             self.c = self.c - cuantia
             NPCMurray.tax = NPCMurray.tax + cuantia
-            self.narrativa = f'''El Gobierno introdujo una subvención de {cuantia} u.m. por cada unidad producida.\
- Los cambios se han introducido en tu función de costes.'''
+            self.narrativa = f'''The Government introduced a subsidy of {cuantia} units of currency (u.m.) on production. \
+The resulting increase in costs has been incorporated into your cost function.'''
 
         self.update_screen()
 
@@ -283,7 +282,7 @@ class JugarVentana(VentanaLayout):
             if respuesta == 0:
                 raise ValueError
         except ValueError:
-            alerta = MensajeDeError('Introduzca parámetros válidos')
+            alerta = MensajeDeError('Enter valid parameters')
             alerta.open()
             return
 
@@ -331,7 +330,7 @@ class JugarVentana(VentanaLayout):
 
         stage_dict = {1: 'stage1', 2: 'stage2', 3: 'stage3'}
         stage_key = stage_dict.get(self.stage)
-        setattr(self, stage_key, f'Beneficio_{self.stage}:  {self.beneficio1}')
+        setattr(self, stage_key, f'Profit_{self.stage}:  {self.beneficio1}')
 
         # Pasamos de etapa
         self.ids.respuesta.text = ''
@@ -448,42 +447,29 @@ class NPCMarx:
 
 
 class JugarMasInfoScreen(MasInfoVentana):
-    a = '''El juego consiste en 3 etapas en las que tú, dueño de una empresa, competirás con uno de los tres NPCs\
- disponibles, dueño de la empresa rival. Cada uno de estos jugadores tiene un comportamiento predefinido distinto,\
- cambiando la facilidad con la que podrás obtener beneficios en cada periodo:
-    - John Nash: siempre tomará las decisiones más adecuadas, teniendo en cuenta la teoría existente al respecto.
+    a = '''The game consists of 3 stages in which you, as a company owner, will compete with one of the three available NPCs, who are owners of rival companies. Each of these players has a different predefined behavior, changing the ease with which you can obtain profits in each period:
+   
+   - John Nash: will always make the most appropriate decisions, taking into account the existing theory in this regard.
 
-    - Murray Rothbard: responderá generalmente de forma acertada pero tiene una debilidad: la intervención estatal.\
- Ignorará los impuestos establecidos y las subvenciones concedidas por el Gobierno. Lo ignorará de cara a su decisión\
- de producción, sin embargo, sus costes reales serán igual a los tuyos por lo que puedes aprovecharte de esta\
- circunstancia. Ten en cuenta que su desaprobación de la intervención estatal es permanente, por lo que “acumulará”\
- la ignorancia sobre las intervenciones pasadas, así que es recomendable ir apuntándolo para optimizar tus\
- decisiones, por ejemplo:
+   - Murray Rothbard: will generally respond accurately but has a weakness: state intervention. He will ignore established taxes and subsidies granted by the government. He will ignore them when making his production decision; however, his actual costs will be the same as yours, so you can take advantage of this circumstance. Keep in mind that his disapproval of state intervention is permanent, so he will "accumulate" ignorance of past interventions. It is advisable to keep track of this to optimize your decisions. For example:
 
-CT = 10x
-Etapa 1:
-“El Gobierno introduce un impuesto sobre la producción de 2 u.m.”
-Rothbard producirá como si siguiera teniendo CT = 10x, cuando en realidad sus costes son mayores (12x).
-Etapa 2:
-“El Gobierno concede una subvención sobre la producción de 4 u.m.”
-Rothbard producirá como si siguiera teniendo CT = 10x (ignora tanto el impuesto del anterior periodo como la\
- subvención de este), cuando en realidad sus costes reales son de 8x.
+   TC = 10x
+   Stage 1:
+   "The Government introduces a tax on production of 2 units of currency (u.m.)."
+   Rothbard will produce as if he still had TC = 10x when in reality his costs are higher (12x).
+   Stage 2:
+   "The Government grants a production subsidy of 4 units of currency (u.m.)."
+   Rothbard will produce as if he still had TC = 10x (ignoring both the tax from the previous period and the subsidy from this period) when in reality his actual costs are 8x.
 
-    -Karl Marx: sobreestima sus costes con la intención de no extraer plusvalía de sus trabajadores. En concreto,\
- producirá como si tuviera unos costes un 20% mayores a los reales. En este caso, el NPC tiene en cuenta todos los\
- eventos que sucedan. Además, ese 20% no es acumulativo, es decir, en cada periodo actuará como si sus costes fueran\
- un 20% superiores a los tuyos para ese mismo periodo:
+   - Karl Marx: overestimates his costs with the intention of not extracting surplus value from his workers. Specifically, he will produce as if his costs were 20% higher than the actual costs. In this case, the NPC takes into account all events that occur. Furthermore, this 20% is not cumulative, meaning that in each period, he will act as if his costs were 20% higher than yours for that same period:
 
-CT = 10x
-Karl Marx producirá como si tuviera CT = 12x . 
+   TC = 10x
+   Karl Marx will produce as if he had TC = 12x.
 
-Cabe recordar que el enfrentamiento con el ordenador no es siempre rigurosamente equitativo puesto que, a pesar de\
- tener los mismos costes totales en todo momento, en el modelo de Stackelberg el orden de entrada en el mercado\
- desequilibra la balanza (favorece a la empresa líder considerablemente).
+   It is worth remembering that the confrontation with the computer is not always strictly equitable since, despite having the same total costs at all times, in the Stackelberg model, the order of entry into the market unbalances the scale (significantly favors the leading company).
 
-A lo largo del juego deberás decidir la cantidad a producir (modelos de Cournot y Stackelberg) o el precio que vas\
- a establecer (modelo de Bertrand) teniendo en cuenta la personalidad del NPC, el modelo a tratar en la etapa y, por\
- supuesto, las funciones de demanda del mercado y costes totales.
+   Throughout the game, you will have to decide the quantity to produce (Cournot and Stackelberg models) or the price you will set (Bertrand model) considering the NPC's personality, the model to be used in the stage, and, of course, the market demand functions and total costs.
 
-Al final de la partida podrás exportar los resultados obtenidos por etapa a un documento Word.
+   At the end of the game, you will be able to export the results obtained for each stage to a Word document.
+
 '''

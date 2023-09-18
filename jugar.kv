@@ -30,13 +30,13 @@
 
                 # Función de demanda del mercado
                 WrappedLabel:
-                    text: 'Demanda del mercado: p(x) = ' + root.demanda_mercado
+                    text: 'Market demand: p(x) = ' + root.demanda_mercado
                     font_size: self.height * .35
                     halign: 'left'
 
                 # Costes totales de la empresa del jugador
                 WrappedLabel:
-                    text: 'Costes totales: ' + root.costes_totales
+                    text: 'Total Costs: ' + root.costes_totales
                     font_size: self.height * .35
                     halign: 'left'
 
@@ -53,7 +53,7 @@
                             pos: self.pos
                             size: self.size
                     size_hint: (.25, .25)
-                    text: 'Etapa: ' + str(root.stage)
+                    text: 'Stage: ' + str(root.stage)
                     font_size: self.height * .4
                 BoxLayout:
                     padding: '10dp'
@@ -109,7 +109,7 @@
                     font_size: self.height * .4
 
                 HoverButton3:
-                    text: 'Confirmar'
+                    text: 'Confirm'
                     font_size: self.height * .4
                     on_release: root.confirma()
                     canvas.before:
@@ -120,7 +120,7 @@
                             size: self.size
 
                 HoverButton3:
-                    text: 'Reiniciar'
+                    text: 'Reset'
                     font_size: self.height * .4
                     on_release: root.reiniciar()
                     canvas.before:
@@ -167,7 +167,7 @@
                 orientation: 'vertical'
 
                 WrappedLabel:
-                    text: 'HISTORIAL'
+                    text: 'HISTORY'
                     font_size: self.height*.25
 
                 WrappedLabel:
@@ -201,7 +201,7 @@
         BoxLayout:
             size_hint: (1, .2)
             WrappedLabel:
-                text: '[u]Selecciona tu rival[/u]'
+                text: '[u]Select your rival[/u]'
                 markup: True
                 font_size: self.height*.4
 
@@ -235,13 +235,13 @@
                 orientation: "vertical"
 
                 JugarLabel:
-                    text: 'Creador de la Teoría de Juegos y conceptos como "equilibrio de Nash". Jugador experimentado y con gran conocimiento que optimizará sus decisiones al máximo'
+                    text: 'Creator of Game Theory and concepts such as "Nash equilibrium". Experienced player with extensive knowledge who will optimize their decisions to the fullest.'
 
                 JugarLabel:
-                    text: 'Considerado padre del anarcocapitalismo. Economista libertario que ignora las actuaciones del Gobierno pues las considera ilegítimas.'
+                    text: 'Considered the father of anarcho-capitalism. A libertarian economist who dismisses government actions as he deems them illegitimate.'
 
                 JugarLabel:
-                    text: 'Uno de los filósofos más influyentes de la historia. Sobreestima sus costes un 20% pues no quiere extraer plusvalía de sus trabajadores'
+                    text: 'One of the most influential philosophers in history. Overestimates his costs by 20% because he does not want to extract surplus value from his workers.'
 
 
 <ResetGame>:
@@ -262,7 +262,7 @@
         BoxLayout:
             size_hint: (1, .2)
             WrappedLabel:
-                text: '[u]El juego ha finalizado[/u]'
+                text: '[u]The game has ended[/u]'
                 markup: True
                 font_size: self.height*.4
 
@@ -273,14 +273,14 @@
             padding: '20dp'
 
             CournotButton:
-                text: 'Volver a jugar'
+                text: 'Play again'
                 on_release:
                     app.root.ids.jugarid.reset_parametros()
                     app.root.ids.jugarid.on_enter()
                     root.dismiss()
 
             CournotButton:
-                text: 'Menú principal'
+                text: 'Main Menu'
                 on_release:
                     app.root.ids.jugarid.reset_parametros()
                     app.root.transition.direction = 'right'
@@ -288,7 +288,7 @@
                     root.dismiss()
 
             CournotButton:
-                text: 'Exportar resultados'
+                text: 'Export results'
                 on_release:
                     root.exportar_resultados(app.root.ids.jugarid.historial)
                     app.root.ids.jugarid.reset_parametros()
@@ -318,7 +318,7 @@
                 halign: 'justify'
                 bold: True
                 font_size: self.height*.4
-                text: 'JUGAR vs NPC'
+                text: 'PLAY vs NPC'
 
             WrappedLabel2:
                 size_hint_y: None
@@ -331,7 +331,7 @@
 
 <Popup_resultado>:
     title_color: (0, 0, 0, 1)
-    title: 'RESULTADOS'
+    title: 'RESULTS'
     size_hint: (.8, .65)
     background: '' # white
 
@@ -354,7 +354,7 @@
         BoxLayout:
             size_hint: (1, .2)
             WrappedLabel:
-                text: '¿Desea reiniciar la partida?'
+                text: 'Are you sure you want to reset?'
                 font_size: self.height
 
         # Selección de opción

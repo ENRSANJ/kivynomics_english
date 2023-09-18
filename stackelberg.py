@@ -32,7 +32,7 @@ class StackelbergVentana(CournotVentana):
 
         # Comprobamos si los parámetros son compatibles con una solución razonable del modelo
         if a < (2 * c - e) or a < (3 * e - 2 * c):
-            alerta = MensajeDeError('Introduzca parámetros válidos')
+            alerta = MensajeDeError('Enter valid parameters')
             alerta.open()
             return
 
@@ -48,16 +48,16 @@ class StackelbergVentana(CournotVentana):
         # Obtenemos la producción óptima de cada empresa y pasamos el valor a la StringProperty a mostrar
         x1_sol = (a + e - 2 * c) / (2 * b)
         x2_sol = (a - 3 * e + 2 * c) / (4 * b)
-        self.prod_1 = 'Producción óptima: ' + str(np.around(x1_sol, 3))
-        self.prod_2 = 'Producción óptima: ' + str(np.around(x2_sol, 3))
+        self.prod_1 = 'Optimal production: ' + str(np.around(x1_sol, 3))
+        self.prod_2 = 'Optimal production: ' + str(np.around(x2_sol, 3))
 
         # Calculamos el beneficio de cada empresa y el precio final
         p = a - b * (x1_sol + x2_sol)
-        self.beneficio1 = 'Beneficio: ' + str(np.around((p - c) * x1_sol, 3))
-        self.beneficio2 = 'Beneficio: ' + str(np.around((p - e) * x2_sol, 3))
-        self.precio = 'Precio en el mercado: ' + str(np.around(p, 3))
-        self.empresa1 = 'EMPRESA LÍDER'
-        self.empresa2 = 'EMPRESA SEGUIDORA'
+        self.beneficio1 = 'Profit: ' + str(np.around((p - c) * x1_sol, 3))
+        self.beneficio2 = 'Profit: ' + str(np.around((p - e) * x2_sol, 3))
+        self.precio = 'Market price: ' + str(np.around(p, 3))
+        self.empresa1 = 'LEADER'
+        self.empresa2 = 'FOLLOWER'
 
         # GRÁFICO
         # Convert the sympy equation to a lambda function
@@ -90,7 +90,7 @@ class StackelbergVentana(CournotVentana):
                     xycoords='data', xytext=(5, 5), textcoords='offset points')
 
         # Editamos las características del gráfico
-        plt.title('Funciones de reacción')
+        plt.title('Reaction functions')
         plt.xlabel('x$_{1}$')
         plt.ylabel('x$_{2}$')
 
@@ -124,12 +124,12 @@ class StackelbergVentana(CournotVentana):
                 fig.savefig('stackelberg_graph.png')
                 crear_stackelberg_word(fdemanda, ct1, ct2, self.freacc2, self.precio, self.prod_1,
                                        self.beneficio1, self.prod_2, self.beneficio2)
-                alerta = MensajeDeError("Se ha creado el documento de Word 'stackelberg_output.docx' exitosamente")
+                alerta = MensajeDeError("The Word document 'stackelberg_output.docx' has been succesfully created")
                 alerta.title = ''
                 alerta.open()
         except PermissionError:
             alerta = MensajeDeError(
-                "Cierra los archivos con nombre 'stackelberg_output.docx' o 'stackelberg_graph.png'")
+                "Close all files named 'stackelberg_output.docx' or 'stackelberg_graph.png'")
             alerta.open()
 
 
@@ -139,23 +139,23 @@ def crear_stackelberg_word(fdemanda, ct1, ct2, freacc2, precio, prod1, beneficio
     document = Document()
 
     # Añadimos nuestros datos al documento
-    document.add_paragraph('MODELO DE STACKELBERG')
-    document.add_paragraph('Función de demanda del mercado: ' + fdemanda)
-    document.add_paragraph('Costes totales de la empresa 1: ' + ct1)
-    document.add_paragraph('Costes totales de la empresa 2: ' + ct2)
+    document.add_paragraph('STACKELBERG MODEL')
+    document.add_paragraph('Market demand function: ' + fdemanda)
+    document.add_paragraph('Total costs of firm 1: ' + ct1)
+    document.add_paragraph('Total costs of firm 2: ' + ct2)
     document.add_paragraph()
-    document.add_paragraph('Funciones de reacción: ')
-    document.add_paragraph(f'Empresa 2: x\u2082(x\u2081) = {freacc2} - x\u2081/2 ')
+    document.add_paragraph('Reaction functions: ')
+    document.add_paragraph(f'Firm 2: x\u2082(x\u2081) = {freacc2} - x\u2081/2 ')
     document.add_paragraph()
     document.add_picture('stackelberg_graph.png', width=Inches(6))
-    document.add_paragraph('Resultados: ')
+    document.add_paragraph('Results: ')
     document.add_paragraph(precio)
     document.add_paragraph()
-    document.add_paragraph('EMPRESA 1: ')
+    document.add_paragraph('FIRM 1: ')
     document.add_paragraph(prod1)
     document.add_paragraph(beneficio1)
     document.add_paragraph()
-    document.add_paragraph('EMPRESA 2: ')
+    document.add_paragraph('FIRM 2: ')
     document.add_paragraph(prod2)
     document.add_paragraph(beneficio2)
 
@@ -164,15 +164,15 @@ def crear_stackelberg_word(fdemanda, ct1, ct2, freacc2, precio, prod1, beneficio
 
 
 class StackelbergMasInfoScreen(MasInfoVentana):
-    a = '''Heinrich Freiherr von Stackelberg (1905-1946), economista alemán, introduce su fa-moso modelo de duopolio en\
- su obra “Estructura de Mercado y Equilibrio” publicada en 1934.
- 
- El duopolio de Stackelberg, al igual que el modelo de Cournot, es también un modelo económico en el que dos\
- empresas compiten decidiendo sobre su producción.
+    a = '''Heinrich Freiherr von Stackelberg (1905-1946), a German economist, introduced his famous duopoly model in \
+his work "Market Structure and Equilibrium," published in 1934. \
 
-Las empresas determinan la cantidad producida de forma secuencial; una empresa (líder) determina su producción en el\
- primer periodo. Esta decisión es irreversible: no puede cambiarse en el segundo periodo. Teniendo en cuenta la\
-  producción de la líder, la otra empresa (seguidora) determina su producción óptima en el segundo periodo.
-  
-El modelo es, por tanto, un juego dinámico con información perfecta: un jugador toma una decisión tras conocer\
- la decisión que ha tomado el otro jugador'''
+The Stackelberg duopoly, like the Cournot model, is also an economic model in which two firms compete by deciding on \
+their production.
+
+The firms determine the quantity produced sequentially; one firm (the leader) determines its production in the first \
+period. This decision is irreversible and cannot be changed in the second period. Taking into account the leader's \
+production, the other firm (the follower) determines its optimal production in the second period.
+
+The model is, therefore, a dynamic game with perfect information: a player makes a decision after knowing the decision \
+made by the other player.'''
